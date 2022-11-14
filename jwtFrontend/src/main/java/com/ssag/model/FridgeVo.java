@@ -18,4 +18,36 @@ public class FridgeVo {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate createddate;
 
+	public Integer getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Integer owner) {
+		this.owner = owner;
+	}
+
+	public Integer getCode() {
+		return code;
+	}
+
+	public void setCode(Integer code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public LocalDate getCreateddate() {
+		return createddate;
+	}
+
+	public void setCreateddate(LocalDate createddate) {
+		this.createddate = createddate;
+	}
+
 }

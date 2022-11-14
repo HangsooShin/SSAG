@@ -24,11 +24,11 @@ public class SecurityCongfig extends WebSecurityConfigurerAdapter{
 	private final CorsConfig corsConfig;
 	private final UserDao userDao;
 //	
-//	@Autowired
-//	public SecurityCongfig(CorsConfig corsConfig, UserDao userDao) {
-//		this.corsConfig = corsConfig;
-//		this.userDao = userDao;
-//	}
+	@Autowired
+	public SecurityCongfig(CorsConfig corsConfig, UserDao userDao) {
+		this.corsConfig = corsConfig;
+		this.userDao = userDao;
+	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception { 

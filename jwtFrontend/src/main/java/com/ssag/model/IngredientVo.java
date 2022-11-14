@@ -7,11 +7,31 @@ import lombok.ToString;
 
 @Component("ingredientVo")
 @Data
-@ToString
 public class IngredientVo {
 
 	private Integer code;
 	private String name;
 	private Integer group;
+	public Integer getCode() {
+		return code;
+	}
+	public void setCode(Integer code) {
+		this.code = code;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Integer getGroup() {
+		return group;
+	}
+	public void setGroup(Integer group) {
+		this.group = group;
+	}
+
+	
+	
 	
 }

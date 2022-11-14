@@ -14,6 +14,7 @@ public interface UserDao {
 	public UserVo findByUsername(String username) throws DataAccessException;
 //	CustomUserDetails getUserById(String id) throws DataAccessException;
 	public void insertUserFridgeCode(Integer fridgecode, Integer code)throws DataAccessException;
-
+	public UserVo updateUser(String username, Integer usercode)throws DataAccessException;
+	public void procedureCall()throws DataAccessException;
 	
 }

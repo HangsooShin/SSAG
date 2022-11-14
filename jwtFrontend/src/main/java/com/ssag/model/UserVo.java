@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import lombok.Data;
 public class UserVo {
 
 	
-	private Integer code;
+	private Integer usercode;
 	
 	private String username;
 	private String password;
@@ -28,7 +29,8 @@ public class UserVo {
 	private String address;
 	private Integer companycode;
 	private String companyname;
-	private Integer fridgecode;
+//	private Integer fridgecode;
+	private String fridgecode;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birth;
@@ -46,12 +48,12 @@ public class UserVo {
 		return new ArrayList<>();
 	}
 
-	public Integer getCode() {
-		return code;
+	public Integer getUsercode() {
+		return usercode;
 	}
 
-	public void setCode(Integer code) {
-		this.code = code;
+	public void setUsercode(Integer usercode) {
+		this.usercode = usercode;
 	}
 
 	public String getUsername() {
@@ -146,26 +148,21 @@ public class UserVo {
 
 	@Override
 	public String toString() {
-		return "UserVo [code=" + code + ", username=" + username + ", password=" + password + ", role=" + role
+		return "UserVo [code=" + usercode + ", username=" + username + ", password=" + password + ", role=" + role
 				+ ", name=" + name + ", email=" + email + ", telephone=" + telephone + ", address=" + address
 				+ ", companycode=" + companycode + ", companyname=" + companyname + ", fridgecode=" + fridgecode
 				+ ", birth=" + birth + ", userLogin=" + userLogin + "]";
 	}
 
-	/**
-	 * @return the fridgecode
-	 */
-	public Integer getFridgecode() {
+	public String getFridgecode() {
 		return fridgecode;
 	}
 
-	/**
-	 * @param fridgecode the fridgecode to set
-	 */
-	public void setFridgecode(Integer fridgecode) {
+	public void setFridgecode(String fridgecode) {
 		this.fridgecode = fridgecode;
 	}
-	
+
+
 	
 	
 }

@@ -32,7 +32,20 @@ public class UserService {
 	public UserVo findById(String username) {
 		return userDao.findByUsername(username);
 	}
-
 	
+	public UserVo updateUser(String username,Integer usercode) {
+		return userDao.updateUser(username, usercode);
+	}
+	
+	public void procedureCall() {
+		userDao.procedureCall();
+	}
+
+
+//	public String createToken(UserVo UserVo) {
+//	    UserVo user = userDao.findByUsername(UserVo.getUsername());
+//	      //비밀번호 확인 등의 유효성 검사 진행
+//	    return jwtTokenProvider.createToken(user.getName());
+//	}
 	
 }

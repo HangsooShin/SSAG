@@ -24,6 +24,66 @@ public class FridgeBoxVo {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate expiredate;
+
+
+	public Integer getIngredientcode() {
+		return ingredientcode;
+	}
+
+
+	public void setIngredientcode(Integer ingredientcode) {
+		this.ingredientcode = ingredientcode;
+	}
+
+
+	public Integer getFridgecode() {
+		return fridgecode;
+	}
+
+
+	public void setFridgecode(Integer fridgecode) {
+		this.fridgecode = fridgecode;
+	}
+
+
+	public Integer getStoragecode() {
+		return storagecode;
+	}
+
+
+	public void setStoragecode(Integer storagecode) {
+		this.storagecode = storagecode;
+	}
+
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+
+	public LocalDate getCreateddate() {
+		return createddate;
+	}
+
+
+	public void setCreateddate(LocalDate createddate) {
+		this.createddate = createddate;
+	}
+
+
+	public LocalDate getExpiredate() {
+		return expiredate;
+	}
+
+
+	public void setExpiredate(LocalDate expiredate) {
+		this.expiredate = expiredate;
+	}
 	
 	
 //	private boolean userLogin;
