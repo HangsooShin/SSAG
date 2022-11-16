@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssag.dao.SearchDao">
+
+	<!--*******************************제품 검색 (감자) ************************************************************ -->
+	<resultMap id='ingredient' type="com.ssag.model.IngredientVo">
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="group" column="group" />
+	</resultMap>
+
+
+	<resultMap id='merchandise'
+		type="com.ssag.model.MerchandiseVo">
+		<result property="code" column="code" />
+		<result property="companycode" column="companycode" />
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="itemname" column="itemname" />
+		<result property="cost" column="cost" />
+		<result property="expiredate" column="expiredate" />
+		<result property="outofstock" column="outofstock" />
+		<result property="link" column="link" />
+		<result property="imglink" column="imglink" />
+	</resultMap>
+
+
+
+	<resultMap type="com.ssag.model.SimilarnameVo" id="join">
+
+		<result property="similar" column="similar" />
+		<result property="originalname" column="originalname" />
+		<collection property="ingredientVo22"
+			resultMap="ingredient"></collection>
+		<collection property="merchandiseVo22"
+			resultMap="merchandise"></collection>
+	</resultMap>
+
+
+	<select id="similarname"
+		parameterType="com.ssag.model.SimilarnameVo"
+		resultType="com.ssag.model.SimilarnameVo" resultMap="join">
+	<![CDATA[
+			
+		select * from (select i.code as code from (select * from similarname where similar=#{similar}) co1 join ingredient i on co1.originalname=i.name) co2 join merchandise m  on co2.code=m.ingredientcode;
+		]]>
+	</select>
+
+	<!--***************************************키워드로 레시피 검색 프로시저**************************************************** -->
+	<select id="recipeProcedureCall"
+		parameterType="com.ssag.model.SimilarnameVo" resultMap="procedure"
+		resultType="com.ssag.model.SimilarnameVo">
+		call string_split(#{similar},' ');
+
+	</select>
+
+	<resultMap type="com.ssag.model.SimilarnameVo" id="procedure">
+		<result property="similar" column="similar" />
+		<result property="originalname" column="originalname" />
+		<collection property="ingredientVo22"
+			resultMap="ingredient"></collection>
+		<collection property="cookIngredientVo22"
+			resultMap="cookingredient"></collection>
+		<collection property="cookVo22" resultMap="cook"></collection>
+	</resultMap>
+
+	<resultMap id='cook' type="com.ssag.model.CookVo">
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="companycode" column="companycode" />
+		<result property="serve" column="serve" />
+		<result property="howtomake" column="howtomake" />
+		<result property="link" column="link" />
+		<result property="imglink" column="imglink" />
+	</resultMap>
+
+	<resultMap id='cookingredient'
+		type="com.ssag.model.CookIngredientVo">
+		<result property="cookcode" column="cookcode" />
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="quantity" column="quantity" />
+	</resultMap>
+
+
+	<!--*****************************************레시피 검색(튀김)************************************************** -->
+
+	<select id="selectRecipe" resultMap="cook">
+		<![CDATA[
+		select * from cook where name like CONCAT('%', #{name}, '%');
+		]]>
+	</select>
+
+
+</mapper>

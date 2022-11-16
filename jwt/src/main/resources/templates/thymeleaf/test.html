@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<title>test</title>
+
+</head>
+
+<body>
+	<form th:action="@{/test}" class="form-signin" method="post">
+		<div class="form-group">
+			<label>Name</label> <input name="name" id="name" type="text"
+				required="required">
+		</div>
+
+		<div class="button">
+			<button type="submit" class="btn">전송</button>
+		</div>
+	
+	</form>
+
+</body>
+
+</html>

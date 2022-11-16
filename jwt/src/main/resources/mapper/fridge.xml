@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssag.dao.FridgeDao">
+
+	<resultMap id='fridgeBox' type="fridgeboxVo">
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="fridgecode" column="fridgecode" />
+		<result property="storagecode" column="storagecode" />
+		<result property="quantity" column="quantity" />
+		<result property="createddate" column="createddate" />
+		<result property="expiredate" column="expiredate" />
+
+	</resultMap>
+
+	<resultMap id='ingredient' type="ingredientVo">
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="group" column="group" />
+	</resultMap>
+
+	<resultMap id='fridge' type="fridgeVo">
+		<result property="owner" column="owner" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+	</resultMap>
+
+
+	<insert id="insertItem" parameterType="fridgeboxVo">
+		<![CDATA[
+			
+			insert into fridgebox(ingredientcode,fridgecode,createddate,storagecode,expiredate,quantity)
+			value(#{ingredientcode},#{fridgecode},#{createddate},#{storagecode},#{expiredate},#{quantity});
+			
+		]]>
+	</insert>
+
+	<select id='ingredientAll' resultMap='ingredient'>
+		<![CDATA[
+		select * from ingredient;
+		]]>
+	</select>
+
+	<select id='myfridgeBox' resultMap='fridge'>
+		<![CDATA[
+		select * from fridge where code =#{id};
+		]]>
+	</select>
+
+	<insert id="insertFridge" parameterType="fridgeVo">
+		<![CDATA[
+			
+			insert into fridge(code,owner,name,createddate)
+			value(#{code},#{owner},#{name},#{createddate});
+			
+		]]>
+	</insert>
+
+	<select id='userfridgeList' resultMap='fridge'>
+		<![CDATA[
+		select * from fridge where owner=#{owner};
+		]]>
+	</select>
+
+	<update id="updateFridgeBox" parameterType="fridgeboxVo">
+		<![CDATA[
+			update fridgebox set quantity=#{quantity}
+			where ingredientcode=#{ingredientcode} and fridgecode=#{fridgecode};
+		]]>
+	</update>
+
+
+
+	<!-- 	<resultMap id="splitMap" type="hashmap" />
+
+	<select id="mapProcedureList" statementType="CALLABLE"
+		parameterType="hashmap">
+		{
+		CALL string_split(
+		(#{ingredientNameList}," ")
+
+		)
+		}
+	</select> -->
+
+
+	<!-- <resultMap id='procVo' type="stringSplitVo"> <result property="name" 
+		column="ingredientcode" /> <result property="link" column="fridgecode" /> 
+		<result property="imglink" column="storagecode" /> </resultMap> <select id="selectRecipeList" 
+		statementType="CALLABLE" parameterType="procVo"> <![CDATA[ { CALL string_split 
+		(#{ingredientNameList}," "); } ]]> </select> -->
+
+	<!-- <resultMap id="test" type="hashmap"></resultMap> -->
+
+	<!-- <select id="test" statementType="CALLABLE"> -->
+	<!-- { -->
+	<!-- CALL string_split( -->
+	<!-- #{name, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=test}, -->
+	<!-- #{link}, -->
+	<!-- #{mValue}, -->
+	<!-- ) -->
+	<!-- } -->
+	<!-- </select> -->
+
+</mapper>

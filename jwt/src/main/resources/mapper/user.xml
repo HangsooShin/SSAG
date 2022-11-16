@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssag.dao.UserDao">
+	<resultMap id='userResult' type="userVo">
+		<result property="code" column="code" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="telephone" column="telephone" />
+		<result property="address" column="address" />
+		<result property="companycode" column="companycode" />
+		<result property="companyname" column="companyname" />
+		<result property="fridgecode" column="fridgecode" />
+		<result property="birth" column="birth" />
+
+	</resultMap>
+
+	<insert id="insertUser" parameterType="userVo">
+		<![CDATA[
+			
+			insert into users(username,password,role,name,email,telephone,address,fridgecode)
+			value(#{username},#{password},#{role},#{name},#{email},#{telephone},#{address},#{fridgecode});
+			
+		]]>
+	</insert>
+
+	<update id="insertUserFridgeCode" parameterType="userVo">
+		<![CDATA[
+			update users set fridgecode=#{fridgecode}
+			where code=#{code};
+		]]>
+	</update>
+
+
+	<select id="findByUsername" parameterType="String" resultType="com.ssag.model.UserVo">
+		SELECT * FROM users WHERE username=#{username};
+	</select>
+
+
+	<update id="updateUser" parameterType="userVo">
+		<![CDATA[
+			update users set name=#{username} where code=#{code};
+		]]>
+	</update>
+
+	<insert id="procedureCall" parameterType="userVo">
+	{ CALL insertData()}	
+	</insert>
+
+	<!-- <select id="getUserById" parameterType="String" -->
+	<!-- resultType="com.ssag.sercurity.service.CustomUserDetails"> -->
+	<!-- SELECT * FROM users WHERE username= #{username} -->
+	<!-- </select> -->
+
+</mapper>
+
