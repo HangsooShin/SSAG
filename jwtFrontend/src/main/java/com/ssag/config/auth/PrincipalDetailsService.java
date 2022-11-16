@@ -18,10 +18,10 @@ public class PrincipalDetailsService implements UserDetailsService {
 	
 	private final UserDao userDao;
 	
-	@Autowired
-	public PrincipalDetailsService(UserDao userDao) {
-		this.userDao = userDao;
-	}
+//	@Autowired
+//	public PrincipalDetailsService(UserDao userDao) {
+//		this.userDao = userDao;
+//	}
 	
 	
 	@Override

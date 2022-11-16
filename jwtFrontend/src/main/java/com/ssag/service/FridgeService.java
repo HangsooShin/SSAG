@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssag.config.auth.PrincipalDetails;
 import com.ssag.dao.FridgeDao;
 import com.ssag.dao.SearchDao;
+import com.ssag.model.CookVo;
 import com.ssag.model.FridgeBoxVo;
 import com.ssag.model.FridgeVo;
 import com.ssag.model.IngredientVo;
@@ -60,7 +61,7 @@ public class FridgeService {
 		}
 		return ingredientList2;
 	}
-
+	//냉장고 재료 리스트(ALL)
 	@Transactional
 	public List<String> myFridgeBox(FridgeVo fridgeVo) {
 		System.out.println("fridgeService MyfridgeBox!!!");
@@ -77,28 +78,32 @@ public class FridgeService {
 //		fridgeDao.insertFridge(fiFridgeVo);
 //		System.out.println("FridgeService AddFridge 진입");
 //	}
-	
+	//fridgecode가 없다면
 	@Transactional
 	public FridgeVo addFridge(Authentication authentication) {
 		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 
 		String fridgeCode = principal.getUserVo().getFridgecode();
 
-		Integer userCode = principal.getUserVo().getUsercode();
+		Integer userCode = principal.getUserVo().getCode();
 
 //		Integer userFridgeCode = principal.getUserVo().getFridgecode();
 
 		System.out.println("FridgeCode 유무 : " + fridgeCode);
 		System.out.println("UserTable 의 GetCode" + userCode);
-		FridgeVo fridgeVo = new FridgeVo();
+		
 		if (fridgeCode == null) {
 			System.err.println("Fridgecode 없음");
-
+			FridgeVo fridgeVo = new FridgeVo();
 			fridgeVo.setOwner(userCode);
+			System.out.println("1");
 			fridgeVo.setCreateddate(LocalDate.now());
 			fridgeVo.setName("내 냉장고");
+			System.out.println("2");
+			fridgeVo.setCode(UUID.randomUUID().toString());
+			System.out.println("3");
 			fridgeDao.insertFridge(fridgeVo);
-//			userVo.setFridgecode(fridgeVo.getCode());
+			System.out.println("4");
 			return fridgeVo;
 		}
 		System.out.println("FridgeCode 있음");
@@ -134,6 +139,22 @@ public class FridgeService {
 		List<SimilarnameVo> similarnameList = searchDao.similarname(similar);
 		return similarnameList;
 	}
+	
+	public List<SimilarnameVo> procedure2(String similar){
+		System.out.println("fridgeService : procedure2  들어옴");
+		System.out.println("fridgeService procedure2 : " + similar);
+		List<SimilarnameVo> procedureList = searchDao.recipeProcedureCall(similar);
+		return procedureList;
+	}
+	
+	public List<CookVo> selectRecipe(String name){
+		
+		System.out.println("fridgeService : selectRecipe  들어옴");
+		System.out.println("fridgeService selectRecipe : " + name);
+		List<CookVo> recipeList = searchDao.selectRecipe(name);
+		return recipeList;
+	}
+	
 	
 }
 

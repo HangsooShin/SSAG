@@ -12,7 +12,7 @@ import lombok.Data;
 public class FridgeBoxVo {
 
 	private Integer ingredientcode;
-	private Integer fridgecode;
+	private String fridgecode;
 	private Integer storagecode;
 	private Integer quantity;
 	
@@ -36,12 +36,12 @@ public class FridgeBoxVo {
 	}
 
 
-	public Integer getFridgecode() {
+	public String getFridgecode() {
 		return fridgecode;
 	}
 
 
-	public void setFridgecode(Integer fridgecode) {
+	public void setFridgecode(String fridgecode) {
 		this.fridgecode = fridgecode;
 	}
 

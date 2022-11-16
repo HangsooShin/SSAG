@@ -52,7 +52,7 @@ public class RestApiController {
 		userVo.setPassword(passwordEncoder.encode(userVo.getPassword()));
 		userVo.setRole("ROLE_USER");
 //		String fridgecode = UUID.randomUUID().toString();
-		userVo.setFridgecode(UUID.randomUUID().toString());
+//		userVo.setFridgecode(UUID.randomUUID().toString());
 		
 //		 String uuid = UUID.randomUUID().toString();
 		userService.addUser(userVo);
@@ -71,7 +71,7 @@ public class RestApiController {
 	public String user(Authentication authentication, Model model,HttpServletRequest request, HttpServletResponse response) {
 //		SecurityContextHolder.getContext().getAuthentication()
 		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-		System.out.println("principal : " + principal.getUserVo().getUsercode());
+		System.out.println("principal : " + principal.getUserVo().getCode());
 		System.out.println("principal : " + principal.getUserVo().getUsername());
 		System.out.println("principal : " + principal.getUserVo().getPassword());
 		System.out.println("principal : " + principal.getUserVo().getName());
@@ -89,7 +89,7 @@ public class RestApiController {
 //
 	@PostMapping("/login")
 	public String login(String usernaem, String password) {
-		return "redirect:/";
+		return "/";
 	}
 	
 	@GetMapping("/mypage")

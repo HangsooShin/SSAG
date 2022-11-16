@@ -94,6 +94,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.sign(Algorithm.HMAC512("cos"));
 		
 		response.addHeader("Authorization", "Bearer "+jwtToken);
+//		response.addCookie("d",jwtToken);
 		System.out.println("JWT token?? : " + jwtToken);
 		System.out.println(response.getHeader("Authorization"));
 		

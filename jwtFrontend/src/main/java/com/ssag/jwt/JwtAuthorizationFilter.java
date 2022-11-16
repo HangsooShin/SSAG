@@ -1,5 +1,6 @@
 package com.ssag.jwt;
 
+import java.awt.Window;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -38,6 +39,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 			throws IOException, ServletException {
 		System.out.println("인증이나 권한이 필요한 주소 요청이 됨.");
 		String header = request.getHeader("Authorization");
+		
 		String header2 = response.getHeader("Authorization");
 		System.out.println("header : " + header);
 		System.out.println("header : " + header2);

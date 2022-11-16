@@ -18,7 +18,7 @@ import lombok.Data;
 public class UserVo {
 
 	
-	private Integer usercode;
+	private Integer code;
 	
 	private String username;
 	private String password;
@@ -48,12 +48,12 @@ public class UserVo {
 		return new ArrayList<>();
 	}
 
-	public Integer getUsercode() {
-		return usercode;
+	public Integer getCode() {
+		return code;
 	}
 
-	public void setUsercode(Integer usercode) {
-		this.usercode = usercode;
+	public void setUsercode(Integer code) {
+		this.code = code;
 	}
 
 	public String getUsername() {
@@ -148,7 +148,7 @@ public class UserVo {
 
 	@Override
 	public String toString() {
-		return "UserVo [code=" + usercode + ", username=" + username + ", password=" + password + ", role=" + role
+		return "UserVo [code=" + code + ", username=" + username + ", password=" + password + ", role=" + role
 				+ ", name=" + name + ", email=" + email + ", telephone=" + telephone + ", address=" + address
 				+ ", companycode=" + companycode + ", companyname=" + companyname + ", fridgecode=" + fridgecode
 				+ ", birth=" + birth + ", userLogin=" + userLogin + "]";

@@ -12,7 +12,7 @@ import lombok.Data;
 public class FridgeVo {
 
 	private Integer owner;
-	private Integer code;
+	private String code;
 	private String name;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -26,11 +26,11 @@ public class FridgeVo {
 		this.owner = owner;
 	}
 
-	public Integer getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(Integer code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 

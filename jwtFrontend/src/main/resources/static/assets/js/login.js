@@ -1,7 +1,5 @@
 const username = document.getElementById("username"),
   password = document.getElementById("password")
-// loginBtn = document.getElementById("loginBtn")
-//   form = document.getElementById("submit-form")
 
 const formData = document.getElementById("submit-form")
 
@@ -12,8 +10,7 @@ function login(event) {
     username: username.value,
     password: password.value,
   }
-  console.log(req)
-  console.log(JSON.stringify(req))
+
   fetch("/login", {
     method: "POST",
     headers: {
@@ -21,13 +18,32 @@ function login(event) {
     },
     body: JSON.stringify(req),
   })
-    .then((Response) => Response.text())
+    .then((Response) => {
+      Response.text()
+      console.log("Authorization: ", Response.headers.get("Authorization"))
+      const jwttoken = Response.headers.get("Authorization")
+      sessionStorage.setItem("wtw-token", jwttoken)
+      // let config = {
+      //   headers: {
+      //     "access-token": jwttoken,
+      //   },
+      // }
+      console.log(jwttoken)
+    })
     .then((req) => {
       console.log("성공:", req)
+      //localStorage.setItem('Authorization', response.jwttoken);
+      // response.setHeader
     })
     .catch((error) => {
       console.error("실패:", error)
     })
+  // // .then(response => response.json())
+  // .then(response => {
+  // if (response.jwttoken) {
+
+  // }
+  // })
   // console.log("payload:", payload)
   console.log("username, passowrd:", username, password)
   console.log("JSON.stringify(req):", JSON.stringify(req))
@@ -36,50 +52,59 @@ function login(event) {
 
 formData.addEventListener("submit", login)
 
-// let formData = document.getElementById("submit-form")
-
-// fetch("https://httpbin.org/post", {
-//   method: "POST",
-//   cache: "no-cache",
-//   body: formData, // body 부분에 폼데이터 변수를 할당
-// })
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log(data)
+// fetch('http://localhost:8000/login/', {
+//   method: 'POST',
+//   headers: {
+//       'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify({
+//     'id': 'kim',
+//     'password': '1234'
 //   })
-
-// fetch("https://httpbin.org/post", {
-//   method: "POST",
-//   cache: "no-cache",
-//   body: new URLSearchParams({
-//     // 일반 객체를 fordata형식으로 변환해주는 클래스
-//     aaa: "a1",
-//     bbb: "b1",
-//   }),
 // })
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log(data)
-//   })
+// .then(response => response.json())
+// .then(response => {
+//   if (response.token) {
+//     localStorage.setItem('wtw-token', response.token);
+//   }
+// })
 
-// 이 아래에 있는 방식은 주소를 지정하고 거기에서 가지고 오는 방법이였다.
-// let form = document.getElementById("submit-form")
+// 여기서 부터 내가 원래 작성해 놨던 부분 시작
+// const username = document.getElementById("username"),
+//   password = document.getElementById("password")
+// // loginBtn = document.getElementById("loginBtn")
+// //   form = document.getElementById("submit-form")
 
-// form.addEventListener("submit", (e) => {
-//   e.preventDefault()
-//   console.log(form)
-//   const payload = new FormData(form)
+// const formData = document.getElementById("submit-form")
 
-//   console.log([...payload])
-
+// function login(event) {
+//   event.preventDefault()
+//   // const payload = new FormData(formData)
+//   const req = {
+//     username: username.value,
+//     password: password.value,
+//   }
+//   console.log(req)
+//   console.log(JSON.stringify(req))
 //   fetch("/login", {
 //     method: "POST",
 //     headers: {
-//       "Content-Type": "appliaction/json",
+//       "Content-type": "application/json",
 //     },
-//     body: JSON.stringify(payload),
+//     body: JSON.stringify(req),
 //   })
-//     .then((response) => response.json())
-//     .then((data) => console.log(data))
-//   console.log(payload, "여기가 데이터")
-// })
+//     .then((Response) => Response.text())
+//     .then((req) => {
+//       console.log("성공:", req)
+//     })
+//     .catch((error) => {
+//       console.error("실패:", error)
+//     })
+//   // console.log("payload:", payload)
+//   console.log("username, passowrd:", username, password)
+//   console.log("JSON.stringify(req):", JSON.stringify(req))
+//   console.log("Login data upload succeed")
+// }
+
+// formData.addEventListener("submit", login)
+// 여기서 부터 내가 원래 작성했던 부분 끝

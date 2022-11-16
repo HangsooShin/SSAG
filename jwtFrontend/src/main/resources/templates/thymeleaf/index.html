@@ -77,7 +77,7 @@
                                 </ul> -->
                   </li>
                   <li class="nav-item">
-                    <a href="my-freezy.html" aria-label="Toggle navigation">내 냉장고</a>
+                    <a href="mypage" aria-label="Toggle navigation">내 냉장고</a>
                   </li>
                   <li class="nav-item">
                     <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
@@ -126,7 +126,7 @@
             </div>
             <!-- End Hero Text -->
             <!-- Start Search Form -->
-            <form>
+            <form th:action="@{/searchresult}" method="post" id="search-form">
               <div class="search-form wow fadeInUp" data-wow-delay=".7s">
                 <div class="row">
                   <div class="col-lg-10 col-md-4 col-12 p-0">
@@ -155,8 +155,6 @@
   </section>
   <!-- End Hero Area -->
 
-
-
   <!-- Start Items Grid Area -->
   <section class="items-grid section custom-padding">
     <div class="container">
@@ -171,277 +169,53 @@
       </div>
       <div class="single-head">
         <div class="row">
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".2s">
-              <div class="image">
-                <a href="item-details.html" class="thumbnail"><img src="https://via.placeholder.com/600x400"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a href="javascript:void(0)"><img src="https://via.placeholder.com/100x100" alt="#">
-                      <span>Smith jeko</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
+          <div th:each="list : ${cardlist}" class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img th:src="${list.merchandiseVo22.imglink}" class="img-fluid rounded-start" alt="...">
               </div>
-              <div class="content">
-                <div class="top-content">
-                  <a href="javascript:void(0)" class="tag">Mobile Phones</a>
-                  <h3 class="title">
-                    <a href="item-details.html">Apple Iphone X</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 1 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a href="javascript:void(0)">(35)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a href="javascript:void(0)"><i class="lni lni-map-marker"></i> New York,
-                        US</a></li>
-                    <li><a href="javascript:void(0)"><i class="lni lni-timer"></i> Feb 18, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$200.00</span></p>
-                  <a href="javascript:void(0)" class="like"><i class="lni lni-heart"></i></a>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 th:text="${list.merchandiseVo22.itemname}" class="card-title"></h5>
+                  <div class="author-image">
+                    <!-- 여기 아래 부분에는 회사코드(company code) 넣을 것 -->
+                    <img
+                      src="https://i0.wp.com/news.kurly.com/wp-content/uploads/2022/03/indentity-1.png?fit=410%2C410&ssl=1"
+                      alt="#" id="company-icon" style="width:10%">
+                    <!-- <span>Smith jeko</span></a> -->
+                  </div>
+                  <p class="card-text"><small th:text="|${list.merchandiseVo22.cost}원|" class="text-muted"></small></p>
                 </div>
               </div>
             </div>
-            <!-- End Single Grid -->
           </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".4s">
-              <div class="image">
-                <a href="item-details.html" class="thumbnail"><img src="https://via.placeholder.com/600x400"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a href="javascript:void(0)"><img src="https://via.placeholder.com/100x100" alt="#">
-                      <span>Alex Jui</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
+          <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img
+                  src="https://img-cf.kurly.com/cdn-cgi/image/width=676,format=auto/shop/data/goods/1583285919646l0.jpg"
+                  class="img-fluid rounded-start" alt="...">
               </div>
-              <div class="content">
-                <div class="top-content">
-                  <a href="javascript:void(0)" class="tag">Real Estate</a>
-                  <h3 class="title">
-                    <a href="item-details.html">Amazing Room for Rent</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 2 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a href="javascript:void(0)">(20)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a href="javascript:void(0)"><i class="lni lni-map-marker"></i> Dallas,
-                        Washington</a></li>
-                    <li><a href="javascript:void(0)"><i class="lni lni-timer"></i> Jan 7, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$450.00</span></p>
-                  <a href="javascript:void(0)" class="like"><i class="lni lni-heart"></i></a>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This content is a little bit longer.</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
               </div>
             </div>
-            <!-- End Single Grid -->
           </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".6s">
-              <div class="image">
-                <a href="item-details.html" class="thumbnail"><img src="https://via.placeholder.com/600x400"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a href="javascript:void(0)"><img src="https://via.placeholder.com/100x100" alt="#">
-                      <span>Devid Milan</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
-                <p class="item-position"><i class="lni lni-bolt"></i> Featured</p>
-              </div>
-              <div class="content">
-                <div class="top-content">
-                  <a href="javascript:void(0)" class="tag">Mobile Phones</a>
-                  <h3 class="title">
-                    <a href="item-details.html">Canon SX Powershot D-SLR</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 3 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a href="javascript:void(0)">(55)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a href="javascript:void(0)"><i class="lni lni-map-marker"></i> New York,
-                        US</a></li>
-                    <li><a href="javascript:void(0)"><i class="lni lni-timer"></i> Mar 18, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$700.00</span></p>
-                  <a href="javascript:void(0)" class="like"><i class="lni lni-heart"></i></a>
-                </div>
-              </div>
-            </div>
-            <!-- End Single Grid -->
-          </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".2s">
-              <div class="image">
-                <a href="item-details.html" class="thumbnail"><img src="https://via.placeholder.com/600x400"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a href="javascript:void(0)"><img src="https://via.placeholder.com/100x100" alt="#">
-                      <span>Jesia Jully</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
-              </div>
-              <div class="content">
-                <div class="top-content">
-                  <a href="javascript:void(0)" class="tag">Vehicles</a>
-                  <h3 class="title">
-                    <a href="item-details.html">BMW 5 Series GT Car</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 4 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a href="javascript:void(0)">(35)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a href="javascript:void(0)"><i class="lni lni-map-marker"></i> New York,
-                        US</a></li>
-                    <li><a href="javascript:void(0)"><i class="lni lni-timer"></i> Apr 12, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$1000.00</span></p>
-                  <a href="javascript:void(0)" class="like"><i class="lni lni-heart"></i></a>
-                </div>
-              </div>
-            </div>
-            <!-- End Single Grid -->
-          </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".4s">
-              <div class="image">
-                <a href="item-details.html" class="thumbnail"><img src="https://via.placeholder.com/600x400"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a href="javascript:void(0)"><img src="https://via.placeholder.com/100x100" alt="#">
-                      <span>Thomas Deco</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
-                <p class="item-position"><i class="lni lni-bolt"></i> Featured</p>
-              </div>
-              <div class="content">
-                <div class="top-content">
-                  <a href="javascript:void(0)" class="tag">Apple</a>
-                  <h3 class="title">
-                    <a href="item-details.html">Apple Macbook Pro 13 Inch</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 5 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a href="javascript:void(0)">(35)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a href="javascript:void(0)"><i class="lni lni-map-marker"></i> Louis,
-                        Missouri, US</a></li>
-                    <li><a href="javascript:void(0)"><i class="lni lni-timer"></i> May 25, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$550.00</span></p>
-                  <a href="javascript:void(0)" class="like"><i class="lni lni-heart"></i></a>
-                </div>
-              </div>
-            </div>
-            <!-- End Single Grid -->
-          </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".6s">
-              <div class="image">
-                <a href="item-details.html" class="thumbnail"><img src="https://via.placeholder.com/600x400"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a href="javascript:void(0)"><img src="https://via.placeholder.com/100x100" alt="#">
-                      <span>Jonson zack</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
-              </div>
-              <div class="content">
-                <div class="top-content">
-                  <a href="javascript:void(0)" class="tag">Restaurant</a>
-                  <h3 class="title">
-                    <a href="item-details.html">Cream Restaurant</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 7 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a href="javascript:void(0)">(20)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a href="javascript:void(0)"><i class="lni lni-map-marker"></i> New York,
-                        US</a></li>
-                    <li><a href="javascript:void(0)"><i class="lni lni-timer"></i> Feb 18, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$500.00</span></p>
-                  <a href="javascript:void(0)" class="like"><i class="lni lni-heart"></i></a>
-                </div>
-              </div>
-            </div>
-            <!-- End Single Grid -->
-          </div>
+
         </div>
       </div>
     </div>
   </section>
   <!-- /End Items Grid Area -->
+
+
+
+
 
 
 
@@ -574,6 +348,9 @@
   <script src="js/tiny-slider.js"></script>
   <script src="js/glightbox.min.js"></script>
   <script src="js/main.js"></script>
+  <!-- <script src="js/index-search.js"></script> -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
   <script type="text/javascript">
     //========= Category Slider 
     tns({

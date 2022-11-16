@@ -12,28 +12,22 @@
 
   <!-- Web Font -->
   <link
-    th:href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
-  <link th:href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
   <!-- ========================= CSS here ========================= -->
-  <link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
-  <link rel="stylesheet" th:href="@{css/LineIcons.2.0.css}" />
-  <link rel="stylesheet" th:href="@{css/animate.css}" />
-  <link rel="stylesheet" th:href="@{css/tiny-slider.css}" />
-  <link rel="stylesheet" th:href="@{css/glightbox.min.css}" />
-  <link rel="stylesheet" th:href="@{css/main.css}" />
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/LineIcons.2.0.css" />
+  <link rel="stylesheet" href="css/animate.css" />
+  <link rel="stylesheet" href="css/tiny-slider.css" />
+  <link rel="stylesheet" href="css/glightbox.min.css" />
+  <link rel="stylesheet" href="css/main.css" />
 
 </head>
 
 <body>
-  <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a th:href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
+
 
   <!-- Preloader -->
   <div class="preloader">
@@ -67,7 +61,7 @@
               <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                 <ul id="nav" class="navbar-nav ms-auto">
                   <li class="nav-item">
-                    <a class="dd-menu collapsed" th:href="@{index.html}" data-bs-toggle="collapse"
+                    <a class="dd-menu collapsed" th:href="@{index}" data-bs-toggle="collapse"
                       data-bs-target="#submenu-1-1" aria-controls="navbarSupportedContent" aria-expanded="false"
                       aria-label="Toggle navigation">홈페이지</a>
                     <!-- <ul class="sub-menu collapse" id="submenu-1-1">
@@ -77,16 +71,16 @@
                                 </ul> -->
                   </li>
                   <li class="nav-item">
-                    <a th:href="@{my-freezy.html}" aria-label="Toggle navigation">내 냉장고</a>
+                    <a th:href="@{myfreezy}" aria-label="Toggle navigation">내 냉장고</a>
                   </li>
                   <li class="nav-item">
                     <a class="dd-menu collapsed" th:href="@{/#}" data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
                       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">사이트
                       소개</a>
                     <ul class="sub-menu collapse" id="submenu-1-3">
-                      <li class="nav-item"><a th:href="@{item-listing-grid.html}">검색 사용방법</a></li>
-                      <li class="nav-item"><a th:href="@{item-listing-list.html}">내 냉장고 사용방법</a></li>
-                      <li class="nav-item"><a th:href="@{item-details.html}">어플리케이션 다운로드 및 사용방법</a></li>
+                      <li class="nav-item"><a href="item-listing-grid.html">검색 사용방법</a></li>
+                      <li class="nav-item"><a href="item-listing-list.html">내 냉장고 사용방법</a></li>
+                      <li class="nav-item"><a href="item-details.html">어플리케이션 다운로드 및 사용방법</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -126,13 +120,13 @@
             </div>
             <!-- End Hero Text -->
             <!-- Start Search Form -->
-            <form>
+            <form th:action="@{/searchresult}" method="post" id="search-form">
               <div class="search-form wow fadeInUp" data-wow-delay=".7s">
                 <div class="row">
                   <div class="col-lg-10 col-md-4 col-12 p-0">
                     <div id="search-input" class="search-input">
                       <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
-                      <input type="text " name="keyword" id="keyword" placeholder="상품명을 입력하세요">
+                      <input type="text " name="similar" id="similar" placeholder="상품명을 입력하세요">
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-12 p-0">
@@ -171,134 +165,93 @@
       </div>
       <div class="single-head">
         <div class="row">
-          <div class="col-lg-4 col-md-6 col-12">
+          <div th:each="list : ${cardlist}" class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img th:src="|http://${list.merchandiseVo22.imglink}|" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 th:text="${list.merchandiseVo22.itemname}" class="card-title"></h5>
+                  <div class="author-image">
+                    <!-- 여기 아래 부분에는 회사코드(company code) 넣을 것 -->
+                    <img
+                      src="https://i0.wp.com/news.kurly.com/wp-content/uploads/2022/03/indentity-1.png?fit=410%2C410&ssl=1"
+                      alt="#" id="company-icon" style="width:10%">
+                    <!-- <span>Smith jeko</span></a> -->
+                  </div>
+                  <p class="card-text"><small th:text="|${list.merchandiseVo22.cost}원|" class="text-muted"></small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img
+                  src="https://img-cf.kurly.com/cdn-cgi/image/width=676,format=auto/shop/data/goods/1583285919646l0.jpg"
+                  class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                    additional content. This content is a little bit longer.</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /End Items Grid Area -->
+
+
+
+  <!-- Start Items Grid Area -->
+  <section class="items-grid section custom-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="section-title">
+            <h2 class="wow fadeInUp" data-wow-delay=".4s">최신 상품</h2>
+            <p class="wow fadeInUp" data-wow-delay=".6s">마켓컬리, 쿠팡, SSG.COM 등 다양한 온라인 쇼핑몰에서 <br>실시간으로 팔리고 있는
+              물품들을 확인하세요.</p>
+          </div>
+        </div>
+      </div>
+      <div class="single-head">
+        <div class="row">
+          <div th:each="list : ${cardlist}" class="col-lg-4 col-md-6 col-12">
             <!-- Start Single Grid -->
             <div class="single-grid wow fadeInUp" data-wow-delay=".2s">
               <div class="image">
-                <a th:href="@{item-details.html}" class="thumbnail"><img th:src="@{https://via.placeholder.com/600x400}"
-                    alt="#"></a>
+                <a th:href="${list.merchandiseVo22.link}" class="thumbnail"><img
+                    th:src="|http://${list.merchandiseVo22.imglink}|" alt="################################"></a>
                 <div class="author">
                   <div class="author-image">
-                    <a th:href="@{/#}"><img th:src="@{https://via.placeholder.com/100x100}" alt="#">
-                      <span>Smith jeko</span></a>
+                    <!-- 여기 아래 부분에는 회사코드(company code) 넣을 것 -->
+                    <a th:href="@{/}"><img
+                        th:src="@{https://i0.wp.com/news.kurly.com/wp-content/uploads/2022/03/indentity-1.png?fit=410%2C410&ssl=1}"
+                        alt="#">
+                      <!-- <span>Smith jeko</span></a> -->
                   </div>
-                  <p class="sale">For Sale</p>
+                  <!-- <p class="sale">For Sale</p> -->
                 </div>
               </div>
               <div class="content">
                 <div class="top-content">
-                  <a th:href="@{/#}" class="tag">Mobile Phones</a>
+                  <!-- <a href="javascript:void(0)" class="tag">Mobile Phones</a> -->
                   <h3 class="title">
-                    <a th:href="@{item-details.html}">Apple Iphone X</a>
+                    <a th:href="${list.merchandiseVo22.link}" th:text="${list.merchandiseVo22.itemname}"></a>
                   </h3>
-                  <p class="update-time">Last Updated: 1 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a th:href="@{/#}">(35)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a th:href="@{/#}"><i class="lni lni-map-marker"></i> New York,
-                        US</a></li>
-                    <li><a th:href="@{/#}"><i class="lni lni-timer"></i> Feb 18, 2023</a>
-                    </li>
-                  </ul>
                 </div>
                 <div class="bottom-content">
-                  <p class="price">Start From: <span>$200.00</span></p>
-                  <a th:href="@{/#}" class="like"><i class="lni lni-heart"></i></a>
-                </div>
-              </div>
-            </div>
-            <!-- End Single Grid -->
-          </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".4s">
-              <div class="image">
-                <a th:href="@{item-details.html}" class="thumbnail"><img th:src="@{https://via.placeholder.com/600x400}"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a th:href="@{/#}"><img th:src="@{https://via.placeholder.com/100x100}" alt="#">
-                      <span>Alex Jui</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
-              </div>
-              <div class="content">
-                <div class="top-content">
-                  <a th:href="@{/#}" class="tag">Real Estate</a>
-                  <h3 class="title">
-                    <a th:href="@{item-details.html}">Amazing Room for Rent</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 2 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a th:href="@{/#}">(20)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a th:href="@{/#}"><i class="lni lni-map-marker"></i> Dallas,
-                        Washington</a></li>
-                    <li><a th:href="@{/#}"><i class="lni lni-timer"></i> Jan 7, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$450.00</span></p>
-                  <a th:href="@{/#}" class="like"><i class="lni lni-heart"></i></a>
-                </div>
-              </div>
-            </div>
-            <!-- End Single Grid -->
-          </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".6s">
-              <div class="image">
-                <a th:href="@{item-details.html}" class="thumbnail"><img th:src="@{https://via.placeholder.com/600x400}"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a th:href="@{/#}"><img th:src="@{https://via.placeholder.com/100x100}" alt="#">
-                      <span>Devid Milan</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
-                <p class="item-position"><i class="lni lni-bolt"></i> Featured</p>
-              </div>
-              <div class="content">
-                <div class="top-content">
-                  <a th:href="@{/#}" class="tag">Mobile Phones</a>
-                  <h3 class="title">
-                    <a th:href="@{item-details.html}">Canon SX Powershot D-SLR</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 3 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a th:href="@{/#}">(55)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a th:href="@{/#}"><i class="lni lni-map-marker"></i> New York,
-                        US</a></li>
-                    <li><a th:href="@{/#}"><i class="lni lni-timer"></i> Mar 18, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$700.00</span></p>
-                  <a th:href="@{/#}" class="like"><i class="lni lni-heart"></i></a>
+                  <p class="price">가격: <span th:text="${list.merchandiseVo22.cost}"></span></p>
+                  <!-- <a href="javascript:void(0)" class="like"><i class="lni lni-heart"></i></a> -->
                 </div>
               </div>
             </div>
@@ -308,135 +261,36 @@
             <!-- Start Single Grid -->
             <div class="single-grid wow fadeInUp" data-wow-delay=".2s">
               <div class="image">
-                <a th:href="@{item-details.html}" class="thumbnail"><img th:src="@{https://via.placeholder.com/600x400}"
+                <a href="#" class="thumbnail"><img
+                    src="https://img-cf.kurly.com/cdn-cgi/image/width=676,format=auto/shop/data/goods/1637154387515l0.jpg"
                     alt="#"></a>
                 <div class="author">
                   <div class="author-image">
-                    <a th:href="@{/#}"><img th:src="@{https://via.placeholder.com/100x100}" alt="#">
-                      <span>Jesia Jully</span></a>
+                    <!-- 여기 아래 부분에는 회사코드(company code) 넣을 것 -->
+                    <a href="#"><img
+                        src="https://i0.wp.com/news.kurly.com/wp-content/uploads/2022/03/indentity-1.png?fit=410%2C410&ssl=1"
+                        alt="#">
+                      <!-- <span>Smith jeko</span></a> -->
                   </div>
-                  <p class="sale">For Sale</p>
+                  <!-- <p class="sale">For Sale</p> -->
                 </div>
               </div>
               <div class="content">
                 <div class="top-content">
-                  <a th:href="@{/#}" class="tag">Vehicles</a>
+                  <!-- <a href="javascript:void(0)" class="tag">Mobile Phones</a> -->
                   <h3 class="title">
-                    <a th:href="@{item-details.html}">BMW 5 Series GT Car</a>
+                    <a href="#">kerly 감자</a>
                   </h3>
-                  <p class="update-time">Last Updated: 4 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a th:href="@{/#}">(35)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a th:href="@{/#}"><i class="lni lni-map-marker"></i> New York,
-                        US</a></li>
-                    <li><a th:href="@{/#}"><i class="lni lni-timer"></i> Apr 12, 2023</a>
-                    </li>
-                  </ul>
                 </div>
                 <div class="bottom-content">
-                  <p class="price">Start From: <span>$1000.00</span></p>
-                  <a th:href="@{/#}" class="like"><i class="lni lni-heart"></i></a>
+                  <p class="price">가격: <span>4200원</span></p>
+                  <!-- <a href="javascript:void(0)" class="like"><i class="lni lni-heart"></i></a> -->
                 </div>
               </div>
             </div>
             <!-- End Single Grid -->
           </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".4s">
-              <div class="image">
-                <a th:href="@{item-details.html}" class="thumbnail"><img th:src="@{https://via.placeholder.com/600x400}"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a th:href="@{/#}"><img th:src="@{https://via.placeholder.com/100x100}" alt="#">
-                      <span>Thomas Deco</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
-                <p class="item-position"><i class="lni lni-bolt"></i> Featured</p>
-              </div>
-              <div class="content">
-                <div class="top-content">
-                  <a th:href="@{/#}" class="tag">Apple</a>
-                  <h3 class="title">
-                    <a th:href="item-details.html">Apple Macbook Pro 13 Inch</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 5 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a th:href="@{/#}">(35)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a th:href="@{/#}"><i class="lni lni-map-marker"></i> Louis,
-                        Missouri, US</a></li>
-                    <li><a th:href="@{/#}"><i class="lni lni-timer"></i> May 25, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$550.00</span></p>
-                  <a th:href="@{/#}" class="like"><i class="lni lni-heart"></i></a>
-                </div>
-              </div>
-            </div>
-            <!-- End Single Grid -->
-          </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <!-- Start Single Grid -->
-            <div class="single-grid wow fadeInUp" data-wow-delay=".6s">
-              <div class="image">
-                <a th:href="@{item-details.html}" class="thumbnail"><img th:src="@{https://via.placeholder.com/600x400}"
-                    alt="#"></a>
-                <div class="author">
-                  <div class="author-image">
-                    <a th:href="@{/#}"><img th:src="@{https://via.placeholder.com/100x100}" alt="#">
-                      <span>Jonson zack</span></a>
-                  </div>
-                  <p class="sale">For Sale</p>
-                </div>
-              </div>
-              <div class="content">
-                <div class="top-content">
-                  <a th:href="@{/#}" class="tag">Restaurant</a>
-                  <h3 class="title">
-                    <a th:href="@{item-details.html}">Cream Restaurant</a>
-                  </h3>
-                  <p class="update-time">Last Updated: 7 hours ago</p>
-                  <ul class="rating">
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><i class="lni lni-star-filled"></i></li>
-                    <li><a th:href="@{/#}">(20)</a></li>
-                  </ul>
-                  <ul class="info-list">
-                    <li><a th:href="@{/#}"><i class="lni lni-map-marker"></i> New York,
-                        US</a></li>
-                    <li><a th:href="@{/#}"><i class="lni lni-timer"></i> Feb 18, 2023</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="bottom-content">
-                  <p class="price">Start From: <span>$500.00</span></p>
-                  <a th:href="@{/#}" class="like"><i class="lni lni-heart"></i></a>
-                </div>
-              </div>
-            </div>
-            <!-- End Single Grid -->
-          </div>
+
         </div>
       </div>
     </div>
@@ -569,11 +423,11 @@
   </a>
 
   <!-- ========================= JS here ========================= -->
-  <script th:src="@{assets/js/bootstrap.min.js}"></script>
-  <script th:src="@{assets/js/wow.min.js}"></script>
-  <script th:src="@{assets/js/tiny-slider.js}"></script>
-  <script th:src="@{assets/js/glightbox.min.js}"></script>
-  <script th:src="@{assets/js/main.js}"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/glightbox.min.js"></script>
+  <script src="js/main.js"></script>
   <script type="text/javascript">
     //========= Category Slider 
     tns({
