@@ -95,6 +95,11 @@ public class FridgeController {
     return "fridgeBox2";
   }
 
+  @GetMapping("/myfridge")
+  public String myfridge() {
+    return "myfridge";
+  }
+
   @GetMapping("/test")
   public String test() {
 
@@ -198,10 +203,10 @@ public class FridgeController {
   public String home() {
     return "index";
   }
-  
+
   @GetMapping("/searchresult")
-  public String searchresult(){
-	  return "search-result";
+  public String searchresult() {
+    return "search-result";
   }
 
 }

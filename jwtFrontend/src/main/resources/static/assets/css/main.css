@@ -1192,7 +1192,7 @@ ol {
   text-transform: capitalize;
   font-size: 15px;
   font-weight: 500;
-  padding: 15px 30px;
+  padding: 15px 15px;
   background-color: #208b47;
   color: #fff;
   border: none;
@@ -2035,7 +2035,7 @@ ol {
 /* Hero Search Form */
 .search-form {
   margin-top: 60px;
-  background: #fff3;
+  background: #9bae9c38;
   border-radius: 6px;
   padding: 30px;
   padding-right: 45px;
