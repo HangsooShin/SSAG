@@ -1007,7 +1007,7 @@ ol {
 .section-title {
   text-align: center;
   margin-bottom: 80px;
-  padding: 0 300px;
+  padding: 0 px;
   position: relative;
   z-index: 5;
 }
@@ -4307,7 +4307,7 @@ blockquote .shape {
 }
 
 .items-tab.custom-padding {
-  padding-top: 150px;
+  padding-top: 60px;
 }
 
 .items-tab .nav-tabs {

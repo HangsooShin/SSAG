@@ -79,7 +79,7 @@ public class RestApiController {
 
     model.addAttribute("user", principal.getUserVo());
 
-    return "myfreezy";
+    return "api";
   }
 
   @GetMapping("/login")
@@ -92,6 +92,11 @@ public class RestApiController {
   @PostMapping("/login")
   public String login(String usernaem, String password) {
     return "index";
+  }
+
+  @GetMapping("whoareu")
+  public String whoareu() {
+    return "whoareu";
   }
 
   @GetMapping("/mypage")

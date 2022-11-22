@@ -72,9 +72,9 @@
                       aria-controls="navbarSupportedContent" aria-expanded="false"
                       aria-label="Toggle navigation">홈페이지</a>
                     <!-- <ul class="sub-menu collapse" id="submenu-1-1">
-                                    <li class="nav-item active"><a href="index.html">Home Default</a></li>
-                                    <li class="nav-item"><a href="index2.html">Home Version 2</a></li>
-                                    <li class="nav-item"><a href="index3.html">Home Version 3</a></li>
+                                    <li class="nav-item active"><a href="index">Home Default</a></li>
+                                    <li class="nav-item"><a href="index2">Home Version 2</a></li>
+                                    <li class="nav-item"><a href="index3">Home Version 3</a></li>
                                 </ul> -->
                   </li>
                   <li class="nav-item">
@@ -86,9 +86,9 @@
                       aria-label="Toggle navigation">사이트
                       소개</a>
                     <ul class="sub-menu collapse" id="submenu-1-3">
-                      <li class="nav-item"><a href="item-listing-grid.html">검색 사용방법</a></li>
-                      <li class="nav-item"><a href="item-listing-list.html">내 냉장고 사용방법</a></li>
-                      <li class="nav-item"><a href="item-details.html">어플리케이션 다운로드 및 사용방법</a></li>
+                      <li class="nav-item"><a href="item-listing-grid">검색 사용방법</a></li>
+                      <li class="nav-item"><a href="item-listing-list">내 냉장고 사용방법</a></li>
+                      <li class="nav-item"><a href="item-details">어플리케이션 다운로드 및 사용방법</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -104,7 +104,7 @@
                 </ul>
               </div>
               <!-- <div class="button header-button">
-                        <a href="post-item.html" class="btn">Post an Ad</a>
+                        <a href="post-item" class="btn">Post an Ad</a>
                     </div> -->
             </nav> <!-- navbar -->
           </div>
@@ -125,7 +125,7 @@
         </div>
         <div class="col-lg-6 col-md-6 col-12">
           <ul class="breadcrumb-nav">
-            <li><a href="index.html">홈페이지</a></li>
+            <li><a href="index">홈페이지</a></li>
             <li>로그인</li>
           </ul>
         </div>
@@ -178,7 +178,7 @@
                   </li>
                 </ul>
               </div>
-              <p class="outer-link">계정이 없으신가요? <a href="register.html">회원가입</a>
+              <p class="outer-link">계정이 없으신가요? <a href="register">회원가입</a>
               </p>
             </form>
           </div>
@@ -187,6 +187,22 @@
     </div>
   </section>
   <!-- end login section -->
+
+  <!-- 그냥 토큰물고 넘어가는거 테스트 하는 버튼 -->
+  <a href="api/v1/user">
+    <button type="button" class="btn" id="tokenBtn">
+      토큰 기릿
+    </button>
+  </a>
+  <a href="javascript:callFunction(this);" attr-a="onclick : attr-a"><button type="button">버튼</button></a>
+
+  <button type="button" class="btn" id="tokenBtn2" onclick="tokenHandler()">
+    토큰 기렛
+  </button>
+
+
+
+
 
   <!-- Start Footer Area -->
   <footer class="footer">
@@ -318,6 +334,7 @@
   <script src="js/glightbox.min.js"></script>
   <script src="js/main.js"></script>
   <script src="js/login.js"></script>
+  <script src="js/token.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 

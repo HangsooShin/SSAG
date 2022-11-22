@@ -52,6 +52,57 @@ function login(event) {
 
 formData.addEventListener("submit", login)
 
+const $tokenBtn = document.getElementById("tokenBtn")
+
+function tokenHandler(event) {
+  // event.preventDefault()
+  console.log("tokenHandler 시작===========================================")
+  fetch("/api/v1/user", {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: sessionStorage.getItem("wtw-token"),
+    },
+  })
+    .then((res) => {
+      console.log("성공:", res)
+    })
+    .catch((error) => {
+      console.error("실패:", error)
+    })
+  console.log("tokenHandler 끝!!!!")
+  // goToApi()
+}
+
+$tokenBtn.addEventListener("click", tokenHandler)
+
+const $tokenBtn2 = document.getElementById("tokenBtn2")
+
+function tokenHandler(event) {
+  // event.preventDefault()
+  console.log("tokenHandler 시작===========================================")
+  fetch("/api/v1/user", {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: sessionStorage.getItem("wtw-token"),
+    },
+  })
+    .then((res) => {
+      console.log("성공:", res)
+    })
+    .catch((error) => {
+      console.error("실패:", error)
+    })
+  console.log("tokenHandler 끝!!!!")
+  goToApi()
+}
+
+// $tokenBtn2.addEventListener("click", tokenHandler)
+
+function goToApi() {
+  window.location.href = "/api/v1/user"
+}
 // fetch('http://localhost:8000/login/', {
 //   method: 'POST',
 //   headers: {
