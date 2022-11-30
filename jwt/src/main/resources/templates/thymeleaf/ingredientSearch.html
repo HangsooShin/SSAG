@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>재료 검색페이지</title>
+    </head>
+    <body>
+              <!-- Start Search Form -->
+              <form th:action="@{/ingredientSearch}" method="post" id="search-form">
+                <div class="search-form wow fadeInUp fridge-search" data-wow-delay=".7s">
+                  <div class="row">
+                    <div class="col-lg-10 col-md-4 col-12 p-0">
+                      <div id="search-input" class="search-input">
+                        <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
+                        <input type="text " name="similar" id="similar" placeholder="레시피 이름으로 검색하세요">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-12 p-0">
+                      <div class="search-btn button">
+                        <button type="submit" id="search-btn" class="btn btn-submit"><i
+                            class="lni lni-search-alt" onclick=""></i> 검색</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+ 
+             <tr th:each="cook : ${list}">
+                <td class="align-middle" th:text="${cook.cookVo.cookname}"></td>
+                <!-- <td class="align-middle" th:text="${cook.ingredientVoList}"></td> -->
+                <block th:each="ingredient : ${cook.ingredientVoList}">
+                  <td class="align-middle" th:text="${ingredient.ingredientname}"></td>
+                  <!-- <td class="align-middle" th:text="${ingredient.ingredientname}"></td> -->
+                </block>
+             </tr>
+
+
+
+                    <!-- <tr th:each="procedureList : ${procedureList}"> 
+                        <td> 
+                            <a th:text="${procedureList.getCookVo22().getCookname()}"></a>
+                        </td> 
+                         -->
+                        <!-- <td> 
+                            <block th:each=" list : ${list}" > 
+                                <td th:text="${list.getIngredientVo22().getIngredientname()}"></td>
+                            </block> 
+                        </td>  -->
+                       
+                    <!-- </tr> -->
+
+                    
+                <!-- <tr th:each="procedureList : ${procedureList}">
+                    <td class="align-middle" th:text="${procedureList.getCookVo22().getCookname()}"></td> -->
+                    <!-- <h1>====================================================================</h1> -->
+                    <!-- <tr th:each="procedureList : ${procedureList}">
+                      <td class="align-middle" th:text="${procedureList.getIngredientVo22().getIngredientname()}"></td> -->
+
+
+    </body>
+
+</html>

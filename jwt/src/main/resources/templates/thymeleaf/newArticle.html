@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<title>fridgeBox - SSAG</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" /> -->
+	<!-- Place favicon.ico in the root directory -->
+
+</head>
+<body>
+
+	<h1 style="text-align: center;">새 글 쓰기</h1>
+	<form th:action="@{/addArticle}" class="form-signin" method="post">
+
+		<table border="0" align="center">
+			<tbody>
+				<tr>
+					<td align="center" class="class-caption">글내용</td>
+					<td colspan="2"><input type="text" maxlength="100"
+						name="text" class="class-content"></input></td>
+				</tr>
+				
+				<div class="button">
+					<button type="submit" class="btn">메모 등록</button>
+				</div>
+			</form>
+
+			</tbody>
+		</table>
+	</form>
+
+
+</body>
