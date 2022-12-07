@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>일반회원가입 - SSAG</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="assets/images/favicon.svg"
+    />
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/glightbox.min.css" />
+    <link rel="stylesheet" href="css/main_test2.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+
+  <body>
+    <!-- Start Header Area -->
+    <section class="hero-whoareu-area">
+      <div style="padding-top: 80%">
+        <form method="post" action="/user-register">
+          <div class="member">
+            <!-- 2. 필드 -->
+            <div class="field">
+              <b>아이디</b>
+              <span class="placehold-text"
+                ><input type="text" name="username"
+              /></span>
+            </div>
+            <div class="field">
+              <b>비밀번호</b>
+              <input class="userpw" type="password" name="password" />
+            </div>
+            <div class="field">
+              <b>비밀번호 재확인</b>
+              <input class="userpw-confirm" type="password" />
+            </div>
+            <div class="field">
+              <b>이름</b>
+              <input type="text" name="name" />
+            </div>
+
+            <!-- 3. 필드(생년월일) -->
+
+            <div class="field">
+              <label>생년월일</label>
+              <input name="birth" type="date" value="xxx" min="yyy" max="zzz" />
+            </div>
+            <!-- 5. 이메일_전화번호 -->
+            <div class="field">
+              <b>이메일<small></small></b>
+              <input type="email" placeholder="선택입력" name="email" />
+            </div>
+
+            <div class="field tel-number">
+              <b>휴대전화</b>
+
+              <input
+                type="number"
+                placeholder="전화번호를 입력하세요"
+                name="telephone"
+              />
+            </div>
+
+            <!-- 6. 가입하기 버튼 -->
+            <input style="margin-top: 5%" type="submit" value="가입하기" />
+
+            <!-- 7. 푸터 -->
+            <div class="member-footer">
+              <div>
+                <a href="#none">이용약관</a>
+                <a href="#none">개인정보처리방침</a>
+                <a href="#none">책임의 한계와 법적고지</a>
+                <a href="#none">회원정보 고객센터</a>
+              </div>
+              <span><a href="#none">NAVER Corp.</a></span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/glightbox.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

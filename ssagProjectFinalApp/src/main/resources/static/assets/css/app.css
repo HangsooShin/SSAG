@@ -1,0 +1,836 @@
+.hero-area {
+  background-image: url(/images/index/background.png);
+  background-size: 100vw;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 2;
+  /* padding-top: 30px; */
+  /* padding-bottom: 300px; */
+}
+
+.hero-login-area {
+  background-image: url(/images/index/login.png);
+  background-size: 100vw;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 2;
+  /* width: 100%; */
+  /* padding-top: 30px; */
+  /* padding-bottom: 300px; */
+}
+
+.hero-whoareu-area {
+  background-image: url(/images/index/whoareu.png);
+  background-size: 100vw;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 2;
+  /* width: 100%; */
+  /* padding-top: 30px; */
+  /* padding-bottom: 300px; */
+}
+
+.hero-mypage-area {
+  background-image: url(/images/index/mypage.png);
+  background-size: 100vw;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 2;
+  /* width: 100%; */
+  /* padding-top: 30px; */
+  /* padding-bottom: 300px; */
+}
+
+@font-face {
+  font-family: "Tenada";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NanumSquareNeo-Variable";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.img {
+  position: relative;
+  background-image: url(/images/app/background.png);
+  height: 40vh;
+  /* width: 100vh; */
+  background-size: cover;
+}
+
+@font-face {
+  font-family: "SeoulHangangM";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/SeoulHangangM.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+#rectangle {
+  width: 350px;
+  height: 60px;
+  background-color: #ffffff;
+  /* style="margin-left: auto; margin-right: auto; display: block" */
+  margin-left: auto;
+  margin-right: auto;
+  /* display: block; */
+  border-radius: 10px;
+  font-family: "SeoulHangangM";
+  color: black;
+}
+
+.wrap {
+  display: flex;
+  align-items: center;
+}
+.bar {
+  flex: auto;
+  border: none;
+  height: 1px;
+  background-color: #fff;
+}
+.txt {
+  padding: 0 10px;
+}
+
+.hr-sect {
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.35);
+  font-size: 15px;
+  margin: 5%;
+}
+.hr-sect::before,
+.hr-sect::after {
+  content: "";
+  flex-grow: 1;
+  background: rgba(0, 0, 0, 0.35);
+  height: 1px;
+  font-size: 0px;
+  line-height: 0px;
+  margin: 5%;
+}
+
+/* Google web font CDN*/
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap");
+
+* {
+  box-sizing: border-box; /*전체에 박스사이징*/
+  outline: none; /*focus 했을때 테두리 나오게 */
+}
+
+/* body {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  background-color: #ffffff;
+  line-height: 1.5em;
+  color: #222;
+  margin: 0;
+} */
+
+a {
+  text-decoration: none;
+  color: #222;
+}
+
+/*member sign in*/
+.member {
+  width: 400px;
+  /* border: 1px solid #000; */
+  margin: auto; /*중앙 정렬*/
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.member .logo {
+  /*로고는 이미지라 인라인 블록이니까 마진 오토 안됨 블록요소만 됨 */
+  display: block;
+  margin: 50px auto;
+}
+
+.member .field {
+  margin: 5px 0; /*상하로 좀 띄워주기*/
+}
+
+.member b {
+  /* border: 1px solid #000; */
+  display: block; /*수직 정렬하기 */
+  margin-bottom: 5px;
+}
+
+/*input 중 radio 는 width 가 100%면 안되니까 */
+.member input:not(input[type="radio"]),
+.member select {
+  border: 1px solid #dadada;
+  padding: 15px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.member input[type="button"],
+.member input[type="submit"] {
+  background-color: #739aff;
+  color: #fff;
+}
+
+.member input:focus,
+.member select:focus {
+  border: 1px solid #739aff;
+}
+
+.field.birth div {
+  /*field 이면서 birth*/
+  display: flex;
+  gap: 10px; /*간격 벌려줄때 공식처럼 사용핟나 */
+}
+
+/* .field.birth div > * {  gap 사용한거랑 같은 효과를 줌 
+    flex:1;
+} */
+
+.field.tel-number div {
+  display: flex;
+}
+
+.field.tel-number div input:nth-child(1) {
+  flex: 2;
+}
+
+.field.tel-number div input:nth-child(2) {
+  flex: 1;
+}
+
+.field.gender div {
+  border: 1px solid #dadada;
+  padding: 15px 5px;
+  background-color: #fff;
+}
+
+.placehold-text {
+  display: block; /*span 으로 감싸서 크기영역을 블록요소로 만들어ㅜ저야한다*/
+  position: relative;
+  /* border: 1px solid #000; */
+}
+
+.placehold-text:before {
+  position: absolute; /*before은 inline 요소이기 때문에 span으로 감싸줌 */
+  right: 20px;
+  top: 13px;
+  pointer-events: none; /*자체가 가지고 있는 pointer event 를 없애준다 */
+}
+
+.userpw {
+  background: url(./images/images2/icon-01.png) no-repeat center right 15px;
+  background-size: 20px;
+  background-color: #fff;
+}
+
+.userpw-confirm {
+  background: url(./images/images2/icon-02.png) no-repeat center right 15px;
+  background-size: 20px;
+  background-color: #fff;
+}
+
+.member-footer {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 20px;
+}
+
+.member-footer div a:hover {
+  text-decoration: underline;
+  color: #44b1ff;
+}
+
+.member-footer div a:after {
+  content: "|";
+  font-size: 10px;
+  color: #bbb;
+  margin-right: 5px;
+  margin-left: 7px;
+  /*살짝 내려가 있기 때문에 위로 올려주기 위해 transform 사용하기*/
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+.member-footer div a:last-child:after {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .member {
+    width: 100%;
+  }
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap");
+html {
+  scroll-behavior: smooth;
+}
+/* 
+body {
+  font-family: "Jost", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  color: #888;
+  overflow-x: hidden;
+  font-size: 15px;
+} */
+
+p {
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-toggler:focus,
+a:focus,
+input:focus,
+textarea:focus,
+button:focus,
+.btn:focus,
+.btn.focus,
+.btn:not(:disabled):not(.disabled).active,
+.btn:not(:disabled):not(.disabled):active {
+  text-decoration: none;
+  outline: none;
+  outline: none !important;
+  border-color: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.form-check-input:checked {
+  background-color: #208b47;
+  border-color: #208b47;
+}
+
+select {
+  -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  color: #081828;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  appearance: menulist;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  white-space: pre;
+  -webkit-rtl-ordering: logical;
+  background-color: -internal-light-dark(white, #3b3b3b);
+  cursor: default;
+  margin: 0em;
+  font: 400 14px;
+  border-radius: 0px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: -internal-light-dark(#767676, #858585);
+  -o-border-image: initial;
+  border-image: initial;
+}
+
+span,
+a {
+  display: inline-block;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  margin: 0px;
+  color: #081828;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  color: inherit;
+}
+
+h1 {
+  font-size: 50px;
+}
+h2 {
+  font-size: 40px;
+}
+h3 {
+  font-size: 30px;
+}
+h4 {
+  font-size: 25px;
+}
+h5 {
+  font-size: 20px;
+}
+h6 {
+  font-size: 16px;
+}
+
+ul,
+ol {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+}
+
+/* 반응형 백그라운드 */
+.background {
+  background-image: url(/images/index/background.png);
+  background-size: 100vw;
+  background-position: center top;
+  background-repeat: no-repeat;
+  /* z-index: 2; */
+}
+
+.app-header {
+  padding: 20px 5px;
+  margin: 0px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.head-txt {
+  text-align: center;
+  color: #ddd;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 20px 0px;
+}
+
+.search-back {
+  width: 340px;
+  height: 50px;
+  background: #fff3;
+  border-radius: 6px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-input {
+  width: 300px;
+  height: 35px;
+  background: #fff;
+  border-radius: 4px;
+  font-size: 15px;
+  border: 1px solid #eee;
+  margin: 10px 0px 10px 10px;
+  padding-left: 10px;
+  align-items: center;
+  border: none;
+}
+
+.search-btn {
+  width: 35px;
+  height: 35px;
+  text-transform: capitalize;
+  background-color: #208b47;
+  color: #fff;
+  border: none;
+  transition: 0.5s;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.txtinput {
+  border: none;
+}
+
+.loc-c {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* 
+		[CSS 요소 설명] 
+		1. font-family : 폰트 표시 형태 스타일 지정
+		2. width : 가로 크기 지정
+		3. height : 세로 크기 지정
+		4. margin : 마진 (외부) 여백 설정
+		5. padding : 패딩 (내부) 여백 설정
+		6. border : 테두리 (선) 표시 설정
+		7. background : 배경 표시 설정
+		8. overflow : 범위를 벗어난 콘텐츠 표시 여부 설정 (스크롤)
+		9. float : 정렬 기준 설정
+		10. div : 레이아웃 표시 블록
+		11. position : 레이아웃 위치 정렬 설정
+		12. display : 해당 div 영역을 표시 여부 설정		
+		13. vertical-align : middle; : 테이블 셀 영역에서 텍스트 수직 정렬 설정
+		14. table-layout : 표 크기 고정 실시
+		15. font-size : 텍스트 사이즈 지정
+		*/
+
+/* html, body 영역 스타일 지정 */
+/* html, */
+/* body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  /* 스크롤바 표시 지정 */
+/* overflow: auto; */
+/* } */
+*/
+
+/* body 스크롤바 메인 스타일 지정 */
+body::-webkit-scrollbar {
+  /* 스크롤바 너비 지정 */
+  width: 10px;
+
+  /* 스크롤바 배경 색상 지정 */
+  background-color: #c1c1c1;
+}
+/* body 스크롤바 thumb 스타일 지정 */
+body::-webkit-scrollbar-thumb {
+  /* 스크롤바 thumb 색상 지정 */
+  background-color: #444444;
+}
+
+/* 메인 탭 레이아웃 */
+#tab_container {
+  width: 50%;
+  height: 60%;
+  margin-left: 1%;
+
+  padding: 0;
+  border: none;
+  /*background-color : #ff0000;*/
+
+  /* 컨테이너 배치 정렬 실시 */
+  float: top;
+  position: relative;
+  top: 15%;
+  left: 0%;
+
+  /* 브라우저에서 화면 터치 시 파란박스 하이라이트 제거 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* 탭 헤더 부분 레이아웃 */
+#tab_header {
+  width: 100%;
+  height: 15%;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  /*background-color : #0000ff;*/
+
+  /* 컨테이너 배치 정렬 실시 */
+  float: top;
+  position: relative;
+  top: 0%;
+  left: 0%;
+
+  /* 브라우저에서 화면 터치 시 파란박스 하이라이트 제거 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* 탭 헤더 공통 레이아웃 */
+.tab_header_common {
+  width: 25%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+
+  /* 컨테이너 배치 정렬 실시 */
+  float: left;
+  position: relative;
+  top: 0%;
+  left: 0%;
+
+  /* 마우스 커서 스타일 지정 */
+  cursor: pointer;
+
+  /* 브라우저에서 화면 터치 시 파란박스 하이라이트 제거 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  /* 텍스트 정렬 위한 display 설정 */
+  display: table;
+  table-layout: fixed;
+}
+.tab_header_common:hover {
+  /* 마우스 오버 시 투명도 조절 */
+  opacity: 0.5;
+}
+.tab_header_text_common {
+  /* 텍스트 가로 정렬 지정 */
+  text-align: center;
+
+  /* 텍스트 색상 지정 */
+  color: #ffffff;
+
+  /* 텍스트 굵기 지정 */
+  font-weight: bold;
+
+  /* 텍스트 사이즈 지정 */
+  font-size: 150%;
+
+  /* 텍스트 수직 정렬 실시 */
+  display: table-cell;
+  vertical-align: middle;
+
+  /* 텍스트 내용 길면 숨김 처리*/
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  /* 태그 밑줄 없애기 */
+  text-decoration: none;
+}
+
+/* 탭 헤더 개별 레이아웃 */
+#tab_header_1 {
+  background-color: #c0ecff;
+  width: 30%;
+  height: 45px;
+  /* style="margin-left: auto; margin-right: auto; display: block" */
+  margin-left: auto;
+  margin-right: auto;
+  /* display: block; */
+  border-radius: 10px;
+  font-family: "SeoulHangangM";
+  color: black;
+}
+#tab_header_2 {
+  background-color: #a6b1ff;
+  width: 30%;
+  height: 45px;
+  margin-left: auto;
+  margin-right: auto;
+  /* display: block; */
+  border-radius: 10px;
+  font-family: "SeoulHangangM";
+  color: black;
+}
+#tab_header_3 {
+  background-color: #c0ecff;
+  width: 30%;
+  height: 45px;
+  margin-left: auto;
+  margin-right: auto;
+  /* display: block; */
+  border-radius: 10px;
+  font-family: "SeoulHangangM";
+  color: black;
+}
+#tab_header_4 {
+  background-color: #000000;
+}
+#tab_header_5 {
+  background-color: #c758da;
+}
+
+/* 탭 콘텐츠 레이아웃 */
+#tab_content {
+  width: 100%;
+  height: 85%;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  background-color: #ff00ff;
+
+  /* 컨테이너 배치 정렬 실시 */
+  float: top;
+  position: relative;
+  top: -0.2%;
+  left: 0%;
+
+  /* 브라우저에서 화면 터치 시 파란박스 하이라이트 제거 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* 탭 콘텐츠 공통 레이아웃 */
+.tab_content_common {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+
+  /* 컨테이너 배치 정렬 실시 */
+  float: top;
+  position: relative;
+  top: 0%;
+  left: 0%;
+
+  /* 마우스 커서 스타일 지정 */
+  cursor: pointer;
+
+  /* 브라우저에서 화면 터치 시 파란박스 하이라이트 제거 */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* 탭 콘텐츠 개별 레이아웃 */
+#tab_content_1 {
+  background-color: #ff6699;
+  /* 표시 설정 */
+  display: block;
+}
+#tab_content_2 {
+  background-color: #66cc99;
+  /* 표시 설정 */
+  display: none;
+}
+#tab_content_3 {
+  background-color: #3366ff;
+  /* 표시 설정 */
+  display: none;
+}
+#tab_content_4 {
+  background-color: #888888;
+  /* 표시 설정 */
+  display: none;
+}
+#tab_content_5 {
+  background-color: #9489f6;
+  /* 표시 설정 */
+  display: none;
+}
+
+.mypage-text {
+  color: black;
+  font-size: 20pt;
+  border: none;
+  margin-left: 10%;
+}
+
+/* mypage Css */
+
+form {
+  margin-top: 10%;
+  /* background: #ffffff; */
+  text-align: center;
+  /* -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1); */
+  /* box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1); */
+}
+label {
+  display: block;
+  position: relative;
+  margin-top: 10%;
+}
+.label-txt {
+  position: absolute;
+  top: -1.6em;
+  padding: 10px;
+  margin-left: -3%;
+  font-family: sans-serif;
+  font-size: 10pt;
+  /* letter-spacing: 1px; */
+  color: rgb(120, 120, 120);
+  transition: ease 0.3s;
+}
+.input {
+  width: 100%;
+  margin-top: 10%;
+  margin-bottom: 2%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16pt;
+  font-family: NanumSquareNeo-Variable;
+}
+
+.line-box {
+  position: relative;
+  width: 300px;
+  height: 2px;
+  background: #bcbcbc;
+}
+
+.line {
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #739aff;
+  transition: ease 0.6s;
+}
+
+.input:focus + .line-box .line {
+  width: 100%;
+}
+
+.label-active {
+  top: -3em;
+}
+
+button {
+  display: inline-block;
+  background: rgb(232, 232, 232);
+  font-weight: bold;
+  color: rgb(120, 120, 120);
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+  /* transition: ease 0.3s; */
+  width: 75%;
+  height: 40px;
+}
+
+button:hover {
+  background: #739aff;
+  color: #ffffff;
+}

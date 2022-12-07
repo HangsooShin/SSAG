@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AppMain</title>
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/app.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <div class="img">
+      <div>
+        <h1 style="font-family: Tenada" ;>SSAG</h1>
+        <!-- 가로세로 자동조정 : <img src="그림주소" style="max-width: 100%; height: auto;">  -->
+      </div>
+
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="상품을 검색해 주세요"
+        aria-label="Search"
+      />
+      <div style="padding: 150px 0px 0px 10px; height: 20%; float: left">
+        <form action="/myFridge" method="get">
+          <input
+            type="image"
+            name="FridgeBoxBT"
+            src="/images/app/FridegBoxBT2.png"
+            height="120"
+            width="120"
+          />
+        </form>
+      </div>
+    </div>
+    <!--  부트스트랩 js 사용 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+  </body>
+</html>

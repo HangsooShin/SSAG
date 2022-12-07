@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+  <div th:fragment="mainheader">
+    <div class="app-header">
+      <a href="/"><h1>SSAG.M</h1></a>
+      <div>
+        <ul>
+          <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}"><i class="lni lni-enter"></i>로그아웃</a>
+          </li>
+          <li sec:authorize="isAuthenticated()">
+            <a th:href="@{/mypage}">회원정보</a>
+          </li>
+          <li sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}"><i class="lni lni-enter"></i>로그인</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align: center">
+      <!-- <h2 class="wow fadeInUp" data-wow-delay=".3s">Welcome to SSAG.R</h2> -->
+      <p class="wow fadeInUp" data-wow-delay=".5s">○○○님 냉장고</p>
+    </div>
+  </div>
+</html>

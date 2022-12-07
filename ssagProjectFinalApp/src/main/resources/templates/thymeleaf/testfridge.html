@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>냉장고 - SSAG</title>
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+      user-scaleable="yes"
+    /> 
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/main_test2.css" />
+    <!-- 내부 CSS 스타일 지정 -->
+
+
+
+    <!-- 내부 JS 지정 -->
+    <!-- <script>
+
+    	/*
+    	[JS 요약 설명]
+    	1. includes : 특정 값이 포함된 것을 확인합니다
+    	2. document.getElementById(객체).style : 특정 객체 스타일 속성을 변경합니다    	
+    	*/
+
+    	/* [이벤트 수행 함수] */
+    	function tab_Change(tagId){
+    		var id = tagId.id;
+    		console.log("");
+    		console.log("[tab_Change] : [start] : " + id); 
+    		console.log("");
+
+    		//반복문을 수행하면서 스타일 변경 실시
+    		for(var i=1; i<=4; i++){
+    			if(id.includes(i)){
+    				var content = "tab_content_" + String(i);
+    				document.getElementById(content).style.display = "block";
+    			}
+    			else {
+    				var content = "tab_content_" + String(i);
+    				document.getElementById(content).style.display = "none";
+    			}
+    		}    		
+
+    	};
+    	
+    </script> -->
+
+<script>
+  function tab_change(nav_Id) {
+    let id = nav_Id.id;
+    console.log(nav_Id);
+    // if(nav_Id == 1) {var selection="nav_cool"};
+    // console.log(selection);
+    // if(nav_Id == 2) {var selection="nav_ice"};
+    // console.log(selection);
+    // if(nav_Id == 3) {var selection="nav_room"};
+    // console.log(selection);
+    // document.getElementById(selection).style.display = "block";
+
+    for(var i=1; i<=4; i++){
+    			if(nav_Id==1){
+    				var content = "tab_content_" + String(i);
+    				document.getElementById(content).style.display = "block";
+    			}else if(nav_Id==2){
+            var content = "tab_content_" + String(i);
+    				document.getElementById(content).style.display = "block";
+          }else if(nav_Id==3){
+            var content = "tab_content_" + String(i);
+    				document.getElementById(content).style.display = "block";
+          }else if(nav_Id==4){
+            var content = "tab_content_" + String(i);
+    				document.getElementById(content).style.display = "block";
+          }
+    			else {
+    				var content = "tab_content_" + String(i);
+    				document.getElementById(content).style.display = "none";
+    			}
+    		}   
+  };
+</script>
+
+</head>
+
+
+<body>
+<section class="background">
+  <div style="padding-top: 82%">
+<!-- 탭 레이아웃 -->
+	<div id = "tab_header" style="display: flex;">
+		<div id = "tab_header_1" class="tab_header_common" onclick="tab_Change(this);">
+			<p class="tab_header_text_common">냉장</p>
+		</div>
+		<div id = "tab_header_2" class="tab_header_common" onclick="tab_Change(this);">
+			<p class="tab_header_text_common">냉동</p>
+		</div>
+		<div id = "tab_header_3" class="tab_header_common" onclick="tab_Change(this);">
+			<p class="tab_header_text_common">실온</p>
+		</div>
+
+		</div>
+	</div>
+	<div id = "tab_content">
+		<div id = "tab_content_1" class="tab_content_common">
+			<p>이렇게 넣으면 되나?111111</p>
+		</div>
+		<div id = "tab_content_2" class="tab_content_common">
+			<p>이렇게 넣으면 되나?</p>
+		</div>
+		<div id = "tab_content_3" class="tab_content_common"></div>
+		<div id = "tab_content_4" class="tab_content_common"></div>
+		<div id = "tab_content_5" class="tab_content_common"></div>
+	</div>
+</div>
+</section>
+</body>
+
+</html>
+
+</html>

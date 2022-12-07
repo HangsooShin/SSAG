@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>로그인 - SSAG</title>
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+      user-scaleable="yes"
+    />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" /> -->
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/glightbox.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+
+  <body>
+    <!-- Start Header Area -->
+    <section class="hero-login-area" style="padding-top: 0%">
+      <div style="padding-top: 95%">
+        <!-- <div class="hero-login-area"> -->
+        <form th:action="@{/login_proc}" class="form-signin" method="post">
+          <!-- <input th:type="hidden" th:value="secret" name="secret_Key" /> -->
+          <div style="margin-top: -12%; margin-left: 10%; font-size: 18pt">
+            <label hidden>ID</label>
+            <input
+              type="text"
+              style="border: none; background: transparent"
+              name="username"
+              id="username"
+              size="30%"
+              height="30%"
+            />
+          </div>
+          <div
+            class="form-group"
+            style="margin-top: 20%; margin-left: 10%; font-size: 18pt"
+          >
+            <label hidden>Password</label>
+            <input
+              name="password"
+              id="password"
+              type="password"
+              style="border: none; background: transparent"
+              size="30%"
+            />
+          </div>
+          <div style="padding: 5% 0% 0% 0%">
+            <input
+              type="image"
+              name="signupBT"
+              src="/images/index/signupBT.png"
+              height="70"
+              width="320"
+              style="margin-left: auto; margin-right: auto; display: block"
+              ;
+            />
+          </div>
+        </form>
+        <div>
+          <div style="padding-left: 10%; padding-top: 10%; float: left">
+            <a href="/whoareu" style="font-family: Tenada; font-size: 17pt"
+              >Sign up</a
+            >
+          </div>
+          <div style="padding-left: 30%; padding-top: 10%; float: left">
+            <a href="/whoareu" style="font-family: Tenada; font-size: 17pt"
+              >Forgot Pw</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/glightbox.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/token.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+  </body>
+</html>
