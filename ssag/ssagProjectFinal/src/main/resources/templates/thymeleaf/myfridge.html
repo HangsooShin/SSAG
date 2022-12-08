@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>내 냉장고 - SSAG</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- <link rel="shortcut icon" type="image/x-icon" th:href="@{images/favicon.svg" />} -->
+  <!-- Place favicon.ico in the root directory -->
+
+  <!-- Web Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+  <!-- ========================= CSS here ========================= -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/LineIcons.2.0.css" />
+  <link rel="stylesheet" href="css/animate.css" />
+  <link rel="stylesheet" href="css/tiny-slider.css" />
+  <link rel="stylesheet" href="css/glightbox.min.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/sheepcastle.css" />
+
+
+
+
+</head>
+
+<body>
+
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-icon">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- /End Preloader -->
+
+  <!-- Start Header Area -->
+  <header class="header navbar-area">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <div class="nav-inner">
+            <nav class="navbar navbar-expand-lg">
+              <a class="navbar-brand" th:href="@{/}">
+                <!-- <img th:src="@{images/logo/logo.svg" alt="Logo">} -->
+                <h1>SSAG.R</h1>
+              </a>
+              <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                <ul id="nav" class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                    <a class="dd-menu collapsed" th:href="@{/}" data-bs-toggle="collapse" data-bs-target="#submenu-1-1"
+                      aria-controls="navbarSupportedContent" aria-expanded="false"
+                      aria-label="Toggle navigation">홈페이지</a>
+                    <!-- <ul class="sub-menu collapse" id="submenu-1-1">
+                                    <li class="nav-item active"><a th:href="@{/}">Home Default</a></li>
+                                    <li class="nav-item"><a th:href="index2.html">Home Version 2</a></li>
+                                    <li class="nav-item"><a th:href="index3.html">Home Version 3</a></li>
+                                </ul> -->
+                  </li>
+                  <li class="nav-item">
+                    <a th:href="@{myFridge}" aria-label="Toggle navigation">내 냉장고</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="dd-menu collapsed" th:href="@{/#}" data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
+                      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">사이트
+                      소개</a>
+                    <ul class="sub-menu collapse" id="submenu-1-3">
+                      <li class="nav-item"><a th:href="@{item-listing-grid.html}">검색 사용방법</a></li>
+                      <li class="nav-item"><a th:href="@{item-listing-list.html}">내 냉장고 사용방법</a></li>
+                      <li class="nav-item"><a th:href="@{item-details.html}">어플리케이션 다운로드 및 사용방법</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div> <!-- navbar collapse -->
+              <div class="login-button">
+                <ul>
+                  <li>
+                    <a th:href="@{/login}"><i class="lni lni-enter"></i> 로그인</a>
+                  </li>
+                  <li>
+                    <a th:href="@{/whoareu}"><i class="lni lni-user"></i> 회원가입</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- <div class="button header-button">
+                        <a th:href="post-item.html" class="btn">Post an Ad</a>
+                    </div> -->
+            </nav> <!-- navbar -->
+          </div>
+        </div>
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </header>
+  <!-- End Header Area -->
+
+  <!-- Start Breadcrumbs -->
+  <div class="breadcrumbs">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-md-6 col-12">
+          <div class="breadcrumbs-content">
+            <h1 class="page-title">내 냉장고</h1>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <ul class="breadcrumb-nav">
+            <li><a th:href="@{/}">홈페이지</a></li>
+            <li>내 냉장고</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Breadcrumbs -->
+
+  <!-- start Freezy section -->
+
+
+  <div class="container">
+    <div class="content">
+      <div class="row">
+        <div class="overflow-auto">
+
+        </div>
+        <div class="col">
+          <!-- 냉장고 부분 첫번째 행 시작 -->
+          <!-- Start Items Tab Area -->
+          <section class="items-tab section custom-padding">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <div class="section-title">
+                    <h2 class="wow fadeInUp" data-wow-delay=".4s">내 냉장고</h2>
+                    <p class="wow fadeInUp" data-wow-delay=".6s">남들과 다르게 냉장고를 깔끔하게 정리해봐요.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <!-- 냉장고 nav-tab -->
+                  <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <button class="nav-link" id="nav-popular-tab" data-bs-toggle="tab" data-bs-target="#nav-memo"
+                        type="button" role="tab" aria-controls="nav-popular" aria-selected="false">메모</button>
+                      <button class="nav-link active" id="nav-latest-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-latest" type="button" role="tab" aria-controls="nav-latest"
+                        aria-selected="true">냉장</button>
+                      <button class="nav-link" id="nav-popular-tab" data-bs-toggle="tab" data-bs-target="#nav-popular"
+                        type="button" role="tab" aria-controls="nav-popular" aria-selected="false">냉동</button>
+                      <button class="nav-link" id="nav-random-tab" data-bs-toggle="tab" data-bs-target="#nav-random"
+                        type="button" role="tab" aria-controls="nav-random" aria-selected="false">실온</button>
+                    </div>
+                  </nav>
+
+                  <div class="tab-content scroll-css" id="nav-tabContent">
+
+                    <!-- 여기 아래에서 부터 메모 -->
+                    <div class="tab-pane fade" id="nav-memo" role="tabpanel" aria-labelledby="nav-popular-tab">
+                      <div class="row">
+                        <div class="input-group mb-3">
+                          <!-- 아래의 form 부분에서 지원해주는 방식이 아닌 js파일을 통한 fetch메소드를 활용 할 것이다. -->
+                          <form class="memoSubmitForm" id="memoSubmitForm">
+                            <input type="text" name="memotext" class="form-control" placeholder="내용을 입력하세요"
+                              aria-label="default input example" aria-describedby="button-addon2" id="memotext">
+                            <button class="btn btn-outline-secondary memoSubmitBtn" type="submit"
+                              id="memoSubmitBtn">등록</button>
+                          </form>
+
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div id="memo-table">
+                          <table>
+                            <thead>
+                              <form>
+                                <tr>
+                                  <!-- <th>번호</th> -->
+                                  <th>(writer)code</th>
+                                  <th>memo</th>
+                                  <th>작성일</th>
+                                  <th>삭제버튼</th>
+                                </tr>
+                              </form>
+                            </thead>
+                              <tr th:each="memo : ${memoList}" id="realmemo">
+                                <!-- <td th:text="${memo.memocode}"></td>  -->
+                                <td th:text="${memo.writer}" class="author"></td>
+                                <td th:text="${memo.memotext}" class="tdText"></td>
+                                <td th:text="${memo.memocreateddate}" class="tdTime"></td>
+                                <form th:action="@{'/removeArticle/' + ${memo.memocode}}" id="deleteMemoBtn">
+
+                                  <td type="text" class="tdDelete"><button class="button btn deleteMemoBtn"
+                                    type="submit" id="deleteBtn">삭제</button></td>
+                                </form>
+                                <!-- <button type="submit" class="button btn btn-secondary" id="memoDeleteBtn">삭제</button> -->
+                                <!-- <td><button type="button" onclick="deleteMemo()" id="memo${memo.memocode}" class="button btn btn-secondary">삭제</button></td> -->
+                                <!-- <input type="button" value="삭제하기" onclick="fn_remove_memo('${contextPath}/removeArticle', ${memo.memocode})" /> -->
+                                <!-- <form id="delete-form" th:action="@{'/removeArticle/' + ${memo.memocode}}" method="post">
+                                  <input type="hidden" name="_method" value="delete" />
+                                  <button id="delete-btn">삭제</button>
+                                </form> -->
+                              </tr>
+                            
+                            
+                          </table>
+                        </div>
+
+
+                        <!-- <form id="deleteMemoBtn" th:action="@{'/removeArticle/' + ${memo.memocode}}"><input
+                            type="hidden">
+                        </form> -->
+
+                        <!-- <table>
+                          <tr>
+                            <th scope="row">
+                              작성자
+                            </th>
+                            <td class="tdText">
+                              내용 들어가는 부분.
+                            </td>
+                            <td class="tdTime">시간/time</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              신항수
+                            </th>
+                            <td class="tdText">
+                              내용 들어가는 부분. 얘들아 아이스크림이 없다. 사서 넣어놔!
+                            </td>
+                            <td class="tdTime">시간/time</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              권주희
+                            </th>
+                            <td class="tdText">
+                              내용 들어가는 부분. 오빠들 아이스크림이 없어. 사서 넣어줘!
+                            </td>
+                            <td class="tdTime">시간/time</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              임양성
+                            </th>
+                            <td class="tdText">
+                              내용 들어가는 부분. 여러분 아이스크림 사실 제가 다 먹었어요. 사서 넣어놓을게요!
+                            </td>
+                            <td class="tdTime">시간/time</td>
+                          </tr>
+                        </table> -->
+                      </div>
+                    </div>
+
+                    <!-- 여기 밑에서부터 냉장고 상품등록 및 표시를 위한 코드 -->
+                    <div class="tab-pane fade show active" id="nav-latest" role="tabpanel"
+                      aria-labelledby="nav-latest-tab">
+                      <div class="row">
+                        <!-- 여기 아래 row는 상품 등록 칸을 같이 넣어주기 위한 row부분 -->
+                        <div class="row">
+                          <!-- 새 상품 등록 시작 -->
+                          <div class="col-lg-3 col-md-4 col-12" id="newProductBtn">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="button btn btn-success newProductBtn" data-bs-toggle="modal"
+                              data-bs-target="#selectRefrigerationModal">
+                              재료 등록
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="selectRefrigerationModal" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">상품 등록 방법 선택</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col">
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#ingredientUploadModal">
+                                          재료 이미지 등록
+                                        </button>
+
+                                        <!-- 내부 모달 부분 -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="ingredientUploadModal" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">재료 이미지 등록</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 -->
+                                              <div class="modal-body">
+                                                <div class="uploadContainer">
+                                                  <div class="image-upload" id="image-upload">
+
+                                                    <form method="post" enctype="multipart/form-data">
+                                                      <div class="button">
+                                                        <label for="chooseFile">
+                                                          👉 이미지 선택 👈
+                                                        </label>
+                                                      </div>
+                                                      <input type="file" id="chooseFile" name="chooseFile"
+                                                        accept="image/*" onchange="loadFile(this)">
+                                                    </form>
+
+                                                    <div class="fileContainer">
+                                                      <div class="fileInput">
+                                                        <p>파일 이름: </p>
+                                                        <p id="fileName"></p>
+                                                      </div>
+                                                      <div class="buttonContainer">
+                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="image-show" id="image-show"></div>
+                                                </div>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 끝 -->
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-bs-dismiss="modal">닫기</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 내부 모달 끝 -->
+
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#receiptUploadModal">
+                                          영수증 이미지 등록
+                                        </button>
+
+                                        <!-- 내부 모달 부분 -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="receiptUploadModal" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">영수증 이미지 등록</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 -->
+                                              <div class="modal-body">
+                                                <div class="uploadContainer">
+                                                  <div class="image-upload" id="image-upload">
+
+                                                    <form method="post" enctype="multipart/form-data">
+                                                      <div class="button">
+                                                        <label for="chooseFile">
+                                                          👉 이미지 선택 👈
+                                                        </label>
+                                                      </div>
+                                                      <input type="file" id="chooseFile" name="chooseFile"
+                                                        accept="image/*" onchange="loadFile(this)">
+                                                    </form>
+
+                                                    <div class="fileContainer">
+                                                      <div class="fileInput">
+                                                        <p>파일 이름: </p>
+                                                        <p id="fileName"></p>
+                                                      </div>
+                                                      <div class="buttonContainer">
+                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="image-show" id="image-show"></div>
+                                                </div>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 끝 -->
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-bs-dismiss="modal">닫기</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 내부 모달 끝 -->
+                                      </div>
+
+                                      <div class="col">
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#barcodeUploadModal">
+                                          상품 바코드 등록
+                                        </button>
+
+                                        <!-- 내부 모달 부분 -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="barcodeUploadModal" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">상품 바코드 등록</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 -->
+                                              <div class="modal-body">
+                                                <div class="uploadContainer">
+                                                  <div class="image-upload" id="image-upload">
+
+                                                    <form method="post" enctype="multipart/form-data">
+                                                      <div class="button">
+                                                        <label for="chooseFile">
+                                                          👉 이미지 선택 👈
+                                                        </label>
+                                                      </div>
+                                                      <input type="file" id="chooseFile" name="chooseFile"
+                                                        accept="image/*" onchange="loadFile(this)">
+                                                    </form>
+
+                                                    <div class="fileContainer">
+                                                      <div class="fileInput">
+                                                        <p>파일 이름: </p>
+                                                        <p id="fileName"></p>
+                                                      </div>
+                                                      <div class="buttonContainer">
+                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="image-show" id="image-show"></div>
+                                                </div>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 끝 -->
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-bs-dismiss="modal">닫기</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 내부 모달 끝 -->
+
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#selftypingUploadModal">
+                                          직접 입력
+                                        </button>
+
+                                        <!-- Start Single Item -->
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="selftypingUploadModal" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">직접 입력
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close" id="closeBtnIcon"></button>
+                                              </div>
+                                              <!-- 여기는 모달바디 -->
+                                              <div class="modal-body">
+                                                <div class="row" id="addForm">
+                                                  <form th:action="@{/fridgebox}" id="saveIngredientBtn" method="post">
+                                                    <div class="col">
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile01">상품명</label>
+                                                        <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
+                                                        <select id="ingredientList3" class="form-select form-select-sm"
+                                                          size="1" aria-label=".form-select-sm example"
+                                                          name="ingredientcode">
+                                                          <option th:each="m:${ingredientList3}"
+                                                            th:value="${m.ingredientcode}"
+                                                            th:text="${m.ingredientname}"></option>
+                                                        </select>
+                                                      </div>
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile02">&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp</label>
+                                                        <input type="text" name="ingredientquantityinfridgebox" class="form-control"
+                                                          id="inputGroupFile02">
+                                                      </div>
+                                                    </div>
+                                                    <div class="col">
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile03">보관위치</label>
+                                                          <select class="form-select form-select-sm"
+                                                          size="1" aria-label=".form-select-sm example"
+                                                          name="storagecode">
+                                                          <option value="1">냉장</option>
+                                                          <option value="2">냉동</option>
+                                                          <option value="3">실온</option>
+                                                          </select>
+                                                      </div>
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile04">유통기한</label>
+                                                        <!-- <input type="text" class="form-control" id="inputGroupFile04"> -->
+                                                        <input type="date" value="xxx" min="yyy" max="zzz"
+                                                          class="form-control input-large" name="expiredate"
+                                                          id="expiredate" placeholder="유통기한" required>
+                                                      </div>
+                                                    </div>
+                                                  </form>
+
+                                                  <hr>
+
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  id="closeBtn">닫기</button>
+                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn">재료
+                                                  추가</button>
+                                                <button type="submit" form="saveIngredientBtn" class="btn btn-primary"
+                                                  id="saveBtn">저장</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- End Single Item -->
+
+
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+                          <!-- 새 상품 등록 끝 -->
+                        </div>
+
+
+                        <div class="row">
+                          <!-- 여기 아래에서 부터 냉장 -->
+                          <div class="col-lg-3 col-md-4 col-12" th:each="fridgeList, fridgeStat : ${fridgeBoxList}" th:if="${fridgeList.storagecode.toString().equals('1')}">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#code'+${fridgeList.ingredientcode}+'_'+${fridgeStat.index}">
+                              <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';" class="imgIconBorder">
+                            </button>
+
+                            <p class="fridge-icon-name" th:text="${fridgeList.ingredientVo22.ingredientname}"></p>
+
+                            <!-- Modal -->
+                            <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
+                                      style="height: 50px; width: 50px;"><br>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel" th:text="${fridgeList.ingredientVo22.ingredientname}"></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="input-group mb-3">
+                                        <label class="input-group-text"
+                                          for="inputGroupFile01" >&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientquantityinfridgebox}">
+                                      </div>
+                                      <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientcreateddate}">
+                                      </div>
+                                      <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.expiredate}">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-secondary">수정</button>
+                                    <button type="button" class="btn btn-primary">저장</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                    <!-- 여기 아래에서 부터 냉동 -->
+                    <div class="tab-pane fade" id="nav-popular" role="tabpanel" aria-labelledby="nav-popular-tab">
+                      <div class="row">
+                        <!-- 여기 아래 row는 상품 등록 칸을 같이 넣어주기 위한 row부분 -->
+                        <div class="row">
+                          <!-- 새 상품 등록 시작 -->
+                          <div class="col-lg-3 col-md-4 col-12" id="newProductBtn">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="button btn btn-success newProductBtn" data-bs-toggle="modal"
+                              data-bs-target="#selectFrozenModal">
+                              재료 등록
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="selectFrozenModal" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">상품 등록 방법 선택</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col">
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#ingredientUploadModal1">
+                                          재료 이미지 등록
+                                        </button>
+
+                                        <!-- 내부 모달 부분 -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="ingredientUploadModal1" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">재료 이미지 등록</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 -->
+                                              <div class="modal-body">
+                                                <div class="uploadContainer">
+                                                  <div class="image-upload" id="image-upload">
+
+                                                    <form method="post" enctype="multipart/form-data">
+                                                      <div class="button">
+                                                        <label for="chooseFile">
+                                                          👉 이미지 선택 👈
+                                                        </label>
+                                                      </div>
+                                                      <input type="file" id="chooseFile" name="chooseFile"
+                                                        accept="image/*" onchange="loadFile(this)">
+                                                    </form>
+
+                                                    <div class="fileContainer">
+                                                      <div class="fileInput">
+                                                        <p>파일 이름: </p>
+                                                        <p id="fileName"></p>
+                                                      </div>
+                                                      <div class="buttonContainer">
+                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="image-show" id="image-show"></div>
+                                                </div>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 끝 -->
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-bs-dismiss="modal">닫기</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 내부 모달 끝 -->
+
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#receiptUploadModal1">
+                                          영수증 이미지 등록
+                                        </button>
+
+                                        <!-- 내부 모달 부분 -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="receiptUploadModal1" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">영수증 이미지 등록</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 -->
+                                              <div class="modal-body">
+                                                <div class="uploadContainer">
+                                                  <div class="image-upload" id="image-upload">
+
+                                                    <form method="post" enctype="multipart/form-data">
+                                                      <div class="button">
+                                                        <label for="chooseFile">
+                                                          👉 이미지 선택 👈
+                                                        </label>
+                                                      </div>
+                                                      <input type="file" id="chooseFile" name="chooseFile"
+                                                        accept="image/*" onchange="loadFile(this)">
+                                                    </form>
+
+                                                    <div class="fileContainer">
+                                                      <div class="fileInput">
+                                                        <p>파일 이름: </p>
+                                                        <p id="fileName"></p>
+                                                      </div>
+                                                      <div class="buttonContainer">
+                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="image-show" id="image-show"></div>
+                                                </div>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 끝 -->
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-bs-dismiss="modal">닫기</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 내부 모달 끝 -->
+                                      </div>
+
+                                      <div class="col">
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#barcodeUploadModal1">
+                                          상품 바코드 등록
+                                        </button>
+
+                                        <!-- 내부 모달 부분 -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="barcodeUploadModal1" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">상품 바코드 등록</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 -->
+                                              <div class="modal-body">
+                                                <div class="uploadContainer">
+                                                  <div class="image-upload" id="image-upload">
+
+                                                    <form method="post" enctype="multipart/form-data">
+                                                      <div class="button">
+                                                        <label for="chooseFile">
+                                                          👉 이미지 선택 👈
+                                                        </label>
+                                                      </div>
+                                                      <input type="file" id="chooseFile" name="chooseFile"
+                                                        accept="image/*" onchange="loadFile(this)">
+                                                    </form>
+
+                                                    <div class="fileContainer">
+                                                      <div class="fileInput">
+                                                        <p>파일 이름: </p>
+                                                        <p id="fileName"></p>
+                                                      </div>
+                                                      <div class="buttonContainer">
+                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="image-show" id="image-show"></div>
+                                                </div>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 끝 -->
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-bs-dismiss="modal">닫기</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 내부 모달 끝 -->
+
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#selftypingUploadModal1">
+                                          직접 입력
+                                        </button>
+
+                                        <!-- Start Single Item -->
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="selftypingUploadModal1" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">직접 입력
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close" id="closeBtnIcon"></button>
+                                              </div>
+                                              <!-- 여기는 모달바디 -->
+                                              <div class="modal-body">
+                                                <div class="row" id="addForm">
+                                                  <form th:action="@{/fridgebox}" id="saveIngredientBtn1" method="post">
+                                                    <div class="col">
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile01">상품명</label>
+                                                        <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
+                                                        <select id="ingredientList3" class="form-select form-select-sm"
+                                                          size="1" aria-label=".form-select-sm example"
+                                                          name="ingredientcode">
+                                                          <option th:each="m:${ingredientList3}"
+                                                            th:value="${m.ingredientcode}"
+                                                            th:text="${m.ingredientname}"></option>
+                                                        </select>
+                                                      </div>
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile02">&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp</label>
+                                                        <input type="text" name="ingredientquantityinfridgebox" class="form-control"
+                                                          id="inputGroupFile02">
+                                                      </div>
+                                                    </div>
+                                                    <div class="col">
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile03">보관위치</label>
+                                                          <select class="form-select form-select-sm"
+                                                          size="1" aria-label=".form-select-sm example"
+                                                          name="storagecode">
+                                                          <option value="1">냉장</option>
+                                                          <option value="2">냉동</option>
+                                                          <option value="3">실온</option>
+                                                          </select>
+                                                      </div>
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile04">유통기한</label>
+                                                        <!-- <input type="text" class="form-control" id="inputGroupFile04"> -->
+                                                        <input type="date" value="xxx" min="yyy" max="zzz"
+                                                          class="form-control input-large" name="expiredate"
+                                                          id="expiredate" placeholder="유통기한" required>
+                                                      </div>
+                                                    </div>
+                                                  </form>
+
+                                                  <hr>
+
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  id="closeBtn">닫기</button>
+                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn">재료
+                                                  추가</button>
+                                                <button type="submit" form="saveIngredientBtn1" class="btn btn-primary"
+                                                  id="saveBtn">저장</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- End Single Item -->
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+                          <!-- 새 상품 등록 끝 -->
+                        </div>
+
+                        <div class="row">
+                          <!-- 여기 아래에서 부터 냉동 -->
+                          <div class="col-lg-3 col-md-4 col-12" th:each="fridgeList, fridgeStat : ${fridgeBoxList}" th:if="${fridgeList.storagecode.toString().equals('2')}">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#code'+${fridgeList.ingredientcode}+'_'+${fridgeStat.index}">
+                              <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';" class="imgIconBorder">
+                            </button>
+
+                            <p class="fridge-icon-name" th:text="${fridgeList.ingredientVo22.ingredientname}"></p>
+
+                            <!-- Modal -->
+                            <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
+                                      style="height: 50px; width: 50px;"><br>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel" th:text="${fridgeList.ingredientVo22.ingredientname}"></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="input-group mb-3">
+                                        <label class="input-group-text"
+                                          for="inputGroupFile01" >&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientquantityinfridgebox}">
+                                      </div>
+                                      <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientcreateddate}">
+                                      </div>
+                                      <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.expiredate}">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-secondary">수정</button>
+                                    <button type="button" class="btn btn-primary">저장</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 여기 아래에서 부터 냉동 -->
+                    <div class="tab-pane fade" id="nav-random" role="tabpanel" aria-labelledby="nav-random-tab">
+                      <div class="row">
+                        <!-- 여기 아래 row는 상품 등록 칸을 같이 넣어주기 위한 row부분 -->
+                        <div class="row">
+                          <!-- 새 상품 등록 시작 -->
+                          <div class="col-lg-3 col-md-4 col-12" id="newProductBtn">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="button btn btn-success newProductBtn" data-bs-toggle="modal"
+                              data-bs-target="#selectFrozenModal2">
+                              재료 등록
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="selectFrozenModal2" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">상품 등록 방법 선택</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col">
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#ingredientUploadModal2">
+                                          재료 이미지 등록
+                                        </button>
+
+                                        <!-- 내부 모달 부분 -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="ingredientUploadModal2" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">재료 이미지 등록</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 -->
+                                              <div class="modal-body">
+                                                <div class="uploadContainer">
+                                                  <div class="image-upload" id="image-upload">
+
+                                                    <form method="post" enctype="multipart/form-data">
+                                                      <div class="button">
+                                                        <label for="chooseFile">
+                                                          👉 이미지 선택 👈
+                                                        </label>
+                                                      </div>
+                                                      <input type="file" id="chooseFile" name="chooseFile"
+                                                        accept="image/*" onchange="loadFile(this)">
+                                                    </form>
+
+                                                    <div class="fileContainer">
+                                                      <div class="fileInput">
+                                                        <p>파일 이름: </p>
+                                                        <p id="fileName"></p>
+                                                      </div>
+                                                      <div class="buttonContainer">
+                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="image-show" id="image-show"></div>
+                                                </div>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 끝 -->
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-bs-dismiss="modal">닫기</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 내부 모달 끝 -->
+
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#receiptUploadModal2">
+                                          영수증 이미지 등록
+                                        </button>
+
+                                        <!-- 내부 모달 부분 -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="receiptUploadModal2" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">영수증 이미지 등록</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 -->
+                                              <div class="modal-body">
+                                                <div class="uploadContainer">
+                                                  <div class="image-upload" id="image-upload">
+
+                                                    <form method="post" enctype="multipart/form-data">
+                                                      <div class="button">
+                                                        <label for="chooseFile">
+                                                          👉 이미지 선택 👈
+                                                        </label>
+                                                      </div>
+                                                      <input type="file" id="chooseFile" name="chooseFile"
+                                                        accept="image/*" onchange="loadFile(this)">
+                                                    </form>
+
+                                                    <div class="fileContainer">
+                                                      <div class="fileInput">
+                                                        <p>파일 이름: </p>
+                                                        <p id="fileName"></p>
+                                                      </div>
+                                                      <div class="buttonContainer">
+                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="image-show" id="image-show"></div>
+                                                </div>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 끝 -->
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-bs-dismiss="modal">닫기</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 내부 모달 끝 -->
+                                      </div>
+
+                                      <div class="col">
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#barcodeUploadModal2">
+                                          상품 바코드 등록
+                                        </button>
+
+                                        <!-- 내부 모달 부분 -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="barcodeUploadModal2" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">상품 바코드 등록</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close"></button>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 -->
+                                              <div class="modal-body">
+                                                <div class="uploadContainer">
+                                                  <div class="image-upload" id="image-upload">
+
+                                                    <form method="post" enctype="multipart/form-data">
+                                                      <div class="button">
+                                                        <label for="chooseFile">
+                                                          👉 이미지 선택 👈
+                                                        </label>
+                                                      </div>
+                                                      <input type="file" id="chooseFile" name="chooseFile"
+                                                        accept="image/*" onchange="loadFile(this)">
+                                                    </form>
+
+                                                    <div class="fileContainer">
+                                                      <div class="fileInput">
+                                                        <p>파일 이름: </p>
+                                                        <p id="fileName"></p>
+                                                      </div>
+                                                      <div class="buttonContainer">
+                                                        <div class="submitButton" id="submitButton">SUBMIT</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="image-show" id="image-show"></div>
+                                                </div>
+                                              </div>
+                                              <!-- 이미지 업로드 모달 끝 -->
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-bs-dismiss="modal">닫기</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 내부 모달 끝 -->
+
+                                        <!-- 내부 모달버튼 트리거 -->
+                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                          data-bs-target="#selftypingUploadModal2">
+                                          직접 입력
+                                        </button>
+
+                                        <!-- Start Single Item -->
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="selftypingUploadModal2" data-bs-backdrop="static"
+                                          data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                          aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">직접 입력
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                  aria-label="Close" id="closeBtnIcon"></button>
+                                              </div>
+                                              <!-- 여기는 모달바디 -->
+                                              <div class="modal-body">
+                                                <div class="row" id="addForm">
+                                                  <form th:action="@{/fridgebox}" id="saveIngredientBtn2" method="post">
+                                                    <div class="col">
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile01">상품명</label>
+                                                        <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
+                                                        <select id="ingredientList3" class="form-select form-select-sm"
+                                                          size="1" aria-label=".form-select-sm example"
+                                                          name="ingredientcode">
+                                                          <option th:each="m:${ingredientList3}"
+                                                            th:value="${m.ingredientcode}"
+                                                            th:text="${m.ingredientname}"></option>
+                                                        </select>
+                                                      </div>
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile02">&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp</label>
+                                                        <input type="text" name="ingredientquantityinfridgebox" class="form-control"
+                                                          id="inputGroupFile02">
+                                                      </div>
+                                                    </div>
+                                                    <div class="col">
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile03">보관위치</label>
+                                                          <select class="form-select form-select-sm"
+                                                          size="1" aria-label=".form-select-sm example"
+                                                          name="storagecode">
+                                                          <option value="1">냉장</option>
+                                                          <option value="2">냉동</option>
+                                                          <option value="3">실온</option>
+                                                          </select>
+                                                      </div>
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile04">유통기한</label>
+                                                        <!-- <input type="text" class="form-control" id="inputGroupFile04"> -->
+                                                        <input type="date" value="xxx" min="yyy" max="zzz"
+                                                          class="form-control input-large" name="expiredate"
+                                                          id="expiredate" placeholder="유통기한" required>
+                                                      </div>
+                                                    </div>
+                                                  </form>
+
+                                                  <hr>
+
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  id="closeBtn">닫기</button>
+                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn">재료
+                                                  추가</button>
+                                                <button type="submit" form="saveIngredientBtn2" class="btn btn-primary"
+                                                  id="saveBtn">저장</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- End Single Item -->
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+                          <!-- 새 상품 등록 끝 -->
+                        </div>
+
+                        <!-- 이 아래에서 부터 실온상품 출력 -->
+                        <div class="row">
+                          <!-- 여기 아래에서 부터 실온상품 출력 -->
+                          <div class="col-lg-3 col-md-4 col-12" th:each="fridgeList, fridgeStat : ${fridgeBoxList}" th:if="${fridgeList.storagecode.toString().equals('3')}">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#code'+${fridgeList.ingredientcode}+'_'+${fridgeStat.index}">
+                              <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';" class="imgIconBorder">
+                            </button>
+
+                            <p class="fridge-icon-name" th:text="${fridgeList.ingredientVo22.ingredientname}"></p>
+
+                            <!-- Modal -->
+                            <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
+                                      style="height: 50px; width: 50px;"><br>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel" th:text="${fridgeList.ingredientVo22.ingredientname}"></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="input-group mb-3">
+                                        <label class="input-group-text"
+                                          for="inputGroupFile01" >&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientquantityinfridgebox}">
+                                      </div>
+                                      <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientcreateddate}">
+                                      </div>
+                                      <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.expiredate}">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-secondary">수정</button>
+                                    <button type="button" class="btn btn-primary">저장</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+                        </div>
+
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- End Items Tab Area -->
+          <div class="row">
+
+
+          </div>
+        </div>
+
+
+        <!-- 여기 레시피 검색 결과 속에 사진 크기나 레이아웃 같은거 pages에 accountOverview 에 있는 Recent ads 부분 참조해 보는 것도 좋을 것 같음 -->
+        <div class="col">
+          <section class="items-tab section custom-padding">
+            <div class=" container">
+              <div class="row">
+                <div class="col-12">
+                  <div class="section-title">
+                    <h2 class="wow fadeInUp" data-wow-delay=".4s">레시피 검색</h2>
+                    <p class="wow fadeInUp" data-wow-delay=".6s">레시피를 검색하고 한번에 장바구니에 담아보세요</p>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <nav>
+
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <button class="nav-link active" id="nav-latest-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-recipeNameSearch" type="button" role="tab" aria-controls="nav-latest"
+                        aria-selected="true">레시피 이름으로 검색</button>
+                      <button class="nav-link" id="nav-popular-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-recipeIngredientSearch" type="button" role="tab"
+                        aria-controls="nav-popular" aria-selected="false">재료 이름으로 검색</button>
+                    </div>
+                  </nav>
+                  <div class="tab-content scroll-css" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-recipeNameSearch" role="tabpanel"
+                      aria-labelledby="nav-latest-tab">
+                      <div class="row">
+                        <!-- Start Search Form -->
+                        <form th:action="@{/recipeList}" method="post" id="search-form">
+                          <div class="search-form wow fadeInUp fridge-search">
+                            <div class="row">
+                              <div class="col-lg-10 col-md-4 col-12 p-0">
+                                <div id="search-input" class="search-input">
+                                  <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
+                                  <input type="text " name="similar" id="similar" placeholder="레시피 이름으로 검색하세요">
+                                </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2 col-12 p-0">
+                                <div class="search-btn button">
+                                  <button type="submit" id="search-btn" class="btn btn-submit"><i
+                                      class="lni lni-search-alt"></i> 검색</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        <!-- End Search Form -->
+
+
+                        <!-- Start Items Area -->
+                        <div class="my-items">
+                          <!-- Start Item List Title -->
+                          <div class="item-list-title wow fadeInUp">
+                            <div class="row align-items-center">
+                              <div class="col-lg-5 col-md-5 col-12">
+                                <h5 style="margin-left: 10px;">레시피 목록</h5>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- End List Title -->
+                          <!-- Start Single List -->
+                          <div class="single-item-list wow fadeInUp">
+                            <div class="row align-items-center">
+                              <div class="col-4 col-12">
+                                <div class="item-image">
+                                  <img
+                                    src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
+                                    alt="#" style="position: none;">
+                                  <div class="content">
+                                    <h3 class="title"><a href="javascript:void(0)"><b>김치 전골</b></a><button type="button"
+                                        class="btn btn-success recipeBtn">장바구니
+                                        담기</button></h3>
+                                    <hr>
+                                    <p>멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
+                                      두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯</p>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                            </div>
+                          </div>
+                          <!-- End Single List -->
+
+                          <!-- Start Single List -->
+                          <div class="single-item-list">
+                            <div class="row align-items-center">
+                              <div class="col-4 col-12">
+                                <div class="item-image">
+                                  <img
+                                    src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
+                                    alt="#" style="position: none;">
+                                  <div class="content">
+                                    <h3 class="title"><a href="javascript:void(0)">김치 전골</a></h3>
+                                    <hr>
+                                    <p>멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
+                                      두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯</p>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                            </div>
+                          </div>
+                          <!-- End Single List -->
+
+                          <!-- Start Single List -->
+                          <div class="single-item-list">
+                            <div class="row align-items-center">
+                              <div class="col-4 col-12">
+                                <div class="item-image">
+                                  <img
+                                    src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
+                                    alt="#" style="position: none;">
+                                  <div class="content">
+                                    <h3 class="title"><a href="javascript:void(0)">김치 전골</a></h3>
+                                    <hr>
+                                    <p>멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
+                                      두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯</p>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                            </div>
+                          </div>
+                          <!-- End Single List -->
+                        </div>
+                        <!-- 여기 까지 잘라서 들어가야 함 -->
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-recipeIngredientSearch" role="tabpanel"
+                      aria-labelledby="nav-popular-tab">
+                      <div class="row">
+                        <!-- Start Search Form -->
+                        <form th:action="@{/procedureList}" method="post" id="search-form">
+                          <div class="search-form wow fadeInUp fridge-search" data-wow-delay=".7s">
+                            <div class="row">
+                              <div class="col-lg-10 col-md-4 col-12 p-0">
+                                <div id="search-input" class="search-input">
+                                  <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
+                                  <input type="text " name="similar" id="similar" placeholder="재료 목록으로 검색하세요">
+                                </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2 col-12 p-0">
+                                <div class="search-btn button">
+                                  <button type="submit" id="search-btn" class="btn btn-submit"><i
+                                      class="lni lni-search-alt" onclick=""></i> 검색</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        <!-- End Search Form -->
+
+
+                        <!-- Start Items Area -->
+                        <div class="my-items">
+                          <!-- Start Item List Title -->
+                          <div class="item-list-title wow fadeInUp">
+                            <div class="row align-items-center">
+                              <div class="col-lg-5 col-md-5 col-12">
+                                <h5 style="margin-left: 10px;">레시피 목록</h5>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- End List Title -->
+                          <!-- Start Single List -->
+                          <div class="single-item-list wow fadeInUp" th:each="recipe : ${keyIndex}">
+                            <p th:text="${recipe.get(procedureList.get(0).getCookVo22().getCookname()}"></p>
+                          </div>
+                          <!-- End Single List -->
+
+                          
+                        </div>
+                        <!-- 여기 까지 잘라서 들어가야 함 -->
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <!-- 여기 까지 잘라서 들어가야 함 -->
+              </div>
+            </div>
+          </section>
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- end Fridge section -->
+
+    <hr>
+
+    <!-- Start Footer Area -->
+    <footer class="footer">
+      <!-- Start Footer Top -->
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer mobile-app">
+                <h3>어플리케이션 다운로드</h3>
+                <div class="app-button">
+                  <a th:href="@{/#}" class="btn">
+                    <i class="lni lni-play-store"></i>
+                    <span class="text">
+                      구글플레이
+                      <span class="small-text">에서 다운로드하세요</span>
+
+                    </span>
+                  </a>
+                  <a th:href="@{/#}" class="btn">
+                    <i class="lni lni-apple"></i>
+                    <span class="text">
+                      앱스토어
+                      <span class="small-text">에서 다운로드 하세요</span>
+                    </span>
+                  </a>
+                </div>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer f-link">
+                <h3>Locations</h3>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-12">
+                    <ul>
+                      <li><a th:href="@{/#}">Chicago</a></li>
+                      <li><a th:href="@{/#}">New York City</a></li>
+                      <li><a th:href="@{/#}">San Francisco</a></li>
+                      <li><a th:href="@{/#}">Washington</a></li>
+                      <li><a th:href="@{/#}">Boston</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-12">
+                    <ul>
+                      <li><a th:href="@{/#}">Los Angeles</a></li>
+                      <li><a th:href="@{/#}">Seattle</a></li>
+                      <li><a th:href="@{/#}">Las Vegas</a></li>
+                      <li><a th:href="@{/#}">San Diego</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer f-link">
+                <h3>Quick Links</h3>
+                <ul>
+                  <li><a th:href="@{/#}">About Us</a></li>
+                  <li><a th:href="@{/#}">How It's Works</a></li>
+                  <li><a th:href="@{/#}">Login</a></li>
+                  <li><a th:href="@{/#}">Signup</a></li>
+                  <li><a th:href="@{/#}">Help & Support</a></li>
+                </ul>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer f-contact">
+                <h3>Contact</h3>
+                <ul>
+                  <li>23 New Design Str, Lorem Upsum 10<br> Hudson Yards, USA</li>
+                  <li>Tel. +(123) 1800-567-8990 <br> Mail. support@classigrids.com</li>
+                </ul>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ End Footer Middle -->
+      <!-- Start Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="inner">
+            <div class="row">
+              <div class="col-12">
+                <div class="content">
+                  <ul class="footer-bottom-links">
+                    <li><a th:href="@{/#}">Terms of use</a></li>
+                    <li><a th:href="@{/#}"> Privacy Policy</a></li>
+                    <li><a th:href="@{/#}">Advanced Search</a></li>
+                    <li><a th:href="@{/#}">Site Map</a></li>
+                    <li><a th:href="@{/#}">Information</a></li>
+                  </ul>
+                  <p class="copyright-text">Designed and Developed by <a th:href="@{https://graygrids.com/}"
+                      rel="nofollow" target="_blank">GrayGrids</a>
+                  </p>
+                  <ul class="footer-social">
+                    <li><a th:href="@{/#}"><i class="lni lni-facebook-filled"></i></a></li>
+                    <li><a th:href="@{/#}"><i class="lni lni-twitter-original"></i></a></li>
+                    <li><a th:href="@{/#}"><i class="lni lni-youtube"></i></a></li>
+                    <li><a th:href="@{/#}"><i class="lni lni-linkedin-original"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Footer Middle -->
+    </footer>
+    <!--/ End Footer Area -->
+
+    <!-- ========================= scroll-top ========================= -->
+    <a th:href="@{/#}" class="scroll-top btn-hover">
+      <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/glightbox.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- <script src="js/user-access.js"></script> -->
+    <script src="js/imagesubmit.js"></script>
+    <script src="js/add-ingredient.js"></script>
+    <!-- <script src="js/btncontrol/memosubmit.js"></script> -->
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    
+    <script>
+
+
+      // 여기 밑에는 메모 등록 버튼
+      $(function () {
+        $("#memoSubmitForm").on("submit", function () {
+          memoSubmitHandler()
+        })
+      })
+
+      function memoSubmitHandler() {
+        let form = document.querySelector("#memoSubmitForm")
+        let formData = new FormData(form)
+
+        $.ajax({
+          url: "/addArticle",
+          type: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function (data) {
+            console.log("성공 :", data)
+          },
+          error: function (error) {
+            console.error("에러 :", error)
+          },
+          complete: function () {
+            closeModal()
+            console.log("리로드 하는 부분: 여기는 도착 했니================================>??")
+            $("#memo-table").load(location.href + " #memo-table")
+          }
+        })
+      }
+
+      // 여기 밑에는 게시판 삭제 버튼
+      
+
+
+
+      // $(function () {
+      //   $(".deleteMemoBtn").on("click", function () {
+      //     deleteMemoHandler()
+      //   })
+      // })
+
+      // function deleteMemoHandler() {
+      //   let button = document.querySelector(".deleteMemoBtn")
+      //   let $button = new $button(button)
+
+      //   $.ajax({
+      //     url: "/removeArticle/' + ${memo.memocode}",
+      //     type: "POST",
+      //     contentType: false,
+      //     processData: false,
+      //     success: function (data) {
+      //       console.log("성공 :", data)
+      //     },
+      //     error: function (error) {
+      //       console.error("에러 :", error)
+      //     },
+      //     complete: function () {
+      //       closeModal()
+      //       console.log("리로드 하는 부분: 여기는 도착 했니================================>??")
+      //       $("#memo-table").load(location.href + " #memo-table")
+      //     }
+      //   })
+      // }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>내 냉장고 - SSAG</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- <link rel="shortcut icon" type="image/x-icon" th:href="@{images/favicon.svg" />} -->
+  <!-- Place favicon.ico in the root directory -->
+
+  <!-- Web Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+  <!-- ========================= CSS here ========================= -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/LineIcons.2.0.css" />
+  <link rel="stylesheet" href="css/animate.css" />
+  <link rel="stylesheet" href="css/tiny-slider.css" />
+  <link rel="stylesheet" href="css/glightbox.min.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/sheepcastle.css" />
+
+</head>
+
+<body>
+
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-icon">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- /End Preloader -->
+
+  <!-- Start Header Area -->
+  <header class="header navbar-area">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <div class="nav-inner">
+            <nav class="navbar navbar-expand-lg">
+              <a class="navbar-brand" th:href="@{/}">
+                <!-- <img th:src="@{images/logo/logo.svg" alt="Logo">} -->
+                <h1>SSAG.R</h1>
+              </a>
+              <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                <ul id="nav" class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                    <a class="dd-menu collapsed" th:href="@{/}" data-bs-toggle="collapse" data-bs-target="#submenu-1-1"
+                      aria-controls="navbarSupportedContent" aria-expanded="false"
+                      aria-label="Toggle navigation">홈페이지</a>
+                    <!-- <ul class="sub-menu collapse" id="submenu-1-1">
+                                    <li class="nav-item active"><a th:href="@{/}">Home Default</a></li>
+                                    <li class="nav-item"><a th:href="index2.html">Home Version 2</a></li>
+                                    <li class="nav-item"><a th:href="index3.html">Home Version 3</a></li>
+                                </ul> -->
+                  </li>
+                  <li class="nav-item">
+                    <a th:href="@{myfridge}" aria-label="Toggle navigation">내 냉장고</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="dd-menu collapsed" th:href="@{/#}" data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
+                      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">사이트
+                      소개</a>
+                    <ul class="sub-menu collapse" id="submenu-1-3">
+                      <li class="nav-item"><a th:href="@{item-listing-grid.html}">검색 사용방법</a></li>
+                      <li class="nav-item"><a th:href="@{item-listing-list.html}">내 냉장고 사용방법</a></li>
+                      <li class="nav-item"><a th:href="@{item-details.html}">어플리케이션 다운로드 및 사용방법</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div> <!-- navbar collapse -->
+              <div class="login-button">
+                <ul>
+                  <li>
+                    <a th:href="@{/login}"><i class="lni lni-enter"></i> 로그인</a>
+                  </li>
+                  <li>
+                    <a th:href="@{/whoareu}"><i class="lni lni-user"></i> 회원가입</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- <div class="button header-button">
+                        <a th:href="post-item.html" class="btn">Post an Ad</a>
+                    </div> -->
+            </nav> <!-- navbar -->
+          </div>
+        </div>
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </header>
+  <!-- End Header Area -->
+
+  <!-- Start Breadcrumbs -->
+  <div class="breadcrumbs">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-md-6 col-12">
+          <div class="breadcrumbs-content">
+            <h1 class="page-title">내 냉장고</h1>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+          <ul class="breadcrumb-nav">
+            <li><a th:href="@{/}">홈페이지</a></li>
+            <li>내 냉장고</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Breadcrumbs -->
+
+  <!-- start Freezy section -->
+
+
+  <div class="container">
+    <div class="content">
+      <div class="row">
+        <div class="overflow-auto">
+
+        </div>
+        <div class="col">
+          <!-- 냉장고 부분 첫번째 행 시작 -->
+          <!-- Start Items Tab Area -->
+          <section class="items-tab section custom-padding">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <div class="section-title">
+                    <h2 class="wow fadeInUp" data-wow-delay=".4s">내 냉장고</h2>
+                    <p class="wow fadeInUp" data-wow-delay=".6s">남들과 다르게 냉장고를 깔끔하게 정리해봐요.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <button class="nav-link" id="nav-popular-tab" data-bs-toggle="tab" data-bs-target="#nav-memo"
+                        type="button" role="tab" aria-controls="nav-popular" aria-selected="false">메모</button>
+                      <button class="nav-link active" id="nav-latest-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-latest" type="button" role="tab" aria-controls="nav-latest"
+                        aria-selected="true">냉장</button>
+                      <button class="nav-link" id="nav-popular-tab" data-bs-toggle="tab" data-bs-target="#nav-popular"
+                        type="button" role="tab" aria-controls="nav-popular" aria-selected="false">냉동</button>
+                      <button class="nav-link" id="nav-random-tab" data-bs-toggle="tab" data-bs-target="#nav-random"
+                        type="button" role="tab" aria-controls="nav-random" aria-selected="false">실온</button>
+                    </div>
+                  </nav>
+
+                  <div class="tab-content" id="nav-tabContent">
+
+                    <!-- 여기 아래에서 부터 메모 -->
+                    <div class="tab-pane fade" id="nav-memo" role="tabpanel" aria-labelledby="nav-popular-tab">
+                      <div class="row">
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" placeholder="너의 마음 속에 있던 말들을 풀어놔"
+                            aria-label="Recipient's username" aria-describedby="button-addon2">
+                          <button class="btn btn-outline-secondary" type="button" id="button-addon2">등록</button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <table>
+                          <tr>
+                            <th scope="row">
+                              작성자
+                            </th>
+                            <td class="tdText">
+                              내용 들어가는 부분.
+                            </td>
+                            <td class="tdTime">시간/time</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              신항수
+                            </th>
+                            <td class="tdText">
+                              내용 들어가는 부분. 얘들아 아이스크림이 없다. 사서 넣어놔!
+                            </td>
+                            <td class="tdTime">시간/time</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              권주희
+                            </th>
+                            <td class="tdText">
+                              내용 들어가는 부분. 오빠들 아이스크림이 없어. 사서 넣어줘!
+                            </td>
+                            <td class="tdTime">시간/time</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              임양성
+                            </th>
+                            <td class="tdText">
+                              내용 들어가는 부분. 여러분 아이스크림 사실 제가 다 먹었어요. 사서 넣어놓을게요!
+                            </td>
+                            <td class="tdTime">시간/time</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade show active" id="nav-latest" role="tabpanel"
+                      aria-labelledby="nav-latest-tab">
+                      <div class="row">
+                        <!-- 여기 아래 row는 상품 등록 칸을 같이 넣어주기 위한 row부분 -->
+                        <div class="row">
+                          <!-- 새 상품 등록 시작 -->
+                          <div class="col-lg-3 col-md-4 col-12" id="newProductBtn">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="button btn btn-success newProductBtn" data-bs-toggle="modal"
+                              data-bs-target="#selectMethodModal">
+                              재료 등록
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="selectMethodModal" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">상품 등록 방법 선택</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col">
+                                        <button class="button btn btn-success newSelectBtn">
+                                          재료 이미지 등록
+                                        </button>
+                                        <button class="button btn btn-success newSelectBtn">
+                                          영수증 이미지 등록
+                                        </button>
+                                      </div>
+                                      <div class="col">
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                          <input type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                          <input type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-secondary">수정</button>
+                                    <button type="button" class="btn btn-primary">저장</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+                          <!-- 새 상품 등록 끝 -->
+                        </div>
+
+
+                        <div class="row">
+                          <!-- 여기 아래에서 부터 냉장 -->
+                          <div class="col-lg-3 col-md-4 col-12">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                              <img src="images/fridgeicon/가지.png" alt="냉장고 아이콘 자리" class="imgIconBorder">
+                            </button>
+
+                            <p class="fridge-icon-name">가지</p>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <img src="images/fridgeicon/가지.png" alt="냉장고 아이콘 자리"
+                                      style="height: 50px; width: 50px;"><br>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">&nbsp&nbsp가지</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp상품명&nbsp&nbsp</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                      </div>
+                                      <div class="col">
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-secondary">수정</button>
+                                    <button type="button" class="btn btn-primary">저장</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- End Single Item -->
+                          </div>
+
+
+                          <div class="col-lg-3 col-md-4 col-12">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                              <img src="images/fridgeicon/가지.png" alt="냉장고 아이콘 자리" class="imgIconBorder">
+                            </button>
+                            <p class="fridge-icon-name">가지</p>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <img src="images/fridgeicon/가지.png" alt="냉장고 아이콘 자리"
+                                      style="height: 50px; width: 50px;"><br>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">&nbsp&nbsp가지</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp상품명&nbsp&nbsp</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                      </div>
+                                      <div class="col">
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-secondary">수정</button>
+                                    <button type="button" class="btn btn-primary">저장</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+
+                          <div class="col-lg-3 col-md-4 col-12">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                              <img src="images/fridgeicon/가지.png" alt="냉장고 아이콘 자리" class="imgIconBorder">
+                            </button>
+                            <p class="fridge-icon-name">가지</p>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <img src="images/fridgeicon/가지.png" alt="냉장고 아이콘 자리"
+                                      style="height: 50px; width: 50px;"><br>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">&nbsp&nbsp가지</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp상품명&nbsp&nbsp</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                      </div>
+                                      <div class="col">
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-secondary">수정</button>
+                                    <button type="button" class="btn btn-primary">저장</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+
+                          <div class="col-lg-3 col-md-4 col-12">
+                            <!-- Start Single Item -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                              <img src="images/fridgeicon/가지.png" alt="냉장고 아이콘 자리" class="imgIconBorder">
+                            </button>
+                            <p class="fridge-icon-name">가지</p>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                              aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <img src="images/fridgeicon/가지.png" alt="냉장고 아이콘 자리"
+                                      style="height: 50px; width: 50px;"><br>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">&nbsp&nbsp가지</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <!-- 여기는 모달바디 -->
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp상품명&nbsp&nbsp</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                      </div>
+                                      <div class="col">
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                          <p type="text" class="form-control" id="inputGroupFile01">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    <button type="button" class="btn btn-secondary">수정</button>
+                                    <button type="button" class="btn btn-primary">저장</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Single Item -->
+                          </div>
+                        </div> <!-- 여기가 싱글 아이템 row 끝나는 부분 -->
+                        <div class="row">
+
+                        </div>
+
+
+                      </div>
+                    </div>
+                    <!-- 여기 아래에서 부터 냉동 -->
+                    <div class="tab-pane fade" id="nav-popular" role="tabpanel" aria-labelledby="nav-popular-tab">
+                      <div class="row">
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/당근.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">당근</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/꼬치.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">꼬치</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/당근.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">당근</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/꼬치.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">꼬치</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/체리.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">체리</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/계란후라이.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">계란후라이</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/가지.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">가지</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 여기 아래에서 부터 실온 -->
+                    <div class="tab-pane fade" id="nav-random" role="tabpanel" aria-labelledby="nav-random-tab">
+                      <div class="row">
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/꼬치.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">꼬치</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/아이스크림.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">아이스크림</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/당근.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">당근</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/체리.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">체리</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/체리.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">체리</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/계란후라이.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">계란후라이</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                          <!-- Start Single Item -->
+                          <img src="images/fridgeicon/사과.png" alt="냉장고 아이콘 자리">
+                          <p class="fridge-icon-name">사과</p>
+
+                          <!-- End Single Item -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- End Items Tab Area -->
+          <div class="row">
+
+
+          </div>
+
+
+
+        </div>
+
+        <!-- 여기 레시피 검색 결과 속에 사진 크기나 레이아웃 같은거 pages에 accountOverview 에 있는 Recent ads 부분 참조해 보는 것도 좋을 것 같음 -->
+        <div class="col">
+          <div class="row" style="margin-top: 60px; margin-bottom: 0px;">
+            <div class="col-12">
+              <div class="section-title">
+                <h2 class="wow fadeInUp" data-wow-delay=".4s">레시피 검색</h2>
+                <p class="wow fadeInUp" data-wow-delay=".6s">레시피를 검색하고 한번에 장바구니에 담아보세요</p>
+              </div>
+            </div>
+            <div class="row">
+
+              <!-- Start Search Form -->
+              <form th:action="@{/searchresult}" method="post" id="search-form">
+                <div class="search-form wow fadeInUp fridge-search" data-wow-delay=".7s">
+                  <div class="row">
+                    <div class="col-lg-10 col-md-4 col-12 p-0">
+                      <div id="search-input" class="search-input">
+                        <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
+                        <input type="text " name="similar" id="similar" placeholder="상품명을 입력하세요">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-12 p-0">
+                      <div class="search-btn button">
+                        <button type="submit" id="search-btn" class="btn btn-submit"><i class="lni lni-search-alt"
+                            onclick=""></i> 검색</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <!-- End Search Form -->
+            </div>
+
+
+            <!-- Start Items Area -->
+            <div class="my-items">
+              <!-- Start Item List Title -->
+              <div class="item-list-title wow fadeInUp">
+                <div class="row align-items-center">
+                  <div class="col-lg-5 col-md-5 col-12">
+                    <h5 style="margin-left: 10px;">레시피 목록</h5>
+                  </div>
+                </div>
+              </div>
+              <!-- End List Title -->
+              <!-- Start Single List -->
+              <div class="single-item-list wow fadeInUp">
+                <div class="row align-items-center">
+                  <div class="col-4 col-12">
+                    <div class="item-image">
+                      <img
+                        src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
+                        alt="#" style="position: none;">
+                      <div class="content">
+                        <h3 class="title"><a href="javascript:void(0)"><b>김치 전골</b></a><button type="button"
+                            class="btn btn-success recipeBtn">장바구니
+                            담기</button></h3>
+                        <hr>
+                        <p>멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
+                          두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯</p>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+              <!-- End Single List -->
+
+              <!-- Start Single List -->
+              <div class="single-item-list">
+                <div class="row align-items-center">
+                  <div class="col-4 col-12">
+                    <div class="item-image">
+                      <img
+                        src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
+                        alt="#" style="position: none;">
+                      <div class="content">
+                        <h3 class="title"><a href="javascript:void(0)">김치 전골</a></h3>
+                        <hr>
+                        <p>멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
+                          두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯</p>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+              <!-- End Single List -->
+
+              <!-- Start Single List -->
+              <div class="single-item-list">
+                <div class="row align-items-center">
+                  <div class="col-4 col-12">
+                    <div class="item-image">
+                      <img
+                        src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
+                        alt="#" style="position: none;">
+                      <div class="content">
+                        <h3 class="title"><a href="javascript:void(0)">김치 전골</a></h3>
+                        <hr>
+                        <p>멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
+                          두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯</p>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+              <!-- End Single List -->
+
+
+
+            </div>
+            <!-- End Items Area -->
+
+            <!-- <div class="container">
+                <div class="row">
+                  <div class="col-2 recipeImgCol">
+                    <img class="recipeImg"
+                      src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
+                      style="float: left;">
+                  </div>
+                  <div class="col-8 recipeListText">
+                    <h5 class="recipeListName">김치 전골</h5>
+                    <hr>
+                    <p class="recipeListValue">멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
+                      두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,</p>
+                  </div>
+
+
+                </div>
+              </div>
+
+
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="recipeImg">
+                    <div class="row">
+
+                    </div>
+
+
+                  </div>
+
+
+                </li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+                <li class="list-group-item">A fourth item</li>
+                <li class="list-group-item">And a fifth one</li>
+              </ul> -->
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- end Fridge section -->
+
+    <hr>
+
+    <!-- Start Footer Area -->
+    <footer class="footer">
+      <!-- Start Footer Top -->
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer mobile-app">
+                <h3>어플리케이션 다운로드</h3>
+                <div class="app-button">
+                  <a th:href="@{/#}" class="btn">
+                    <i class="lni lni-play-store"></i>
+                    <span class="text">
+                      구글플레이
+                      <span class="small-text">에서 다운로드하세요</span>
+
+                    </span>
+                  </a>
+                  <a th:href="@{/#}" class="btn">
+                    <i class="lni lni-apple"></i>
+                    <span class="text">
+                      앱스토어
+                      <span class="small-text">에서 다운로드 하세요</span>
+                    </span>
+                  </a>
+                </div>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer f-link">
+                <h3>Locations</h3>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-12">
+                    <ul>
+                      <li><a th:href="@{/#}">Chicago</a></li>
+                      <li><a th:href="@{/#}">New York City</a></li>
+                      <li><a th:href="@{/#}">San Francisco</a></li>
+                      <li><a th:href="@{/#}">Washington</a></li>
+                      <li><a th:href="@{/#}">Boston</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-12">
+                    <ul>
+                      <li><a th:href="@{/#}">Los Angeles</a></li>
+                      <li><a th:href="@{/#}">Seattle</a></li>
+                      <li><a th:href="@{/#}">Las Vegas</a></li>
+                      <li><a th:href="@{/#}">San Diego</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer f-link">
+                <h3>Quick Links</h3>
+                <ul>
+                  <li><a th:href="@{/#}">About Us</a></li>
+                  <li><a th:href="@{/#}">How It's Works</a></li>
+                  <li><a th:href="@{/#}">Login</a></li>
+                  <li><a th:href="@{/#}">Signup</a></li>
+                  <li><a th:href="@{/#}">Help & Support</a></li>
+                </ul>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer f-contact">
+                <h3>Contact</h3>
+                <ul>
+                  <li>23 New Design Str, Lorem Upsum 10<br> Hudson Yards, USA</li>
+                  <li>Tel. +(123) 1800-567-8990 <br> Mail. support@classigrids.com</li>
+                </ul>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ End Footer Middle -->
+      <!-- Start Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="inner">
+            <div class="row">
+              <div class="col-12">
+                <div class="content">
+                  <ul class="footer-bottom-links">
+                    <li><a th:href="@{/#}">Terms of use</a></li>
+                    <li><a th:href="@{/#}"> Privacy Policy</a></li>
+                    <li><a th:href="@{/#}">Advanced Search</a></li>
+                    <li><a th:href="@{/#}">Site Map</a></li>
+                    <li><a th:href="@{/#}">Information</a></li>
+                  </ul>
+                  <p class="copyright-text">Designed and Developed by <a th:href="@{https://graygrids.com/}"
+                      rel="nofollow" target="_blank">GrayGrids</a>
+                  </p>
+                  <ul class="footer-social">
+                    <li><a th:href="@{/#}"><i class="lni lni-facebook-filled"></i></a></li>
+                    <li><a th:href="@{/#}"><i class="lni lni-twitter-original"></i></a></li>
+                    <li><a th:href="@{/#}"><i class="lni lni-youtube"></i></a></li>
+                    <li><a th:href="@{/#}"><i class="lni lni-linkedin-original"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Footer Middle -->
+    </footer>
+    <!--/ End Footer Area -->
+
+    <!-- ========================= scroll-top ========================= -->
+    <a th:href="@{/#}" class="scroll-top btn-hover">
+      <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/glightbox.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/user-access.js"></script>
+</body>
+
+</html>
