@@ -1,6 +1,10 @@
 package com.ssag.config.oauth;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.Map;
+import java.util.Optional;
+
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -8,33 +12,31 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.ssag.config.auth.PrincipalDetails;
-import com.ssag.dao.UserDao;
+import com.ssag.config.oauth.provider.FaceBookUserInfo;
+import com.ssag.config.oauth.provider.GoogleUserInfo;
+import com.ssag.config.oauth.provider.NaverUserInfo;
+import com.ssag.config.oauth.provider.OAuth2UserInfo;
 import com.ssag.model.UserVo;
 import com.ssag.service.UserService;
 
+import lombok.AllArgsConstructor;
+
 @Service
-public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
+public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
+
 	
-	private final PasswordEncoder passwordEncoder;
-	private final UserService userService;
-	private final UserDao userDao;
-	public PrincipalOauth2UserService(PasswordEncoder passwordEncoder,UserDao userDao,UserService userService) {
-		this.passwordEncoder=passwordEncoder;
-		this.userDao=userDao;
-		this.userService=userService;
-	}
-	
-	//구글로 받은 UserRequest 데이터에 대한 후처리되는 함수
+	private UserService userService;
+
 	// userRequest 는 code를 받아서 accessToken을 응답 받은 객체
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		OAuth2User oAuth2User = super.loadUser(userRequest); // google의 회원 프로필 조회
 
 		// code를 통해 구성한 정보
-		System.out.println("userRequest clientRegistration : " + userRequest.getClientRegistration());
+//		System.out.println("userRequest clientRegistration : " + userRequest.getClientRegistration());
 		// token을 통해 응답받은 회원정보
-		System.out.println("oAuth2User : " + oAuth2User);
-	
+//		System.out.println("oAuth2User : " + oAuth2User);
+
 		return processOAuth2User(userRequest, oAuth2User);
 	}
 
@@ -45,46 +47,43 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 		if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
 			System.out.println("구글 로그인 요청~~");
 			oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
-//		} else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
-//			System.out.println("페이스북 로그인 요청~~");
-//			oAuth2UserInfo = new FaceBookUserInfo(oAuth2User.getAttributes());
-//		} else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")){
-//			System.out.println("네이버 로그인 요청~~");
-//			oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
+		} else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
+			System.out.println("페이스북 로그인 요청~~");
+			oAuth2UserInfo = new FaceBookUserInfo(oAuth2User.getAttributes());
+		} else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+			System.out.println("네이버 로그인 요청~~");
+			oAuth2UserInfo = new NaverUserInfo((Map) oAuth2User.getAttributes().get("response"));
 		} else {
 			System.out.println("우리는 구글과 페이스북만 지원해요 ㅎㅎ");
 		}
 
-		oAuth2User = super.loadUser(userRequest);
-		String provider = userRequest.getClientRegistration().getClientId();//google
-		String providerid = oAuth2User.getAttribute("sub");
-		String username = provider +"_" + providerid; //google 고유아이디 생성
-		String password = passwordEncoder.encode("겟인데어");
-		String email = oAuth2User.getAttribute("email");
-		String role = "ROLE_USER";
-		String name = oAuth2User.getAttribute("name");
-		//System.out.println("oAuth2UserInfo.getProvider() : " + oAuth2UserInfo.getProvider());
-		//System.out.println("oAuth2UserInfo.getProviderId() : " + oAuth2UserInfo.getProviderId());
-//		Optional<UserVo> userOptional = 
-//				userService.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
+		System.out.println("oAuth2UserInfo.getProvider() : " + oAuth2UserInfo.getProvider());
+		System.out.println("oAuth2UserInfo.getProviderId() : " + oAuth2UserInfo.getProviderId());
 		
-		UserVo user = userService.findById(username);
-		if(user == null) {
+		Optional<UserVo> userOptional = 
+				userService.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
+		
+		
+		
+		System.out.println("??"+userOptional);
+		UserVo user;
+		if (userOptional.isPresent()) {
+			user = userOptional.get();
+			// user가 존재하면 update 해주기
+			user.setEmail(oAuth2UserInfo.getEmail());
+			userService.updateUser(user);
+		} else {
+			// user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
 			user = UserVo.builder()
-					.username(username)
-					.password(password)
-					.email(email)
-					.role(role)
-					.name(name)
+					.username(oAuth2UserInfo.getProvider() + "_" + oAuth2UserInfo.getProviderId())
+					.email(oAuth2UserInfo.getEmail())
+					.role("ROLE_USER")
+					.provider(oAuth2UserInfo.getProvider())
+					.providerId(oAuth2UserInfo.getProviderId())
 					.build();
-			userDao.insertUser(user);
-		}else {
-			System.out.println("이미 가입한 유저입니다.");
-			System.out.println("test1 ; " +user);
-			System.out.println("test1 ; " + oAuth2User.getAttributes());
+			userService.addUser(user);
 		}
-		
-		
+
 		return new PrincipalDetails(user, oAuth2User.getAttributes());
 	}
 }

@@ -68,6 +68,11 @@
                   채워주기 위해서 만들어진 사이트 입니다.
                 </p>
               </div>
+              <li sec:authorize="isAuthenticated()">
+               <sec:authentication property="details.username" th:src="${username}" />
+                <div id="username">안녕하세요.<h4 th:value=" ${username}"></h4></div>
+            </sec:authorize>
+            </li>
               <!-- End Hero Text -->
               <!-- Start Search Form -->
               <form th:action="@{/searchresult}" method="get" id="search-form">

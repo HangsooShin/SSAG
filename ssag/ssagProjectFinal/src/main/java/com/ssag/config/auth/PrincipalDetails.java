@@ -10,88 +10,75 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.ssag.model.UserVo;
 
-import lombok.Data;
-
-//@Data
+// Authentication 객체에 저장할 수 있는 유일한 타입
 public class PrincipalDetails implements UserDetails, OAuth2User{
-	
+
 	private static final long serialVersionUID = 1L;
 	private UserVo user;
 	private Map<String, Object> attributes;
-	
-	//일반 로그인
+
+	// 일반 시큐리티 로그인시 사용
 	public PrincipalDetails(UserVo user) {
 		this.user = user;
 	}
 	
-	//Oauth 로그인
-	public PrincipalDetails(UserVo user,Map<String, Object> attributes) {
-		this.user= user;
+	// OAuth2.0 로그인시 사용
+	public PrincipalDetails(UserVo user, Map<String, Object> attributes) {
+		this.user = user;
 		this.attributes = attributes;
 	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> authorities = new ArrayList<>();
-		user.getRoleList().forEach(r ->{
-			authorities.add(()-> r );
-		});
-		return authorities;
-	}
-
+	
 	public UserVo getUser() {
 		return user;
 	}
-	
+
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return user.getUsername();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Collection<GrantedAuthority> collet = new ArrayList<GrantedAuthority>();
+		collet.add(()->{ return user.getRole();});
+		return collet;
+	}
 
+	// 리소스 서버로 부터 받는 회원정보
 	@Override
 	public Map<String, Object> getAttributes() {
-		// TODO Auto-generated method stub
 		return attributes;
 	}
 
+	// User의 PrimaryKey
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	
 	
 }

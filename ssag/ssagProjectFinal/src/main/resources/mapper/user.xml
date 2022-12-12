@@ -14,6 +14,8 @@
 		<result property="detailcompanyname" column="detailcompanyname" />
 		<result property="fridgecode" column="fridgecode" />
 		<result property="birth" column="birth" />
+		<result property="provider" column="provider" />
+		<result property="providerId" column="providerId" />
 
 	</resultMap>
 
@@ -34,8 +36,8 @@
 	<insert id="insertUser" parameterType="userVo">
 		<![CDATA[
 			
-			insert into users(username,password,role,name,email,telephone,address,fridgecode,companycode,detailcompanyname,birth)
-			value(#{username},#{password},#{role},#{name},#{email},#{telephone},#{address},#{fridgecode},#{companycode},#{detailcompanyname},#{birth});
+			insert into users(username,password,role,name,email,telephone,address,fridgecode,companycode,detailcompanyname,birth,provider,providerId)
+			value(#{username},#{password},#{role},#{name},#{email},#{telephone},#{address},#{fridgecode},#{companycode},#{detailcompanyname},#{birth},#{provider},#{providerId});
 			
 		]]>
 	</insert>
@@ -52,7 +54,7 @@
 	<!--회원정보 업데이트 -->
 	<update id="updateUser" parameterType="userVo">
 		<![CDATA[
-			update users set name=#{name},email=#{email},telephone=#{telephone},address=#{address},fridgecode=#{fridgecode} where usercode=#{code};
+			update users set name=#{name},email=#{email},telephone=#{telephone},address=#{address},fridgecode=#{fridgecode} where usercode=#{usercode};
 		]]>
 	</update>
 
@@ -84,6 +86,26 @@
 		]]>
 	</delete>
 
+
+	<select id="findByProviderAndProviderId" parameterType="String" resultType="com.ssag.model.UserVo">
+		<![CDATA[
+		SELECT * FROM users WHERE provider = #{provider} and providerId = #{providerId};
+		]]>
+	</select>
+	
+<!--	아이디 찾기-->
+	<select id="find_id" parameterType="String" resultType="String">
+		<![CDATA[
+		select username from users where email = #{email}
+		]]>
+	</select>
+
+<!-- 비밀번호 변경 -->
+	<update id="update_pw" parameterType="userVo">
+	<![CDATA[
+		update users set password = #{password} where username = #{username}
+		]]>
+	</update>
 
 </mapper>
 

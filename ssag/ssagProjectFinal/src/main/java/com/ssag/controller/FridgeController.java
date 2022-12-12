@@ -59,7 +59,8 @@ public class FridgeController {
 
 	
 	@GetMapping("/")
-	public String home() {
+	public String home(@AuthenticationPrincipal PrincipalDetails details) {
+		String username = details.getUsername(); 
 		return "index";
 	}
 	
@@ -84,10 +85,10 @@ public class FridgeController {
 
 	// 메인 냉장고 페이지!!
 	@GetMapping("/myFridge")
-	public String addFridge(Authentication authentication, @AuthenticationPrincipal UserVo user, Model model,@AuthenticationPrincipal PrincipalDetails details,
+	public String addFridge(@AuthenticationPrincipal PrincipalDetails principal, Model model,UserVo user,
 			FridgeBoardVo fridgeBoardVo) throws Exception {
 		System.out.println("Fridge Contrller MyFridgeBox 진입!!!");
-		FridgeVo fridgeVo = fridgeService.addFridge(user,details);
+		FridgeVo fridgeVo = fridgeService.addFridge(principal,user);
 		System.out.println("controller FridgeVo : " + fridgeVo);
 		FridgeVo fridgeList = fridgeService.userfridge(fridgeVo.getFridgecode());
 		System.out.println("FridgeVO.getCode11 : " + fridgeList.getFridgecode());

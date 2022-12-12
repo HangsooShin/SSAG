@@ -1,6 +1,7 @@
 package com.ssag.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataAccessException;
@@ -25,4 +26,10 @@ public interface UserDao {
 	public List<FridgeBoardVo> memoList(String fridgecode) throws DataAccessException;
 	public void insertMemo(FridgeBoardVo fridgeBoardVo) throws DataAccessException;
 	public void deleteMemo(int memocode) throws DataAccessException;
+	
+	public Optional<UserVo> findByProviderAndProviderId(String provider,String providerId) throws DataAccessException;
+	//이메일로 아이디 찾기
+	public String find_id(String email) throws DataAccessException;
+//	//비밀번호 변경
+	public int update_pw(UserVo userVo) throws Exception;
 }

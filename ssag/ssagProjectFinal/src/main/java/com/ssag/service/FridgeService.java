@@ -64,7 +64,7 @@ public class FridgeService {
 
 	//fridgecode가 없다면
 	@Transactional
-	public FridgeVo addFridge(@AuthenticationPrincipal UserVo user, @AuthenticationPrincipal PrincipalDetails details){
+	public FridgeVo addFridge(@AuthenticationPrincipal PrincipalDetails principal,UserVo user){
 		
 		
 //		System.out.println(details.getUsername());
@@ -78,10 +78,12 @@ public class FridgeService {
 //		Integer userCode = principal.getUser().getCode();
 		
 //		String fridgeCode = userVo.getFridgecode();
-		String fridgeCode = user.getFridgecode();
+		String fridgeCode = principal.getUser().getFridgecode();
 		System.out.println("이것도 널 아닌가?"+ fridgeCode);
 //		Integer userCode = userVo.getUsercode();
-		Integer userCode = user.getUsercode();
+		Integer userCode = principal.getUser().getUsercode();
+		String username = principal.getUser().getUsername();
+		System.out.println(username);
 //		String fridgecodeCheck = fridgeDao.userfridgeList(fridgeCode);
 		
 //		System.out.println("FridgeCode  유무 : " + fridgecodeCheck);
@@ -102,9 +104,9 @@ public class FridgeService {
 			
 			System.out.println("FridgeService : fridgecode주입 진입");
 //			fridgeDao.insertUserFridgeCode(fridgecode2, userVo.getUsercode());
-			fridgeDao.insertUserFridgeCode(fridgecode2, user.getUsercode());
+			fridgeDao.insertUserFridgeCode(fridgecode2, principal.getUser().getUsercode());
 //			System.out.println("inset문이 실행이 되는건가 ..? " + fridgecode2 + userVo.getUsercode());
-			System.out.println("inset문 ?? : "+ user.getUsercode());
+			System.out.println("inset문 ?? : "+ principal.getUser().getUsercode());
 			return fridgeVo;
 		}
 		System.out.println("FridgeCode 있음");

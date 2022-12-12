@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +17,10 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssag.config.auth.PrincipalDetails;
@@ -26,31 +30,38 @@ import com.ssag.model.UserVo;
 import com.ssag.service.UserService;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @AllArgsConstructor
+@Slf4j
 public class RestApiController {
 	
 	private final UserDao userDao;
 	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
 	
+	
+	@GetMapping("/")
+	public String home(@AuthenticationPrincipal PrincipalDetails details) {
+		String username = details.getUsername(); 
+		return "index";
+	}
 	//일반회원가입 기업회원가입 갈라지는 경로
 	@GetMapping("/whoareu")
 	public String whoareu() {
 		return"whoareu";
 	}
-
+	//기업회원 회원가입
 	@GetMapping("/company-register")
 	public String createCompany(Model model) {
 		List<CompanyVo> companyList = userService.companyList();
 		model.addAttribute("companyList", companyList);
 		return "company-register";
 	}
-	
+	//일반회원 회원가입
 	@GetMapping("/user-register")
 	public String createUser() {
-		System.out.println("여기는 GET Mapping Users");
 		return "user-register";
 	}
 
@@ -97,10 +108,8 @@ public class RestApiController {
 	}
 
 	@GetMapping("/mypage")
-	public String mypage(@AuthenticationPrincipal UserVo userVo, Authentication authentication, Principal principal,Model model) throws Exception{
+	public String mypage(@AuthenticationPrincipal PrincipalDetails userVo,Model model) throws Exception{
 		System.out.println("Account============================"+userVo);
-		System.out.println("authentication============================"+authentication);
-		System.out.println("principal============================"+principal);
 		UserVo userVo2 = userService.findById(userVo.getUsername());
 		System.out.println("Mypage UserVo : " + userVo.getName());
 		System.out.println("Mypage UserVo2 : " + userVo2.getName());
@@ -158,4 +167,50 @@ public class RestApiController {
 
 		return "유저 페이지입니다.";
 	}
+	
+	// 아이디 찾기 폼
+	@GetMapping(value = "/find_id")
+	public String find_id_form() throws Exception{
+		return "find_id_form";
+	}
+	
+	@PostMapping(value = "/find_id")
+	public String find_id(HttpServletResponse response, @RequestParam("email") String email, Model md) throws Exception{
+		System.out.println("find_id :" + userService.find_id(response, email));
+		md.addAttribute("id", userService.find_id(response, email));
+		return "find_id";
+	}
+	
+	// 비밀번호 찾기 폼
+		@GetMapping(value = "/find_pw_form")
+		public String find_pw_form() throws Exception{
+			return "find_pw_form";
+		}
+	
+		
+		// 비밀번호 찾기
+		@PostMapping(value = "/find_pw")
+		public void find_pw(@ModelAttribute UserVo userVo, HttpServletResponse response) throws Exception{
+			System.out.println(" 컨트롤에서 받는 아이디 : "+ userVo.getUsername());
+			userService.find_pw(response, userVo);
+		}
+		
+		@GetMapping("/pw-change")
+		public String pwChange() {
+			return "pw-change";
+		}
+		
+		@PostMapping("/pw-change")
+		public String checkPw(@RequestParam("password") String password, HttpSession session, @AuthenticationPrincipal PrincipalDetails details) {
+			log.info("비밀번호 확인 요청 발생");
+			String result = null;
+			if(!passwordEncoder.matches(password, details.getPassword())) {
+				result = "pwConfirmOK";
+			}else {
+				result = "pwConfirmNO";
+			}
+			return result;
+		}
+		
+		
 }

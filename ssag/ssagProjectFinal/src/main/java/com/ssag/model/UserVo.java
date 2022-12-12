@@ -36,6 +36,8 @@ public class UserVo implements Serializable{
 	private String detailcompanyname;
 //	private Integer fridgecode;
 	private String fridgecode;
+	private String provider;
+	private String providerId;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birth;
