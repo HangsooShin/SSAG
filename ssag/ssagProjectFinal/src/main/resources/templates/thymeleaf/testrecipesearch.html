@@ -222,41 +222,10 @@
   </head>
 
   <body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
-
-    <!-- Start Header Area -->
-
-    <!-- End Header Area -->
-
-    <!-- Start Hero Area -->
     <section class="background">
       <!-- Start app-header -->
-      <div class="app-header">
-        <a href="/app"><h1>SSAG.M</h1></a>
-        <div>
-          <ul>
-            <li>
-              <a href="/app/login"><i class="lni lni-enter"></i> 로그인</a>
-            </li>
-            <li>
-              <a href="/app/whoareu"><i class="lni lni-user"></i> 회원가입</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <div th:replace="layout/app-header::mainheader"></div>
       <!-- End app-header -->
-
-      <div>
-        <!-- <h2 class="wow fadeInUp" data-wow-delay=".3s">Welcome to SSAG.R</h2> -->
-        <p class="head-txt">○○○님 냉장고</p>
-      </div>
-
       <div>
         <div>
           <div>
@@ -351,11 +320,6 @@
 
     <!-- ========================= JS here ========================= -->
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/bootstrap.js"></script>
-    <script src="../js/wow.min.js"></script>
-    <script src="../js/tiny-slider.js"></script>
-    <script src="../js/glightbox.min.js"></script>
-    <!-- <script src="js/main.js"></script> -->
     <!-- <script src="js/index-search.js"></script> -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 

@@ -103,11 +103,9 @@ public class UserService {
 		// Mail Server 설정
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
+
 		String hostSMTPid = "아이디";
 		String hostSMTPpwd = "비밀번호";
-
-//		String hostSMTPid = "아이디";
-//		String hostSMTPpwd = "비밀번호";
 		
 		
 		// 보내는 사람 EMail, 제목, 내용

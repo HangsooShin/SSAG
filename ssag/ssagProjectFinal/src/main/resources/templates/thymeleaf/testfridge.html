@@ -109,20 +109,8 @@
   <body>
     <!-- Start Hero Area -->
     <section class="background">
-      <!-- Start app-header -->
-      <div class="app-header">
-        <a href="/app"><h1>SSAG.M</h1></a>
-        <div>
-          <ul>
-            <li>
-              <a href="/app/login"><i class="lni lni-enter"></i> 로그인</a>
-            </li>
-            <li>
-              <a href="/app/whoareu"><i class="lni lni-user"></i> 회원가입</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <!-- Start Header Area -->
+      <div th:replace="layout/app-header::mainheader"></div>
       <!-- End app-header -->
 
       <div>
@@ -454,11 +442,6 @@
 
     <!-- ========================= JS here ========================= -->
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/bootstrap.js"></script>
-    <script src="../js/wow.min.js"></script>
-    <script src="../js/tiny-slider.js"></script>
-    <script src="../js/glightbox.min.js"></script>
-    <script src="../js/main.js"></script>
     <!-- <script src="js/index-search.js"></script> -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 

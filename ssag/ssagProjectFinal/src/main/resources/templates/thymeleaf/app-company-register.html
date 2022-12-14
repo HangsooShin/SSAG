@@ -35,6 +35,9 @@
   <body>
     <!-- Start Header Area -->
     <section class="hero-whoareu-area">
+           <!-- Start Header Area -->
+           <div th:replace="layout/app-header::mainheader"></div>
+           <!-- End app-header -->
       <div style="padding-top: 20%">
         <!-- 클릭하면 메인 -->
         <a href="/app"
@@ -174,11 +177,10 @@
     </section>
 
     <!-- ========================= JS here ========================= -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="js/tiny-slider.js"></script>
-    <script src="js/glightbox.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/tiny-slider.js"></script>
+    <script src="../js/glightbox.min.js"></script>
 
     <script>
       //비밀번호 확인

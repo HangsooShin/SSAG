@@ -49,7 +49,7 @@ public class AppContoller {
 	List<SimilarnameVo> similarnameList = new ArrayList<SimilarnameVo>();
 	List<FridgeBoxVo> fridgeBoxList = new ArrayList<FridgeBoxVo>();
 	
-	@GetMapping({ "/", "" })
+	@GetMapping({ "/", "","/app/login"})
 	public String appIndex() {
 		return "test2";
 	}
@@ -111,7 +111,7 @@ public class AppContoller {
 		if (authentication != null) {
 			new SecurityContextLogoutHandler().logout(request, response, authentication);
 		}
-		return "redirect:app/login";
+		return "redirect:/login";
 	}
 
 	@GetMapping("/mypage")
@@ -126,12 +126,13 @@ public class AppContoller {
 	public String updateUser(UserVo userVo, @AuthenticationPrincipal PrincipalDetails user) throws Exception {
 		userVo.setUsercode(user.getUser().getUsercode());
 		userService.updateUser(userVo);
-		return "redirect:app/";
+		return "redirect:/app";
 	}
 
 	// 아이디 찾기 폼
 	@GetMapping(value = "/find_id")
 	public String find_id_form() throws Exception {
+		System.out.println("아이디 찾기 페이지 진입");	
 		return "find_id_form";
 	}
 
@@ -144,7 +145,7 @@ public class AppContoller {
 	}
 
 	// 비밀번호 찾기 폼
-	@GetMapping(value = "/find_pw_form")
+	@GetMapping(value = "/find_pw")
 	public String find_pw_form() throws Exception {
 		return "find_pw_form";
 	}
@@ -177,6 +178,10 @@ public class AppContoller {
 
 	@GetMapping("/testfridge")
 	public String testFridge(Model model, @AuthenticationPrincipal PrincipalDetails user) {
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
+		
+		
 		// *********************************************** 냉장고 재료보여줌
 				String userFridgeCode = user.getUser().getFridgecode();
 				fridgeService.selectMyFridge(userFridgeCode);
@@ -263,14 +268,14 @@ public class AppContoller {
 	@PostMapping("/appchangefridgebox")
 	public String changeFridgeBox3(FridgeBoxVo originalfridgeBoxVo, FridgeBoxVo fridgeBoxVo,
 			String ingredientcreateddate, String expiredate, Integer ingredientcode, Integer storagecode,
-			Integer ingredientquantityinfridgebox, @AuthenticationPrincipal UserVo userVo) {
+			Integer ingredientquantityinfridgebox, @AuthenticationPrincipal PrincipalDetails userVo) {
 		// DB에서 선택할 PK 기준
 		originalfridgeBoxVo.setIngredientcode(ingredientcode);
 		originalfridgeBoxVo.setIngredientcreateddate(ingredientcreateddate);
-		originalfridgeBoxVo.setFridgecode(userVo.getFridgecode());
+		originalfridgeBoxVo.setFridgecode(userVo.getUser().getFridgecode());
 		System.out.println("=============== 기존 재료 코드 ===============" + originalfridgeBoxVo.getIngredientcode());
 		System.out.println("=============== 기존 생성 시간 ===============" + originalfridgeBoxVo.getIngredientcreateddate());
-		System.out.println("=============== 기존 냉장 코드 ===============" + userVo.getFridgecode());
+		System.out.println("=============== 기존 냉장 코드 ===============" + userVo.getUser().getFridgecode());
 
 		// 바꾸고싶은 내용
 		fridgeBoxVo.setStoragecode(storagecode);

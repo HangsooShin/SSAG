@@ -21,12 +21,12 @@
     />
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/LineIcons.2.0.css" />
-    <link rel="stylesheet" href="css/animate.css" />
-    <link rel="stylesheet" href="css/tiny-slider.css" />
-    <link rel="stylesheet" href="css/glightbox.min.css" />
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="../css/animate.css" />
+    <link rel="stylesheet" href="../css/tiny-slider.css" />
+    <link rel="stylesheet" href="../css/glightbox.min.css" />
+    <link rel="stylesheet" href="../css/app.css" />
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <link
@@ -39,7 +39,7 @@
       $(function () {
         $("#findBtn").click(function () {
           $.ajax({
-            url: "/find_pw",
+            url: "/app/find_pw",
             type: "POST",
             data: {
               username: $("#username").val(),
@@ -54,29 +54,37 @@
     </script>
   </head>
   <body>
-    <div class="w3-content w3-container w3-margin-top">
-      <div class="w3-container w3-card-4">
-        <div class="w3-center w3-large w3-margin-top">
+    <section class="hero-area">
+      <!-- Start Header Area -->
+      <div th:replace="layout/app-header::mainheader"></div>
+      <!-- End app-header -->
+      <div style="padding-top: 30%">
+      
+              <div style="text-align: center">
+   
           <h3>비밀번호 찾기</h3>
         </div>
         <div>
           <p>
-            <label>ID</label>
+            <label style="margin-left: 5%;">ID</label>
             <input
               class="w3-input"
               type="text"
               id="username"
               name="username"
+              style="margin-left: 5%;"
+
               required
             />
           </p>
           <p>
-            <label>Email</label>
+            <label style="margin-left: 5%;">Email</label>
             <input
               class="w3-input"
               type="text"
               id="email"
               name="email"
+              style="margin-left: 5%;"
               required
             />
           </p>
@@ -85,6 +93,7 @@
               type="button"
               id="findBtn"
               class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round"
+              style="margin-left: 3%; margin-right: 20px; width: 370px;"
             >
               find
             </button>
@@ -92,6 +101,7 @@
               type="button"
               onclick="history.go(-1);"
               class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round"
+              style="margin-left: 3%; margin-right: 20px; width: 370px;"
             >
               Cancel
             </button>
@@ -100,10 +110,5 @@
       </div>
     </div>
     <!-- ========================= JS here ========================= -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="js/tiny-slider.js"></script>
-    <script src="js/glightbox.min.js"></script>
-    <script src="js/main.js"></script>
-  </body>
+    <script src="../js/bootstrap.min.js"></script>
 </html>
