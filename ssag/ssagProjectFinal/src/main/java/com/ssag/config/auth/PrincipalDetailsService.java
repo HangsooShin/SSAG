@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.ssag.model.UserVo;
 import com.ssag.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class PrincipalDetailsService implements UserDetailsService{
 
 	@Autowired
@@ -18,9 +21,13 @@ public class PrincipalDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserVo user = userService.findById(username);
+		System.out.println("여기 타나");
 		if(user == null) {
+			System.out.println("아이디 정보 없음");
 			return null;
 		}else {
+			System.out.println("로그인 진행");
+			System.out.println(user);
 			return new PrincipalDetails(user);
 		}
 		

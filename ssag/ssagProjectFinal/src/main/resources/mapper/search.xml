@@ -5,7 +5,7 @@
 
 	<!--*******************************제품 검색 (감자) ************************************************************ -->
 	<resultMap id='ingredient' type="com.ssag.model.IngredientVo">
-	<result property="ingredientcode" column="ingredientcode" />
+		<result property="ingredientcode" column="ingredientcode" />
 		<result property="ingredientname" column="ingredientname" />
 		<result property="ingredientgroup" column="ingredientgroup" />
 		<result property="ingredienticonlocation" column="ingredienticonlocation" />
@@ -32,20 +32,6 @@
 		<collection property="merchandiseVo22" resultMap="merchandise"></collection>
 	</resultMap>
 
-
-	<select id="similarname" parameterType="com.ssag.model.SimilarnameVo" resultType="com.ssag.model.SimilarnameVo" resultMap="join">
-		<![CDATA[
-		select * from (select i.ingredientcode as code from (select * from similarname where similar=#{similar}) co1 join ingredient i on co1.originalname=i.ingredientname) co2 join merchandise m  on co2.code=m.ingredientcode;
-		]]>
-	</select>
-
-	<!--***************************************키워드로 레시피 검색 프로시저**************************************************** -->
-	<select id="recipeProcedureCall" parameterType="com.ssag.model.SimilarnameVo" resultMap="procedure" resultType="com.ssag.model.SimilarnameVo">
-		
-		call string_split(#{similar},' ');
-		
-	</select>
-
 	<resultMap type="com.ssag.model.SimilarnameVo" id="procedure">
 		<result property="similar" column="similar" />
 		<result property="originalname" column="originalname" />
@@ -71,12 +57,79 @@
 	</resultMap>
 
 
+	<resultMap id='ingredientbasket' type="com.ssag.model.IngredientbasketVo">
+		<result property="usercode" column="usercode" />
+		<result property="cookcode" column="cookcode" />
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="cookquantityinbasket" column="cookquantityinbasket" />
+	</resultMap>
+
+
+	<select id="similarname" parameterType="com.ssag.model.SimilarnameVo" resultType="com.ssag.model.SimilarnameVo" resultMap="join">
+		<![CDATA[
+		select * from (select i.ingredientcode as code from (select * from similarname where similar=#{similar}) co1 join ingredient i on co1.originalname=i.ingredientname) co2 join merchandise m  on co2.code=m.ingredientcode;
+		]]>
+	</select>
+
+
+	<!--***************************************키워드로 레시피 검색 프로시저**************************************************** -->
+	<select id="recipeProcedureCall" parameterType="com.ssag.model.SimilarnameVo" resultMap="procedure" resultType="com.ssag.model.SimilarnameVo">
+		
+		call string_split(#{similar},' ');
+		
+	</select>
+
+
 	<!--*****************************************레시피 검색(튀김)************************************************** -->
-
-
 	<select id="selectRecipe" resultMap="cook">
 		<![CDATA[
 		select * from cook where cookname like CONCAT('%', #{cookname}, '%');
+		]]>
+	</select>
+
+
+	<insert id="getcookbasket" parameterType="com.ssag.model.IngredientbasketVo">
+		<![CDATA[
+	insert into ingredientbasket select usercode, ingredientcode, #{cookquantityinbasket} as cookquantityinbasket, cookcode from (select usercode from users where usercode=#{usercode}) co1 join cookingredient where cookcode=#{cookcode}; 
+	]]>
+	</insert>
+
+	<update id="updatecookbasket" parameterType="com.ssag.model.IngredientbasketVo">
+		<![CDATA[
+	update ingredientbasket set cookquantityinbasket=cookquantityinbasket + #{cookquantityinbasket} where usercode=#{usercode} and cookcode=#{cookcode};
+	]]>
+	</update>
+
+	<select id="findbasket" parameterType="com.ssag.model.IngredientbasketVo" resultType="com.ssag.model.IngredientbasketVo">
+		<![CDATA[
+	select * from ingredientbasket where usercode=#{usercode} and cookcode=#{cookcode}; 
+	]]>
+	</select>
+
+	<select id="recipeSearchbyname" parameterType="com.ssag.model.SimilarnameVo" resultMap="procedure" resultType="com.ssag.model.SimilarnameVo">
+		<![CDATA[
+		select * from (select * from cook where cookname like CONCAT('%', #{cookname}, '%')) co1
+		join cookingredient on co1.cookcode=cookingredient.cookcode join ingredient on cookingredient.ingredientcode=ingredient.ingredientcode;
+		]]>
+	</select>
+
+
+	<resultMap type="com.ssag.model.CookbasketVo" id="cookbasket">
+		<result property="cookquantityinbasket" column="cookquantityinbasket" />
+		<result property="usercode" column="usercode" />
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="cookcode" column="cookcode" />
+		<collection property="cookVo22" resultMap="cook"></collection>
+		<collection property="ingredientVo22" resultMap="ingredient"></collection>
+	</resultMap>
+	
+	<select id="cookbasketlist" resultMap="cookbasket">
+	<![CDATA[
+		
+		select * from ingredientbasket ib join ingredient i on ib.ingredientcode=i.ingredientcode
+		join cook c on ib.cookcode=c.cookcode where usercode=#{usercode} order by ib.cookcode;
+	
+	
 		]]>
 	</select>
 

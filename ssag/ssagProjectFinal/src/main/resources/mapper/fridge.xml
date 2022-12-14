@@ -63,11 +63,6 @@
 		]]>
 	</select>
 
-	<select id='myfridgeBox' resultMap='fridge'>
-		<![CDATA[
-		select * from fridge where fridgecode =#{id};
-		]]>
-	</select>
 
 	<insert id="insertFridge" parameterType="fridgeVo">
 		<![CDATA[
@@ -82,6 +77,8 @@
 		<![CDATA[
 		select * from fridge where fridgecode=#{fridgecode};
 		]]>
+
+
 	</select>
 
 	<update id="updateFridgeBox" parameterType="fridgeboxVo">
@@ -91,13 +88,6 @@
 		]]>
 	</update>
 
-	<!-- 내 냉장고에 있는 물건확이 -->
-	<select id="myFridge" parameterType="com.ssag.model.FridgeBoxVo" resultMap="myfridge" resultType="com.ssag.model.FridgeBoxVo">
-		<![CDATA[
-		select * from fridgebox fb join ingredient i on fb.ingredientcode=i.ingredientcode where fridgecode = #{userFridgeCode};
-		]]>
-
-	</select>
 
 	<resultMap id='userResult' type="userVo">
 		<result property="usercode" column="usercode" />
@@ -131,6 +121,34 @@
 			
 		]]>
 	</insert>
+
+	<update id="changeItem" parameterType="hashmap">
+		-
+		<![CDATA[
+			update fridgebox set expiredate=#{1.expiredate}, ingredientquantityinfridgebox=#{1.ingredientquantityinfridgebox}, storagecode=#{1.storagecode} 
+			where fridgecode=#{0.fridgecode} and ingredientcode=#{0.ingredientcode} and ingredientcreateddate=#{0.ingredientcreateddate};
+		]]>
+	</update>
+
+	<delete id="deleteItem" parameterType="fridgeboxVo">
+		<![CDATA[
+			delete from fridgebox where ingredientcode=#{ingredientcode} and fridgecode=#{fridgecode} 
+			and ingredientcreateddate=#{ingredientcreateddate};
+		]]>
+	</delete>
+
+	<!--	내 냉장고 번호에 맞는 냉장고 찾아줌-->
+	<select id="myfridgeBox" resultMap="fridge">
+		<![CDATA[
+		select * from fridge where fridgecode =#{id};
+		]]>
+	</select>
+
+	<select id="myFridge" parameterType="com.ssag.model.FridgeBoxVo" resultMap="myfridge" resultType="com.ssag.model.FridgeBoxVo">
+		<![CDATA[
+		select * from fridgebox fb join ingredient i on fb.ingredientcode=i.ingredientcode where fridgecode = #{userFridgeCode};
+		]]>
+	</select>
 
 
 </mapper>

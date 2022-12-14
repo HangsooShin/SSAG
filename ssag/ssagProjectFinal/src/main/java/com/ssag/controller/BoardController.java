@@ -38,7 +38,7 @@ public class BoardController {
 	}
 
 	
-	//글 작성에서 등록하기 버튼 누르ㅏ면
+	//글 작성에서 등록하기 버튼
 	@PostMapping(value="/addArticle")
 	public String addArticle(Model model,FridgeBoardVo fridgeBoardVo, @AuthenticationPrincipal UserVo userVo) {
 		System.out.println("여기는 AddArticle");
@@ -50,6 +50,7 @@ public class BoardController {
 		return "redirect:myFridge";
 	}
 	
+	//삭제버튼 
 	@PostMapping(value="/removeArticle/{memocode}")
 	public String removeArticle(@PathVariable("memocode") int memocode) {
 		System.out.println("memocode !! : "+memocode);

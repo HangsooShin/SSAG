@@ -86,7 +86,6 @@
 		]]>
 	</delete>
 
-
 	<select id="findByProviderAndProviderId" parameterType="String" resultType="com.ssag.model.UserVo">
 		<![CDATA[
 		SELECT * FROM users WHERE provider = #{provider} and providerId = #{providerId};

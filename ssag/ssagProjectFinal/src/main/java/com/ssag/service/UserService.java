@@ -28,10 +28,7 @@ public class UserService {
 	private final PasswordEncoder passwordEncoder;
 	
 	public void addUser(UserVo userVo) {
-		System.out.println("null 나올게 뭐가 있어"+userVo);
-		userVo.setUsercode(99);
 		userDao.insertUser(userVo);
-		System.out.println("userService 진입");
 	}
 //	public void findByProviderAndProviderId(UserVo userVo) {
 //		userDao.findByProviderAndProviderId(userVo);
@@ -106,12 +103,16 @@ public class UserService {
 		// Mail Server 설정
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
-		String hostSMTPid = "gongahze";
-		String hostSMTPpwd = "rnjswngml9@";
+		String hostSMTPid = "아이디";
+		String hostSMTPpwd = "비밀번호";
 
+//		String hostSMTPid = "아이디";
+//		String hostSMTPpwd = "비밀번호";
+		
+		
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "gongahze@naver.com";
-		String fromName = "Spring Homepage";
+		String fromName = "gongahze@naver.com";
 		String subject = "";
 		String msg = "";
 
@@ -173,10 +174,8 @@ public class UserService {
 			userDao.update_pw(userVo);
 			// 비밀번호 변경 메일 발송
 			send_mail(password,userVo, "find_pw");
-
 			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
 			out.close();
 		}
 	}
-
 }

@@ -9,7 +9,7 @@ public class IngredientbasketVo {
 
 	private Integer usercode;
 	private Integer ingredientcode;
-	private Integer ingredientquantityinbasket;
+	private Integer cookquantityinbasket;
 	private Integer cookcode;
 	
 	
@@ -25,17 +25,18 @@ public class IngredientbasketVo {
 	public void setIngredientcode(Integer ingredientcode) {
 		this.ingredientcode = ingredientcode;
 	}
-	public Integer getIngredientquantityinbasket() {
-		return ingredientquantityinbasket;
-	}
-	public void setIngredientquantityinbasket(Integer ingredientquantityinbasket) {
-		this.ingredientquantityinbasket = ingredientquantityinbasket;
-	}
+
 	public Integer getCookcode() {
 		return cookcode;
 	}
 	public void setCookcode(Integer cookcode) {
 		this.cookcode = cookcode;
+	}
+	public Integer getCookquantityinbasket() {
+		return cookquantityinbasket;
+	}
+	public void setCookquantityinbasket(Integer cookquantityinbasket) {
+		this.cookquantityinbasket = cookquantityinbasket;
 	}
 	
 	

@@ -2,6 +2,7 @@ package com.ssag.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,16 +20,17 @@ import com.ssag.model.CookVo;
 import com.ssag.model.FridgeBoxVo;
 import com.ssag.model.FridgeVo;
 import com.ssag.model.IngredientVo;
-import com.ssag.model.IngredientbasketVo;
 import com.ssag.model.SimilarnameVo;
 import com.ssag.model.StringSplitVo;
 import com.ssag.model.UserVo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Service
-public class FridgeService {
+@Slf4j
+public class FridgeService{
 
 	@Resource
 	private FridgeDao fridgeDao;
@@ -48,6 +50,23 @@ public class FridgeService {
 		fridgeDao.insertItem(fridgeBoxVo);
 		System.out.println("fridgeDao==========================:  " + fridgeDao);
 	}
+	
+	@Transactional
+	public void changeFridgeBox(FridgeBoxVo originalfridgeBoxVo, FridgeBoxVo fridgeBoxVo) {
+		System.out.println("재료 변경 시작, fridgeService 진입 !! ==========================:  ");
+		HashMap<String, FridgeBoxVo> fridgehashmap = new HashMap<>();
+		fridgehashmap.put("0",originalfridgeBoxVo);
+		fridgehashmap.put("1",fridgeBoxVo);
+		fridgeDao.changeItem(fridgehashmap);
+		System.out.println("fridgeDao.changeItem 완료 ==========================:  " + fridgeDao);
+	}
+	
+	@Transactional
+	public void deleteFridgeBox(FridgeBoxVo fridgeBoxVo) {
+		System.out.println("재료 삭제 시작, fridgeService 진입 !! ==========================:  ");
+		fridgeDao.deleteItem(fridgeBoxVo);
+		System.out.println("fridgeDao.deleteItem 완료 ==========================:  " + fridgeDao);
+	}
 
 	@Transactional
 	public List<IngredientVo> ingredientAll() {
@@ -65,21 +84,7 @@ public class FridgeService {
 	//fridgecode가 없다면
 	@Transactional
 	public FridgeVo addFridge(@AuthenticationPrincipal PrincipalDetails principal,UserVo user){
-		
-		
-//		System.out.println(details.getUsername());
-//		System.out.println(user.getUsername());
-//		
-		
-		
-//		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-//		Integer userFridgeCode = principal.getUser().getFridgecode();
-//		String fridgeCode = principal.getUser().getFridgecode();
-//		Integer userCode = principal.getUser().getCode();
-		
-//		String fridgeCode = userVo.getFridgecode();
 		String fridgeCode = principal.getUser().getFridgecode();
-		System.out.println("이것도 널 아닌가?"+ fridgeCode);
 //		Integer userCode = userVo.getUsercode();
 		Integer userCode = principal.getUser().getUsercode();
 		String username = principal.getUser().getUsername();
@@ -110,8 +115,6 @@ public class FridgeService {
 			return fridgeVo;
 		}
 		System.out.println("FridgeCode 있음");
-		System.out.println("FridgeService Fridge 이거 안나올 수 도 있다.: " + fridgeCode);
-//		System.out.println("FridgeService Fridge 이거 안나올 수 도 있다.: " + fridgecodeCheck.getCode());
 		return fridgeDao.userfridgeList(fridgeCode);
 	}
 
@@ -142,6 +145,8 @@ public class FridgeService {
 		System.out.println(fridgeBoxVo.getIngredientcode());
 		System.out.println(fridgeBoxVo.getFridgecode());
 	}
+	
+	
 	
 	public List<SimilarnameVo> getKeyword(String similar) {
 		System.out.println("fridgeService 들어옴");
@@ -177,22 +182,22 @@ public class FridgeService {
 	}
 	
 	//냉장고 재료 리스트(ALL)
-	@Transactional
-	public List<String> myFridgeBox(FridgeVo fridgeVo) {
-		System.out.println("fridgeService MyfridgeBox!!!");
-		List<FridgeVo> fridgeInfo = fridgeDao.myfridgeBox();
-		List<String> fridgeInfoName = new ArrayList<String>();
-		fridgeInfoName.add(fridgeInfo.get(1).getFridgename());
-		return fridgeInfoName;
-
-	}
-
-	//식재료 추가
-	public void insertbasket(IngredientbasketVo ingredientbasketVo) {
-		fridgeDao.ingredientbasket(ingredientbasketVo);
-	}
+//	@Transactional
+//	public List<String> myFridgeBox(FridgeVo fridgeVo) {
+//		System.out.println("fridgeService MyfridgeBox!!!");
+//		List<FridgeVo> fridgeInfo = fridgeDao.myfridgeBox();
+//		List<String> fridgeInfoName = new ArrayList<String>();
+//		fridgeInfoName.add(fridgeInfo.get(1).getFridgename());
+//		return fridgeInfoName;
+//
+//	}
 
 	
+	//식재료 추가
+//		public void insertbasket(IngredientbasketVo ingredientbasketVo) {
+//			fridgeDao.ingredientbasket(ingredientbasketVo);
+//		}
+
+
 }
 
-//	public List<> myFridgeList(UserVo userVo, FridgeVo fridgeVo)

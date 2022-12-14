@@ -17,19 +17,16 @@ public interface UserDao {
 	
 	public void insertUser(UserVo userVo) throws DataAccessException;
 	public UserVo findByUsername(String username) throws DataAccessException;
-//	CustomUserDetails getUserById(String id) throws DataAccessException;
-	//user table 에 fridgecode주입
-//	public void insertUserFridgeCode(String fridgecode, Integer code)throws DataAccessException;
 	public void updateUser(UserVo userVo)throws DataAccessException;
 	public void procedureCall()throws DataAccessException;
 	public List<CompanyVo> companyList()throws DataAccessException;
 	public List<FridgeBoardVo> memoList(String fridgecode) throws DataAccessException;
 	public void insertMemo(FridgeBoardVo fridgeBoardVo) throws DataAccessException;
 	public void deleteMemo(int memocode) throws DataAccessException;
-	
 	public Optional<UserVo> findByProviderAndProviderId(String provider,String providerId) throws DataAccessException;
+	
 	//이메일로 아이디 찾기
 	public String find_id(String email) throws DataAccessException;
-//	//비밀번호 변경
+	//비밀번호 변경
 	public int update_pw(UserVo userVo) throws Exception;
 }

@@ -107,7 +107,10 @@
                       >
                     </li>
                     <li sec:authorize="isAuthenticated()">
-                      <h6>로그인ㅇ한 사용자 이름</h6>
+                     
+                        <sec:authentication property="principal.username" th:src="${username}" />
+                        <div id="username">안녕하세요.<h4 th:value=" ${username}"></h4></div>
+                    </sec:authorize>
                     </li>
                   </ul>
                 </div>
