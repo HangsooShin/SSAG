@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>일반회원가입 - SSAG</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="assets/images/favicon.svg"
+    />
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="../css/animate.css" />
+    <link rel="stylesheet" href="../css/tiny-slider.css" />
+    <link rel="stylesheet" href="../css/glightbox.min.css" />
+    <link rel="stylesheet" href="../css/main_test2.css" />
+    <link rel="stylesheet" href="../css/app.css" />
+  </head>
+  <body>
+    <!-- Start Header Area -->
+    <section class="hero-whoareu-area">
+      <div style="padding-top: 20%">
+        <!-- 클릭하면 메인 -->
+        <a href="/app"
+          ><div
+            style="
+              font-family: Tenada;
+              padding-top: 10%;
+              padding-left: 10%;
+              width: 300px;
+              height: 130px;
+              padding-top: 0px;
+              padding-left: 0px;
+            "
+          ></div
+        ></a>
+        <!-- 클릭하면 메인 끝 -->
+        <div class="member">
+          <!-- 2. 필드 -->
+          <form method="post" action="/app/company-register">
+          <div class="field">
+            <b>아이디</b>
+            <span class="placehold-text"
+              ><input type="text" name="username"
+            /></span>
+          </div>
+          <div class="field">
+            <label
+              ><span>비밀번호</span>
+              <input
+                type="password"
+                class="form-control"
+                id="pw1"
+                name="password"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'PASSWORD'"
+                onkeyup="this.value=this.value.replace(' ','')"
+                required
+                maxlength="20"
+              />
+              <span class="fieldError" th:text="${valid_password}"></span>
+            </label>
+          </div>
+          <div class="col-md-12 form-group">
+            <label
+              ><span>비밀번호 확인</span>
+              <input
+                type="password"
+                class="form-control"
+                id="pw2"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'PASSWORD CHECK'"
+                onkeyup="this.value=this.value.replace(' ','')"
+                oninput="checkPassword()"
+                required
+                maxlength="20"
+              />
+              <span
+                class="password_ok"
+                style="color: rgb(48, 114, 227); display: none"
+                >비밀번호가 일치합니다.</span
+              >
+              <span
+                class="password_fail"
+                style="color: rgb(255, 99, 99); display: none"
+                >비밀번호가 일치하지 않습니다.</span
+              >
+            </label>
+          </div>
+          <div class="field">
+            <b>이름</b>
+            <input type="text" name="name" />
+          </div>
+
+          <!-- 3. 필드(생년월일) -->
+
+          <div class="field">
+            <label>생년월일</label>
+            <input name="birth" type="date" value="xxx" min="yyy" max="zzz" />
+          </div>
+          <!-- 5. 이메일_전화번호 -->
+          <div class="field">
+            <b>이메일<small></small></b>
+            <input type="email" placeholder="선택입력" name="email" />
+          </div>
+
+          <div class="field tel-number">
+            <b>휴대전화</b>
+
+            <input
+              type="number"
+              placeholder="전화번호를 입력하세요"
+              name="telephone"
+            />
+          </div>
+          <div class="field">
+            
+              <b>회사코드</b>
+            </label>
+            <div class="field tel-number">
+              <tbody>
+                <select
+                  id="companyList"
+                  class="col-sm-10"
+                  size="1"
+                  name="companycode"
+                >
+                  <option
+                    th:each="m:${companyList}"
+                    th:value="${m.companycode}"
+                    th:text="${m.companyname}"
+                  ></option>
+                </select>
+              </tbody>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>회사 상세정보</label>
+            <input name="detailcompanyname" type="text" />
+          </div>
+
+          <!-- 6. 가입하기 버튼 -->
+          <input style="margin-top: 5%" type="submit" value="가입하기" />
+
+          <!-- 7. 푸터 -->
+          <div class="member-footer">
+            <div>
+              <a href="#none">이용약관</a>
+              <a href="#none">개인정보처리방침</a>
+              <a href="#none">책임의 한계와 법적고지</a>
+              <a href="#none">회원정보 고객센터</a>
+            </div>
+            <span><a href="#none">NAVER Corp.</a></span>
+          </div>
+        </div>
+      </form>
+      </div>
+    </section>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/glightbox.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+      //비밀번호 확인
+      function checkPassword() {
+        //console.log(document.querySelector('#pw1').value)
+        //console.log(document.querySelector('#pw2').value)
+        // 비밀번호 일치하지 않을 때
+        if (
+          document.querySelector("#pw1").value !=
+          document.querySelector("#pw2").value
+        ) {
+          document.querySelector(".password_fail").style.display =
+            "inline-block"
+          document.querySelector(".password_ok").style.display = "none"
+        }
+        // 비밀번호 일치할 때
+        else if (
+          document.querySelector("#pw1").value ==
+          document.querySelector("#pw2").value
+        ) {
+          document.querySelector(".password_ok").style.display = "inline-block"
+          document.querySelector(".password_fail").style.display = "none"
+        }
+        // password에 아무 입력 없을 때
+        else {
+          document.querySelector(".password_ok").style.display = "none"
+          document.querySelector(".password_fail").style.display = "none"
+        }
+      }
+    </script> 
+  </body>
+</html>

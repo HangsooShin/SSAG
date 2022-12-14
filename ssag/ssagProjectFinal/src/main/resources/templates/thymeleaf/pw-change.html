@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>비밀번호 찾기</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" /> -->
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/glightbox.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <script type="text/javascript">
+      //비밀번호 변경 체크
+      $("#passwd").keyup(function () {
+        //비밀번호 불일치
+        if (
+          $("#confirm_passwd").val() != "" &&
+          $("#confirm_passwd").val() != $(this).val()
+        ) {
+          $("#message_id").text("비밀번호 불일치").css("color", "red")
+          //비밀번호 일치
+        } else if (
+          $("#confirm_passwd").val() != "" &&
+          $("#confirm_passwd").val() == $(this).val()
+        ) {
+          $("#message_id").text("비밀번호 일치").css("color", "black")
+        }
+      })
+      $("#confirm_passwd").keyup(function () {
+        //비밀번호 불일치
+        if ($("#passwd").val() != "" && $("#passwd").val() != $(this).val()) {
+          $("#message_id").text("비밀번호 불일치").css("color", "red")
+          //비밀번호 일치
+        } else if (
+          $("#passwd").val() != "" &&
+          $("#passwd").val() == $(this).val()
+        ) {
+          $("#message_id").text("비밀번호 일치").css("color", "black")
+        }
+      })
+      $("#change_form").submit(function () {
+        if ($("#old_passwd").val() == "") {
+          alert("현재 비밀번호를 입력하세요")
+          $("#old_passwd").focus()
+          return false
+        }
+        if ($("#passwd").val() == "") {
+          alert("변경할 비밀번호를 입력하세요")
+          $("#passwd").focus()
+          return false
+        }
+        if ($("#passwd").val() != $("#confirm_passwd").val()) {
+          $("message_id").text("비밀번호 불일치").css("color", "red")
+          return false
+        }
+      })
+    </script>
+  </head>
+  <body>
+    <div class="page-main-style">
+      <!-- <form:form action="changePassword.do" commandName="memberVO" id="change_form">
+		<form:hidden path="mem_num"/>
+		<form:errors element="div" cssClass="error-color"/>
+		<ul>
+			<li>
+				<label for="old_passwd">현재 비밀번호</label>
+				<form:password path="old_passwd"/>
+			</li>
+			<li>
+				<label for="passwd">새로운 비밀번호</label>
+				<form:password path="passwd"/><form:errors path="passwd" cssClass="error-color"/>
+			</li>
+			<li>
+				<label for="confirm_passwd">비밀번호 확인</label>
+				<input type="password" id="confirm_passwd"><span id="message_id" class="error-color"></span>
+			</li>
+		</ul>
+		<div class="align-center">
+			<input type="submit" value="전송">
+			<input type="button" value="홈으로" onclick="location.href='${pageContext.request.contextPath }/main/main.do'">
+		</div>
+	</form:form> -->
+
+      <!-- start login section -->
+      <section class="login section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-12">
+              <div class="form-head">
+                <h4 class="title">비밀번호 수정</h4>
+                <form
+                  th:action="@{/login_proc}"
+                  class="form-signin"
+                  method="post"
+                >
+                  <input th:type="hidden" th:value="secret" name="secret_Key" />
+                  <div class="form-group">
+                    <label>기존 비밀번호</label>
+                    <input
+                      name="username"
+                      id="username"
+                      type="text"
+                      required="required"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label>새 비밀번호</label>
+                    <input name="password" id="password" type="password" />
+                  </div>
+                  <div class="form-group">
+                    <label>새 비밀번호 확인</label>
+                    <input name="password" id="password" type="password" />
+                  </div>
+
+                  <div class="button">
+                    <button type="submit" class="btn">비밀번호 변경</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/glightbox.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
