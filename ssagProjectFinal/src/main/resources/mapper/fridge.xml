@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssag.dao.FridgeDao">
+
+	<resultMap id='fridgeBox' type="fridgeboxVo">
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="fridgecode" column="fridgecode" />
+		<result property="storagecode" column="storagecode" />
+		<result property="ingredientquantityinfridgebox" column="ingredientquantityinfridgebox" />
+		<result property="ingredientcreateddate" column="ingredientcreateddate" />
+		<result property="expiredate" column="expiredate" />
+
+	</resultMap>
+
+	<resultMap id='ingredient' type="ingredientVo">
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="ingredientname" column="ingredientname" />
+		<result property="ingredientgroup" column="ingredientgroup" />
+		<result property="ingredienticonlocation" column="ingredienticonlocation" />
+	</resultMap>
+
+	<resultMap id='fridge' type="fridgeVo">
+		<result property="fridgeowner" column="fridgeowner" />
+		<result property="fridgecode" column="fridgecode" />
+		<result property="fridgename" column="fridgename" />
+		<result property="fridgecreateddate" column="fridgecreateddate" />
+	</resultMap>
+
+
+	<resultMap type="com.ssag.model.FridgeBoxVo" id="myfridge">
+
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="fridgecode" column="fridgecode" />
+		<result property="storagecode" column="storagecode" />
+		<result property="ingredientquantityinfridgebox" column="ingredientquantityinfridgebox" />
+		<result property="expiredate" column="expiredate" />
+		<result property="ingredientcreateddate" column="ingredientcreateddate" />
+		<collection property="ingredientVo22" resultMap="ingredient"></collection>
+	</resultMap>
+
+	<resultMap id='ingredientbasket' type="com.ssag.model.IngredientbasketVo">
+		<result property="usercode" column="usercode" />
+		<result property="cookcode" column="cookcode" />
+		<result property="ingredientquantityinbasket" column="ingredientquantityinbasket" />
+		<result property="ingredientcode" column="ingredientcode" />
+	</resultMap>
+
+
+	<!--재료 선택 페이지에서 재료입력 위해 필요-->
+	<insert id="insertItem" parameterType="fridgeboxVo">
+		<![CDATA[
+			insert into fridgebox(ingredientcode,fridgecode,storagecode,expiredate,ingredientquantityinfridgebox)
+			value(#{ingredientcode},#{fridgecode},#{storagecode},#{expiredate},#{ingredientquantityinfridgebox});
+		]]>
+	</insert>
+	
+	<update id="changeItem" parameterType="hashmap">
+		<![CDATA[
+			update fridgebox set expiredate=#{1.expiredate}, ingredientquantityinfridgebox=#{1.ingredientquantityinfridgebox}, storagecode=#{1.storagecode} 
+			where fridgecode=#{0.fridgecode} and ingredientcode=#{0.ingredientcode} and ingredientcreateddate=#{0.ingredientcreateddate};
+		]]>
+	</update>
+	
+	<delete id="deleteItem" parameterType="fridgeboxVo">
+		<![CDATA[
+			delete from fridgebox where ingredientcode=#{ingredientcode} and fridgecode=#{fridgecode} 
+			and ingredientcreateddate=#{ingredientcreateddate};
+		]]>
+	</delete>
+	
+	
+	<!--재료 선택 페이지에서 재료 목록을 보여주기 위해 필요-->
+	<select id='ingredientAll' resultMap='ingredient'>
+		<![CDATA[
+		select * from ingredient order by ingredientname asc;
+		]]>
+	</select>
+
+	<select id='myfridgeBox' resultMap='fridge'>
+		<![CDATA[
+		select * from fridge where fridgecode =#{id};
+		]]>
+	</select>
+
+	<insert id="insertFridge" parameterType="fridgeVo">
+		<![CDATA[
+			
+			insert into fridge(fridgecode,fridgeowner,fridgename,fridgecreateddate)
+			value(#{fridgecode},#{fridgeowner},#{fridgename},#{fridgecreateddate});
+			
+		]]>
+	</insert>
+
+	<select id='userfridgeList' resultMap='fridge'>
+		<![CDATA[
+		select * from fridge where fridgecode=#{fridgecode};
+		]]>
+	</select>
+
+	<update id="updateFridgeBox" parameterType="fridgeboxVo">
+		<![CDATA[
+			update fridgebox set quantity=#{quantity}
+			where ingredientcode=#{ingredientcode} and fridgecode=#{fridgecode};
+		]]>
+	</update>
+
+	<!-- 내 냉장고에 있는 물건확이 -->
+	<select id="myFridge" parameterType="com.ssag.model.FridgeBoxVo" resultMap="myfridge" resultType="com.ssag.model.FridgeBoxVo">
+		<![CDATA[
+		select * from fridgebox fb join ingredient i on fb.ingredientcode=i.ingredientcode where fridgecode = #{userFridgeCode};
+		]]>
+	</select>
+
+	<resultMap id='userResult' type="userVo">
+		<result property="usercode" column="usercode" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="telephone" column="telephone" />
+		<result property="address" column="address" />
+		<result property="companycode" column="companycode" />
+		<result property="detailcompanyname" column="detailcompanyname" />
+		<result property="fridgecode" column="fridgecode" />
+		<result property="birth" column="birth" />
+
+	</resultMap>
+
+	<update id="insertUserFridgeCode" parameterType="userVo">
+		<![CDATA[
+			update users set fridgecode=#{fridgecode}
+			where usercode=#{usercode};
+		]]>
+	</update>
+
+
+	<!--장바구니에 재료 추가-->
+	<insert id="ingredientbasket" parameterType="com.ssag.model.IngredientbasketVo">
+		<![CDATA[
+			insert into ingredientbasket(usercode,ingredientquantityinbasket,cookcode,ingredientcode)
+			value(#{usercode},#{ingredientquantityinbasket},#{cookcode},#{ingredientcode});
+		]]>
+	</insert>
+
+
+</mapper>
