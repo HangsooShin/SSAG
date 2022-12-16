@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<title>mypage - SSAG</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" /> -->
+	<!-- Place favicon.ico in the root directory -->
+	<h2>회원정보조회</h2>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row align-items-start">
+			<div style="padding-top:50px;" class="col">
+			<form class="form-horizontal" th:action="@{/mypage}" method="post">
+				<div class="container text-center">
+					<h1 class="text-primary">여기는 MYPAGE 입니다.</h1>
+					<form th:object="${account}" method="post" action="/mypage">
+						<div> <input type="text" th:value="${account.username}" name="username"></div>
+						<div> <input type="text" th:value="${account.name}" name="name"></div>
+						<div><input type="text" th:value="${account.address}" name="address"></div>
+						<div><input type="text" th:value="${account.telephone}" name="telephone"></div>
+						<div><input type="date" th:value="${account.birth}" name="birth"></div>
+						<div><input type="text" th:value="${account.email}" name="email"></div>
+						<div><input type="text" th:value="${account.password}" name="password"></div>
+						<div><input type="text" th:value="${account.fridgecode}" name="fridgecode"></div>
+						<button type="Submit" class="btn btn-dark btn-lg">수정하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

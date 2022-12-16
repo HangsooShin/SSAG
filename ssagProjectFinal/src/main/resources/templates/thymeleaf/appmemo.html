@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>SSAG.R</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" /> -->
+  <!-- Place favicon.ico in the root directory -->
+
+  <!-- Web Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+  <!-- ========================= CSS here ========================= -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/LineIcons.2.0.css" />
+  <link rel="stylesheet" href="css/animate.css" />
+  <link rel="stylesheet" href="css/tiny-slider.css" />
+  <link rel="stylesheet" href="css/glightbox.min.css" />
+  <link rel="stylesheet" href="css/app2.css" />
+
+  <script>
+
+  function make_no_data() {
+    let sel = document.getElementById("data");
+    let empty = document.createElement("div");
+    empty.innerText = "저장된 메뉴가 없습니다";
+    empty.className = "no-data";
+    sel.append(empty);
+  };
+
+  async function addmemo(num) {
+    console.log("메모추가 진입");
+    const targetUrl = "/appaddmemo";
+    let formData = new FormData();
+    let memotext = document.getElementById("memotext").value;
+
+    formData.append("memotext",memotext);
+    const options = {
+      method: "post",
+      body: formData,
+    }
+
+    try {
+      let response = await fetch(targetUrl, options);
+
+    } catch(err) {
+      alert(err);
+  }
+  window.location.reload();
+
+  };
+
+
+  async function deletememo(num) {
+    console.log("메모삭제 진입");
+    const targetUrl = "/appdeletememo";
+    let formData = new FormData();
+    let memocode = document.getElementById("memocode"+num).value;
+    console.log(memocode);
+    formData.append("memocode",memocode);
+    const options = {
+      method: "post",
+      body: formData,
+    }
+
+    try {
+      let response = await fetch(targetUrl, options);
+
+    } catch(err) {
+      alert(err);
+  }
+  window.location.reload();
+
+  };
+
+  </script>
+
+</head>
+
+<body>
+  <!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+
+  <!-- Preloader -->
+  <!-- <div class="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-icon">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div> -->
+  <!-- /End Preloader -->
+
+  <!-- Start Header Area -->
+
+  <!-- End Header Area -->
+
+  <!-- Start Hero Area -->
+  <section class="background">
+    <!-- Start app-header -->
+    <div class="app-header">
+            <a href="/test2"><h1>SSAG.M</h1></a>
+        <div>
+          <ul>
+            <li><a href="/login"><i class="lni lni-enter"></i> 로그인</a></li>
+            <li><a href="/whoareu"><i class="lni lni-user"></i> 회원가입</a></li>
+          </ul>
+        </div>
+    </div>
+    <!-- End app-header -->
+
+    <div>
+      <!-- <h2 class="wow fadeInUp" data-wow-delay=".3s">Welcome to SSAG.R</h2> -->
+      <p class="head-txt">○○○님 참여 냉장고의 메모</p>
+    </div>
+
+    <div>
+      <div>
+        <div>
+          <div>
+            <!-- Start Search Form -->
+            <div id="memo-form">
+            <!-- <form th:action="@{/appaddmemo}" method="post" id="memo-form"> -->
+              <div class="memo-back">
+                <!-- <div id="search-input" class="search-input"> -->
+                  <!-- <label for="keyword"> -->
+                    <!-- <i class="lni lni-search-alt theme-color"></i> -->
+                  <!-- </label> -->
+                  <textarea type="text" class="memo-input"  name="memotext" id="memotext" placeholder="메모 입력 창" maxlength="120"></textarea>
+                <div class="memo-btn">
+                  <button type="submit" id="addmemo-btn" class="btn btn-submit" onclick="addmemo()"><i class="lni lni-search-alt"></i></button>
+                </div>
+              </div>
+              <!-- </div> -->
+            <!-- </form> -->
+            </div>
+            <!-- End Search Form -->
+
+            <!-- start ingredient checklist insert -->
+            <div>
+              <div id="data" class="memolist">
+                <div th:each="mL,n:${memoList}" th:class="|memocard memocard${n.index}|">
+                  <div class="memotop">
+                    <div th:text="${mL.memotext}" style="padding-bottom: 20px;"></div>
+                    <div th:text="${mL.name}" style="text-align: right;"></div>
+                    <div th:text="${mL.memocreateddate}" style="text-align: right;"></div>
+                  </div>
+                  <div class="memobottom">
+                    <input hidden th:id="|memocode${n.index}|" name="memocode" th:value="${mL.memocode}"></input>
+                    <div class="memobottom-left">
+                      <button th:class="|deletememobtn-${mL.imwriter}|" type="submit" th:onclick="|deletememo(${n.index})|" >제거</button>
+                    </div>
+                    <div class="memobottom-right"></div>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+            <!-- end ingredient checklist insert -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- End Hero Area -->
+
+  <!-- ========================= scroll-top ========================= -->
+  <!-- ========================= JS here ========================= -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/glightbox.min.js"></script>
+  <!-- <script src="js/main.js"></script> -->
+  <!-- <script src="js/index-search.js"></script> -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script type="text/javascript">
+    //========= Category Slider
+    tns({
+      container: '.category-slider',
+      items: 3,
+      slideBy: 'page',
+      autoplay: false,
+      mouseDrag: true,
+      gutter: 0,
+      nav: false,
+      controls: true,
+      controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        540: {
+          items: 2,
+        },
+        768: {
+          items: 4,
+        },
+        992: {
+          items: 5,
+        },
+        1170: {
+          items: 6,
+        }
+      }
+    });
+
+    //========= testimonial
+    tns({
+      container: '.testimonial-slider',
+      items: 3,
+      slideBy: 'page',
+      autoplay: false,
+      mouseDrag: true,
+      gutter: 0,
+      nav: true,
+      controls: false,
+      controlsText: ['<i class="lni lni-arrow-left"></i>', '<i class="lni lni-arrow-right"></i>'],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        540: {
+          items: 1,
+        },
+        768: {
+          items: 2,
+        },
+        992: {
+          items: 2,
+        },
+        1170: {
+          items: 2,
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

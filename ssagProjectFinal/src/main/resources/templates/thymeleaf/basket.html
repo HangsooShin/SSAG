@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>SSAG.R</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" /> -->
+  <!-- Place favicon.ico in the root directory -->
+
+  <!-- Web Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+  <!-- ========================= CSS here ========================= -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/LineIcons.2.0.css" />
+  <link rel="stylesheet" href="css/animate.css" />
+  <link rel="stylesheet" href="css/tiny-slider.css" />
+  <link rel="stylesheet" href="css/glightbox.min.css" />
+  <link rel="stylesheet" href="css/app2.css" />
+
+  <script>
+
+  async function changecookbasket(num){
+    console.log("수량 수정 진입 "+num+"번 카드");
+
+    const targetUrl = "/updatecookbasket";
+    let formData = new FormData();
+    let cookcode = document.getElementsByClassName("cookcode"+num)[0].value;
+    let cookquantityinbasket = document.getElementsByClassName("cookserve"+num)[0].value;
+
+    if (cookquantityinbasket < 1) {
+      alert("최소 1인분 이상 등록해야 합니다.");
+      return;
+    }
+
+    formData.append("cookcode", cookcode);
+    formData.append("cookquantityinbasket", cookquantityinbasket);
+
+    console.log("데이터 확인", cookcode);
+    const options = {
+      method: "post",
+      body: formData,
+    }
+
+    try {
+      let response = await fetch(targetUrl, options);
+    } catch(err) {
+      alert(err);
+    }
+  };
+
+  async function deletecookbasket(num){
+    console.log("메뉴 삭제 진입 "+num+"번 카드");
+    const targetUrl = "/deletecookbasket";
+    let formData = new FormData();
+    let cookcode = document.getElementsByClassName("cookcode"+num)[0].value;
+    formData.append("cookcode", cookcode);
+
+    console.log("데이터 확인",cookcode);
+    const options = {
+      method: "post",
+      body: formData,
+    }
+
+    try {
+      let response = await fetch(targetUrl, options);
+    } catch(err) {
+      alert(err);
+    }
+    window.location.reload();
+
+  };
+
+  function countup(num){
+    if(document.getElementsByClassName("cookserve"+num)[0].value < 50){
+    document.getElementsByClassName("cookserve"+num)[0].value++;
+  }
+  };
+
+  function countdown(num){
+    if(document.getElementsByClassName("cookserve"+num)[0].value > 1){
+    document.getElementsByClassName("cookserve"+num)[0].value--;
+  }
+  };
+
+  function make_no_data() {
+    let sel = document.getElementById("data");
+    let empty = document.createElement("div");
+    empty.innerText = "저장된 메뉴가 없습니다";
+    empty.className = "no-data";
+    sel.append(empty);
+  };
+
+  </script>
+
+</head>
+
+<body>
+  <!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+
+  <!-- Preloader -->
+  <!-- <div class="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-icon">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div> -->
+  <!-- /End Preloader -->
+
+  <!-- Start Header Area -->
+
+  <!-- End Header Area -->
+
+  <!-- Start Hero Area -->
+  <section class="background">
+    <!-- Start app-header -->
+    <div class="app-header">
+            <a href="/test2"><h1>SSAG.M</h1></a>
+        <div>
+          <ul>
+            <li><a href="/login"><i class="lni lni-enter"></i> 로그인</a></li>
+            <li><a href="/whoareu"><i class="lni lni-user"></i> 회원가입</a></li>
+          </ul>
+        </div>
+    </div>
+    <!-- End app-header -->
+
+    <div>
+      <!-- <h2 class="wow fadeInUp" data-wow-delay=".3s">Welcome to SSAG.R</h2> -->
+      <p class="head-txt">○○○님의 요리 장바구니</p>
+    </div>
+
+    <div>
+      <div>
+        <div>
+          <div>
+            <!-- Start Search Form -->
+            <!-- <div id="search-form-1"> -->
+            <!-- <form th:action="@{/searchresult}" method="post" id="search-form-1"> -->
+              <!-- <div class="search-back"> -->
+                <!-- <div id="search-input" class="search-input"> -->
+                  <!-- <label for="keyword"> -->
+                    <!-- <i class="lni lni-search-alt theme-color"></i> -->
+                  <!-- </label> -->
+                  <!-- <input type="text" class="search-input" id="similar-ingre" placeholder="ex)'감자 당근 양파'" onkeyup="if(window.event.keyCode==13){datatypeingre()}">
+                <div class="search-btn">
+                  <button type="submit" id="search-btn" class="btn btn-submit" onclick="datatypeingre();"><i class="lni lni-search-alt"></i></button>
+                </div>
+              </div> -->
+              <!-- </div> -->
+            <!-- </form> -->
+            <!-- </div> -->
+            <!-- <div hidden id="search-form-2"> -->
+            <!-- <form hidden th:action="@{/searchresult}" method="post" id="search-form-2"> -->
+              <!-- <div class="search-back"> -->
+                <!-- <div id="search-input" class="search-input"> -->
+                  <!-- <label for="keyword"> -->
+                    <!-- <i class="lni lni-search-alt theme-color"></i> -->
+                  <!-- </label> -->
+                  <!-- <input type="text" class="search-input" id="similar-cook" placeholder="ex)'스파게티'" onkeyup="if(window.event.keyCode==13){datatypecookname()}"> -->
+                <!-- <div class="search-btn"> -->
+                  <!-- <button type="submit" id="search-btn" class="btn btn-submit" onclick="datatypecookname();"><i class="lni lni-search-alt"></i></button> -->
+                <!-- </div> -->
+              <!-- </div> -->
+              <!-- </div> -->
+            <!-- </form> -->
+            <!-- </div> -->
+            <!-- End Search Form -->
+            <div style="text-align:center;">
+              <button onclick="location.href='/checklist'">체크리스트로 보기</button>
+            </div>
+
+            <!-- start cookbasketdata insert -->
+            <div>
+              <div id="data">
+                <div th:each="CB,n:${basketlist}" class="cookcard">
+                  <div class="cookname" th:text="${CB.cookVo.cookname}"></div>
+                  <input th:class="|cookcode${n.index}|" th:value="${CB.cookVo.cookcode}" hidden></input>
+                  <div class="cookinfo">
+                    <div class="cookimg" th:src="${CB.cookVo.cookimglink}"></div>
+                    <div class="cookingre">
+                      <button th:each="ingre:${CB.ingredientVoList}" th:class="|ingredient infridge-${ingre.infridge}|" th:text="${ingre.ingredientname}"></button>
+                    </div>
+
+                  </div>
+                  <div class="cookbasket">
+                    <button class="cookservebtn cookservedown" th:onclick="|countdown(${n.index})|" ><</button>
+                    <input th:class="|cookserve cookserve${n.index}|" type="number" min="1" max="50" th:value="${CB.cookquantityinbasket}"></input>
+                    <button class="cookservebtn cookserveup" th:onclick="|countup(${n.index})|" >></button>
+                    <button class="changebasketbutton" th:onclick="|changecookbasket(${n.index})|">수정</button>
+                    <button class="deletebasketbutton" th:onclick="|deletecookbasket(${n.index})|">삭제</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end cookbasketdata insert -->
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- End Hero Area -->
+
+  <!-- ========================= scroll-top ========================= -->
+
+  <!-- ========================= JS here ========================= -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/glightbox.min.js"></script>
+  <!-- <script src="js/main.js"></script> -->
+  <!-- <script src="js/index-search.js"></script> -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script type="text/javascript">
+    //========= Category Slider
+    tns({
+      container: '.category-slider',
+      items: 3,
+      slideBy: 'page',
+      autoplay: false,
+      mouseDrag: true,
+      gutter: 0,
+      nav: false,
+      controls: true,
+      controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        540: {
+          items: 2,
+        },
+        768: {
+          items: 4,
+        },
+        992: {
+          items: 5,
+        },
+        1170: {
+          items: 6,
+        }
+      }
+    });
+
+    //========= testimonial
+    tns({
+      container: '.testimonial-slider',
+      items: 3,
+      slideBy: 'page',
+      autoplay: false,
+      mouseDrag: true,
+      gutter: 0,
+      nav: true,
+      controls: false,
+      controlsText: ['<i class="lni lni-arrow-left"></i>', '<i class="lni lni-arrow-right"></i>'],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        540: {
+          items: 1,
+        },
+        768: {
+          items: 2,
+        },
+        992: {
+          items: 2,
+        },
+        1170: {
+          items: 2,
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
