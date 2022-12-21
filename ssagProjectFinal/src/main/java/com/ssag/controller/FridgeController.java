@@ -75,14 +75,33 @@ public class FridgeController {
 	}
 	
 	@PostMapping("/appfridgebox")
-	public String createFridgeBox2(FridgeBoxVo fridgeBoxVo, IngredientVo ingredientVo,
-			@AuthenticationPrincipal UserVo userVo) {
-		fridgeBoxVo.setIngredientcode(ingredientVo.getIngredientcode());
-		fridgeBoxVo.setStoragecode(fridgeBoxVo.getStoragecode());
-		fridgeBoxVo.setFridgecode(userVo.getFridgecode());
-		System.out.println("=============== 설정된 FridgeCode ==================="+userVo.getFridgecode());
-		System.out.println("=============== 설정된 Ingredientcode ===============" + fridgeBoxVo.getIngredientcode());
-		fridgeService.createFridgeBox(fridgeBoxVo);
+	public String createFridgeBox2(String ingredientcode, String ingredientquantityinfridgebox, String storagecode, String expiredate,
+			FridgeBoxVo fridgeBoxVo, @AuthenticationPrincipal UserVo userVo) {
+		
+//		System.out.println(ingredientcode);
+//		System.out.println(ingredientquantityinfridgebox);
+//		System.out.println(storagecode);
+//		System.out.println(expiredate);
+		
+		String[] storagecodelist = storagecode.split(",");
+		String[] ingredientcodelist = ingredientcode.split(",");
+		String[] ingredientquantityinfridgeboxlist = ingredientquantityinfridgebox.split(",");
+		String[] expiredatelist = expiredate.split(",");
+		
+		fridgeBoxVo = new FridgeBoxVo();
+		
+		for (int i=0; i < storagecodelist.length; i++) {
+			fridgeBoxVo.setStoragecode(Integer.parseInt(storagecodelist[i]));
+			fridgeBoxVo.setIngredientcode(Integer.parseInt(ingredientcodelist[i]));
+			fridgeBoxVo.setIngredientquantityinfridgebox(Integer.parseInt(ingredientquantityinfridgeboxlist[i]));
+			fridgeBoxVo.setExpiredate(expiredatelist[i]);
+			fridgeBoxVo.setFridgecode(userVo.getFridgecode());
+			
+			System.out.println("=============== 설정된 FridgeCode ==================="+userVo.getFridgecode());
+			System.out.println("=============== 설정된 Ingredientcode ===============" + fridgeBoxVo.getIngredientcode());
+			
+			fridgeService.createFridgeBox(fridgeBoxVo);
+		}
 		return "redirect:/testfridge";
 	}
 	
@@ -382,5 +401,18 @@ public class FridgeController {
 		model.addAttribute("ingredientlist",ingredientchecklist);
 		return "/checklist";
 	}
+	
+//	@PostMapping("/companyrecipt")
+//	@ResponseBody
+//	public List<ShoppingcartVo> shoppingcart (@AuthenticationPrincipal UserVo user) {
+//		
+//		shoppingcart = ingredientService.getrecipt(user.getUsercode());
+//		
+//		return shoppingcart;
+//	} 
+//	
+	
+	
+	
 	
 }

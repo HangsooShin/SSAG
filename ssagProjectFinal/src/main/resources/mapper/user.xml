@@ -35,10 +35,8 @@
 
 	<insert id="insertUser" parameterType="userVo">
 		<![CDATA[
-			
-			insert into users(username,password,role,name,email,telephone,address,fridgecode,companycode,detailcompanyname,birth)
-			value(#{username},#{password},#{role},#{name},#{email},#{telephone},#{address},#{fridgecode},#{companycode},#{detailcompanyname},#{birth});
-			
+		insert into users(username,password,role,name,email,telephone,address,fridgecode,companycode,detailcompanyname,birth)
+		value(#{username},#{password},#{role},#{name},#{email},#{telephone},#{address},#{fridgecode},#{companycode},#{detailcompanyname},#{birth});
 		]]>
 	</insert>
 
@@ -48,7 +46,7 @@
 
 
 	<insert id="procedureCall" parameterType="userVo">
-	{ CALL insertData()}	
+		{CALL insertData()}	
 	</insert>
 
 	<!--회원정보 업데이트 -->
@@ -61,31 +59,29 @@
 	<select id="companyList" resultMap="companyResult">
 		<![CDATA[
 		select * from company;
-	]]>
+		]]>
 	</select>
 
 	<select id="memoList" parameterType="hashmap" resultMap="boardResult">
 		<![CDATA[
 		select memocode, memotext, memocreateddate, name, imwriter
 		from (select memocode, fridgecode, writer, memotext, substring(memocreateddate, 3, 14) as memocreateddate, case when writer=#{usercode} then 1 else 0 end as imwriter
-		from fridgeboard where fridgecode=#{fridgecode} order by memocode desc limit 500) co1
+			from fridgeboard where fridgecode=#{fridgecode} order by memocode desc limit 500) co1
 		join users u on u.usercode=co1.writer;
-	]]>
+		]]>
 	</select>
 
 	<!-- 냉장고 메모 입력-->
 	<insert id="insertMemo" parameterType="com.ssag.model.FridgeBoardVo">
 		<![CDATA[
-			
-			insert into fridgeboard (fridgecode,memotext,writer)
-			value(#{fridgecode},#{memotext},#{writer});
-			
+		insert into fridgeboard (fridgecode,memotext,writer)
+		value(#{fridgecode},#{memotext},#{writer});
 		]]>
 	</insert>
 
 	<delete id="deleteMemo" parameterType="int">
 		<![CDATA[
-			delete from fridgeboard where memocode=#{memocode};
+		delete from fridgeboard where memocode=#{memocode};
 		]]>
 	</delete>
 

@@ -142,7 +142,7 @@
             <div>
               <div id="data" class="checklist">
                 <div th:each="il,n:${ingredientlist}" th:id="|ingreline${n.index}|" th:class="|ingreline infridge-${il.infridge} ingredientcard${n.index}|">
-                  <img class="ingreimg" th:src="${il.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/사과.png';">
+                  <img class="ingreimg" th:src="|images/fridgeicon/${il.ingredientname}.png|" onerror="this.onerror=null; this.src='images/fridgeicon/바구니.png';">
                   <div th:text="${il.ingredientname}" style="width:120px"></div>
                   <div th:text="${il.ingrequantity}"></div>
                   <button th:id="|buybtn${n.index}|" class="checkbtn" th:onclick="|buy(${n.index})|">체크</button>

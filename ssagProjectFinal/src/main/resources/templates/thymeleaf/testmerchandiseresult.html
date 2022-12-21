@@ -24,79 +24,6 @@
   <link rel="stylesheet" href="css/glightbox.min.css" />
   <link rel="stylesheet" href="css/app2.css" />
 
-  <script>
-
-  async function datasearch() {
-    console.log("datasearch진입");
-    const targetUrl = "/testmerch";
-    let formData = new FormData();
-    let similar = document.getElementById("similar").value;
-    formData.append("similar",similar);
-    const options = {
-      method: "post",
-      body: formData,
-    }
-
-    const tb = document.querySelector('#data');
-    while (tb.firstChild) {
-        tb.removeChild(tb.firstChild);
-    }
-
-    try {
-      let response = await fetch(targetUrl, options);
-      let searchdata = await response.json();
-
-      console.log(searchdata);
-
-      if (searchdata.length == 0) {
-        console.log("데이터 없어요");
-        let sel = document.getElementById("data");
-        let empty = document.createElement("div");
-        empty.innerText = "검색 결과가 없습니다.";
-        empty.className = "no-data";
-        sel.append(empty);
-      } else {
-
-
-      for (let item of searchdata) {
-        let sel = document.getElementById("data");
-
-        let card = document.createElement('div')
-        card.className = 'merchandisecard';
-
-        let img = document.createElement('img');
-        img.className = "merchandiseimg"
-        img.src = item.merchandiseVo22.merchandiseimglink;
-
-        let company = document.createElement('div');
-        company.innerText = "companycode:" + item.merchandiseVo22.companycode;
-
-        let title = document.createElement('div');
-        title.className = "merchandisetitle";
-        title.innerText = item.merchandiseVo22.itemname;
-
-        let cost = document.createElement('div');
-        cost.className = "merchandisecost";
-        cost.innerText = item.merchandiseVo22.merchandisecost +" 원";
-
-        card.append(img);
-        card.append(company);
-        card.append(title);
-        card.append(cost);
-        sel.append(card);
-        }
-      }
-    } catch(err) {
-      alert(err);
-    }
-    // console.log("끝");
-  };
-
-  window.onload = datasearch();
-
-  </script>
-
-
 </head>
 
 <body>
@@ -181,6 +108,77 @@
       </div>
     </div>
   </section>
+
+  <script>
+
+  async function datasearch() {
+    console.log("datasearch진입");
+    const targetUrl = "/testmerch";
+    let formData = new FormData();
+    let similar = document.getElementById("similar").value;
+    formData.append("similar",similar);
+    const options = {
+      method: "post",
+      body: formData,
+    }
+
+    const tb = document.querySelector('#data');
+    while (tb.firstChild) {
+        tb.removeChild(tb.firstChild);
+    }
+
+    try {
+      let response = await fetch(targetUrl, options);
+      let searchdata = await response.json();
+
+      console.log(searchdata);
+
+      if (searchdata.length == 0) {
+        console.log("데이터 없어요");
+        let sel = document.getElementById("data");
+        let empty = document.createElement("div");
+        empty.innerText = "검색 결과가 없습니다.";
+        empty.className = "no-data";
+        sel.append(empty);
+      } else {
+
+
+      for (let item of searchdata) {
+        let sel = document.getElementById("data");
+
+        let card = document.createElement('div')
+        card.className = 'merchandisecard';
+
+        let img = document.createElement('img');
+        img.className = "merchandiseimg"
+        img.src = item.merchandiseVo22.merchandiseimglink;
+
+        let company = document.createElement('img');
+        company.className="merchandisecompanyicon";
+        company.src="images/companyicon/"+item.merchandiseVo22.companycode+".png";
+
+        let title = document.createElement('div');
+        title.className = "merchandisetitle";
+        title.innerText = item.merchandiseVo22.itemname;
+
+        let cost = document.createElement('div');
+        cost.className = "merchandisecost";
+        cost.innerText = item.merchandiseVo22.merchandisecost +" 원";
+
+        card.append(img);
+        card.append(company);
+        card.append(title);
+        card.append(cost);
+        sel.append(card);
+        }
+      }
+    } catch(err) {
+      alert(err);
+    }
+    // console.log("끝");
+  };
+
+  </script>
 
   <script>
   // console.log("타이밍확인");
