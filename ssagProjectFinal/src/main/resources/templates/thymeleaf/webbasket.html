@@ -23,7 +23,15 @@
   <link rel="stylesheet" href="css/animate.css" />
   <link rel="stylesheet" href="css/tiny-slider.css" />
   <link rel="stylesheet" href="css/glightbox.min.css" />
+  <link rel="stylesheet" href="css/sheepcastle.css" />
   <link rel="stylesheet" href="css/main.css" />
+
+  <style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  </style>
 
 </head>
 
@@ -59,7 +67,7 @@
                                 </ul> -->
                   </li>
                   <li class="nav-item">
-                    <a href="myfreezy" aria-label="Toggle navigation">내 냉장고</a>
+                    <a href="myFrdige" aria-label="Toggle navigation">내 냉장고</a>
                   </li>
                   <li class="nav-item">
                     <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
@@ -115,6 +123,97 @@
   </div>
   <!-- End Breadcrumbs -->
 
+  <!-- Start Dashboard Section -->
+  <section class="dashboard section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-12 col-12">
+          <!-- Start Dashboard Sidebar -->
+          <div class="dashboard-sidebar">
+            <div class="user-image">
+              <img src="https://cdn-icons-png.flaticon.com/512/5449/5449842.png" alt="#">
+              <h3 style="font-size: 25px; font-family: 'Courier New', Courier, monospace;">재료목록</h3>
+            </div>
+            <div class="dashboard-menu">
+              <ul class="scroll-css">
+                <li>
+                  <div id="data" class="checklist">
+                    <div th:each="il,n:${ingredientchecklist}" th:id="|ingreline${n.index}|"
+                      th:class="|ingreline infridge-${il.infridge} ingredientcard${n.index}|">
+                      <img class="ingreimg" th:src="${il.ingredienticonlocation}"
+                        onerror="this.onerror=null; this.src='images/fridgeicon/사과.png';">
+                      <div th:text="${il.ingredientname}" style="width:120px"></div>
+                      <div th:text="${il.ingrequantity}"></div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Start Dashboard Sidebar -->
+
+        </div>
+        <div class="col-lg-9 col-md-12 col-12">
+          <div class="main-content">
+            <div class="dashboard-block mt-0">
+              <h2 class="block-title" style="font-size: 30px; font-family: 'Courier New', Courier, monospace;">
+                <b>레시피 장바구니</b>
+                <button type="button" class="btn btn-success recipeBtn" onclick="location.href='/price'"
+                  style="float: right;">가격비교 페이지로 이동</button>
+              </h2>
+
+              <!-- Start Items Area -->
+              <div class="my-items scroll-css">
+                <div th:each="CB,n:${cookbasket}" class="single-item-list">
+                  <input hidden th:value="${CB.cookVo.cookcode}" th:class="|cookcode${n.index}|">
+                  <div class="row align-items-center">
+                    <div class="col-4 col-12">
+                      <div class="item-image"><a th:href="${CB.cookVo.cooklink}"><img th:src="${CB.cookVo.cookimglink}"
+                            onerror="this.onerror=null; this.src='images/recipe/recipe_tmp.png';"
+                            style="position: none;"></a>
+                        <div class="content">
+                          <h3 class="title" th:text="${CB.cookVo.cookname}" style="float: left;"></h3>
+                          <button type="button" class="btn btn-success recipeBtn"
+                            th:onclick="|deletecookbasket(${n.index})|" style="float: right;">삭제</button>
+                          <button type="button" class="btn btn-success recipeBtn"
+                            th:onclick="|changecookbasket(${n.index})|"
+                            style="float: right; margin-bottom: 10px; margin-right: 10px;">수정</button>
+
+
+
+                          <div class="input-group input-group-margin" style="align:right">
+                            <button class="btn btn-outline-secondary" type="button"
+                              th:onclick="|countdown(${n.index})|">&lt;</button>
+                            <input style="text-align:center;" th:class="|form-control cookserve cookserve${n.index}|"
+                              type="number" min="1" th:value="${CB.cookquantityinbasket}" />
+                            <button class="btn btn-outline-secondary" type="button"
+                              th:onclick="|countup(${n.index})|">&gt;</button>
+                          </div>
+                          <hr>
+                          <block>
+                            <h5 th:each="ingre:${CB.ingredientVoList}"
+                              th:class="|ingredient infridge-${ingre.infridge}|" th:text="${ingre.ingredientname}"></h5>
+                          </block>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 이 아래에 있는 거는 삭제 아이콘 -->
+                <!-- <li><a href="javascript:void(0)"><i class="lni lni-trash"></i></a></li> -->
+
+
+
+              </div>
+              <!-- End Items Area -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Dashboard Section -->
 
   <!-- Start Footer Area -->
   <footer class="footer">
@@ -245,9 +344,78 @@
   <script src="js/tiny-slider.js"></script>
   <script src="js/glightbox.min.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/login.js"></script>
+  <!-- <script src="js/login.js"></script> -->
   <script src="js/token.js"></script>
   <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+  <!-- =========================== script here ========================== -->
+  <script>
+    async function deletecookbasket(num) {
+      console.log("메뉴 삭제 진입 " + num + "번 카드");
+      const targetUrl = "/deletecookbasket";
+      let formData = new FormData();
+      let cookcode = document.getElementsByClassName("cookcode" + num)[0].value;
+      formData.append("cookcode", cookcode);
+
+      console.log("데이터 확인", cookcode);
+      const options = {
+        method: "post",
+        body: formData,
+      }
+
+      try {
+        let response = await fetch(targetUrl, options);
+      } catch (err) {
+        alert(err);
+      }
+      window.location.reload();
+
+    };
+
+    async function changecookbasket(num) {
+      console.log("수량 수정 진입 " + num + "번 카드");
+
+      const targetUrl = "/updatecookbasket";
+      let formData = new FormData();
+      let cookcode = document.getElementsByClassName("cookcode" + num)[0].value;
+      let cookquantityinbasket = document.getElementsByClassName("cookserve" + num)[0].value;
+
+      if (cookquantityinbasket < 1) {
+        alert("최소 1인분 이상 등록해야 합니다.");
+        return;
+      }
+
+      formData.append("cookcode", cookcode);
+      formData.append("cookquantityinbasket", cookquantityinbasket);
+
+      console.log("데이터 확인", cookcode);
+      const options = {
+        method: "post",
+        body: formData,
+      }
+
+      try {
+        let response = await fetch(targetUrl, options);
+      } catch (err) {
+        alert(err);
+      }
+    };
+
+    function countup(num) {
+      if (document.getElementsByClassName("cookserve" + num)[0].value < 50) {
+        document.getElementsByClassName("cookserve" + num)[0].value++;
+      }
+    };
+
+
+    function countdown(num) {
+      if (document.getElementsByClassName("cookserve" + num)[0].value > 1) {
+        document.getElementsByClassName("cookserve" + num)[0].value--;
+      }
+    };
+
+
+  </script>
 
 
 </body>

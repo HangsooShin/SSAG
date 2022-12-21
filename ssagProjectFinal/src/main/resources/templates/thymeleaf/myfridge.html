@@ -24,6 +24,17 @@
   <link rel="stylesheet" href="css/glightbox.min.css" />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/sheepcastle.css" />
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
+
+  <!-- Latest compiled and minified JavaScript 한국어 번역 파일 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/i18n/defaults-ko_KR.min.js"></script>
+  <!-- <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script> -->
 
 
   <style>
@@ -38,15 +49,17 @@
 <body>
 
 
+
+
   <!-- Preloader -->
-  <div class="preloader">
+  <!-- <div class="preloader">
     <div class="preloader-inner">
       <div class="preloader-icon">
         <span></span>
         <span></span>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- /End Preloader -->
 
   <!-- Start Header Area -->
@@ -135,6 +148,8 @@
   </div>
   <!-- End Breadcrumbs -->
 
+
+
   <!-- start Freezy section -->
 
 
@@ -157,6 +172,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-12">
                   <!-- 냉장고 nav-tab -->
@@ -303,7 +319,7 @@
                                         <!-- 내부 모달버튼 트리거 -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#ingredientUploadModal">
-                                          재료 이미지 등록
+                                          이미지로 재료 등록
                                         </button>
 
                                         <!-- 내부 모달 부분 -->
@@ -314,7 +330,7 @@
                                           <div class="modal-dialog">
                                             <div class="modal-content">
                                               <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">재료 이미지 등록</h1>
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">이미지로 재료 등록</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                   aria-label="Close"></button>
                                               </div>
@@ -473,7 +489,7 @@
                                         </div>
                                         <!-- 내부 모달 끝 -->
 
-                                        <!-- 내부 모달버튼 트리거 -->
+                                        <!-- 재료 등록 버튼(직접입력1) -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#selftypingUploadModal">
                                           직접 입력
@@ -495,24 +511,28 @@
                                               </div>
                                               <!-- 여기는 모달바디 -->
                                               <div class="modal-body">
-                                                <div class="row" id="addForm">
-                                                  <form th:action="@{/fridgebox}" id="saveIngredientBtn" method="post">
+                                                <div class="row" id="addForm1">
+                                                  <form th:action="@{/appfridgebox}" id="saveIngredientBtn"
+                                                    method="post">
                                                     <div class="col">
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
                                                           for="inputGroupFile01">상품명</label>
-                                                        <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
-                                                        <select id="ingredientList3" class="form-select form-select-sm"
-                                                          size="1" aria-label=".form-select-sm example"
-                                                          name="ingredientcode">
+                                                        <input type="text" class="form-control" list="ingredientList3"
+                                                          id="inputGroupFile01">
+                                                        <!-- <input list="ingredientList3" id="inputGroupFile01"> -->
+                                                        <select id="ingredientList3"
+                                                          class="form-select form-select-sm my-select" size="1"
+                                                          aria-label=".form-select-sm example" name="ingredientcode">
                                                           <option th:each="m:${ingredientList3}"
+                                                            th:class="|value-${m.ingredientcode}|"
                                                             th:value="${m.ingredientcode}"
                                                             th:text="${m.ingredientname}"></option>
                                                         </select>
                                                       </div>
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
-                                                          for="inputGroupFile02">&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp</label>
+                                                          for="inputGroupFile02">수량</label>
                                                         <input type="text" name="ingredientquantityinfridgebox"
                                                           class="form-control" id="inputGroupFile02">
                                                       </div>
@@ -521,6 +541,7 @@
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
                                                           for="inputGroupFile03">보관위치</label>
+                                                        <!-- 이 아래에서 부터 시작해!! -->
                                                         <select class="form-select form-select-sm" size="1"
                                                           aria-label=".form-select-sm example" name="storagecode">
                                                           <option value="1">냉장</option>
@@ -541,13 +562,19 @@
 
                                                   <hr>
 
+
+
                                                 </div>
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                   id="closeBtn">닫기</button>
-                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn">재료
+                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn"
+                                                  onclick="addIngredientBtnHandler(1)">재료
                                                   추가</button>
+                                                <!-- 다중 재료 삭제 -->
+                                                <button type="submit" class="btn btn-danger"
+                                                  onclick="deleteinputtable(1)">삭제</button>
                                                 <button type="submit" form="saveIngredientBtn" class="btn btn-primary"
                                                   id="saveBtn">저장</button>
                                               </div>
@@ -700,7 +727,7 @@
                                         <!-- 내부 모달버튼 트리거 -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#ingredientUploadModal1">
-                                          재료 이미지 등록
+                                          이미지로 재료 등록
                                         </button>
 
                                         <!-- 내부 모달 부분 -->
@@ -711,7 +738,7 @@
                                           <div class="modal-dialog">
                                             <div class="modal-content">
                                               <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">재료 이미지 등록</h1>
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">이미지로 재료 등록</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                   aria-label="Close"></button>
                                               </div>
@@ -870,7 +897,7 @@
                                         </div>
                                         <!-- 내부 모달 끝 -->
 
-                                        <!-- 내부 모달버튼 트리거 -->
+                                        <!-- 재료 등록 버튼(직접입력2) -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#selftypingUploadModal1">
                                           직접 입력
@@ -892,8 +919,9 @@
                                               </div>
                                               <!-- 여기는 모달바디 -->
                                               <div class="modal-body">
-                                                <div class="row" id="addForm">
-                                                  <form th:action="@{/fridgebox}" id="saveIngredientBtn1" method="post">
+                                                <div class="row" id="addForm2">
+                                                  <form th:action="@{/appfridgebox}" id="saveIngredientBtn1"
+                                                    method="post">
                                                     <div class="col">
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
@@ -943,8 +971,12 @@
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                   id="closeBtn">닫기</button>
-                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn">재료
+                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn"
+                                                  onclick="addIngredientBtnHandler(2)">재료
                                                   추가</button>
+                                                <!-- 다중 재료 삭제 -->
+                                                <button type="submit" class="btn btn-danger"
+                                                  onclick="deleteinputtable(2)">삭제</button>
                                                 <button type="submit" form="saveIngredientBtn1" class="btn btn-primary"
                                                   id="saveBtn">저장</button>
                                               </div>
@@ -1091,7 +1123,7 @@
                                         <!-- 내부 모달버튼 트리거 -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#ingredientUploadModal2">
-                                          재료 이미지 등록
+                                          이미지로 재료 등록
                                         </button>
 
                                         <!-- 내부 모달 부분 -->
@@ -1102,7 +1134,7 @@
                                           <div class="modal-dialog">
                                             <div class="modal-content">
                                               <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">재료 이미지 등록</h1>
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">이미지로 재료 등록</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                   aria-label="Close"></button>
                                               </div>
@@ -1261,7 +1293,7 @@
                                         </div>
                                         <!-- 내부 모달 끝 -->
 
-                                        <!-- 내부 모달버튼 트리거 -->
+                                        <!-- 재료 등록 버튼(직접입력3) -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#selftypingUploadModal2">
                                           직접 입력
@@ -1284,8 +1316,9 @@
                                               </div>
                                               <!-- 여기는 모달바디 -->
                                               <div class="modal-body">
-                                                <div class="row" id="addForm">
-                                                  <form th:action="@{/fridgebox}" id="saveIngredientBtn2" method="post">
+                                                <div class="row" id="addForm3">
+                                                  <form th:action="@{/appfridgebox}" id="saveIngredientBtn2"
+                                                    method="post">
                                                     <div class="input-group mb-3">
                                                       <label class="input-group-text" for="inputGroupFile01">상품명</label>
                                                       <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
@@ -1330,8 +1363,12 @@
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                   id="closeBtn">닫기</button>
-                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn">재료
+                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn"
+                                                  onclick="addIngredientBtnHandler(3)">재료
                                                   추가</button>
+                                                <!-- 다중 재료 삭제 -->
+                                                <button type="submit" class="btn btn-danger"
+                                                  onclick="deleteinputtable(3)">삭제</button>
                                                 <button type="submit" form="saveIngredientBtn2" class="btn btn-primary"
                                                   id="saveBtn">저장</button>
                                               </div>
@@ -1604,7 +1641,14 @@
 
     <!-- end Fridge section -->
 
+
     <hr>
+    <select id="test">
+      <option value="">사과</option>
+      <option value="">딸기</option>
+      <option value="">오렌지</option>
+      <option value="">감귤</option>
+    </select>
 
     <!-- Start Footer Area -->
     <footer class="footer">
@@ -1737,11 +1781,11 @@
     <script src="js/main.js"></script>
     <!-- <script src="js/user-access.js"></script> -->
     <script src="js/imagesubmit.js"></script>
-    <script src="js/add-ingredient.js"></script>
+    <!-- <script th:inline="javascript" src="js/add-ingredient.js"></script> -->
     <!-- <script src="js/btncontrol/memosubmit.js"></script> -->
     <script src="https://code.jquery.com/jquery-latest.js"></script>
 
-    <script type="text/javascript">
+    <script th:inline="javascript" type="text/javascript">
       async function datasearch2() {
         console.log("레시피 이름으로 검색 진입");
         const targetUrl = "/recipeList";
@@ -1857,7 +1901,7 @@
           addBasketBtn.innerText = "장바구니 담기";
 
           let inputgroup = document.createElement('div');
-          inputgroup.setAttribute("class", "input-group");
+          inputgroup.setAttribute("class", "input-group input-group-margin");
           inputgroup.setAttribute("style", "align:right");
 
           let cookserve = document.createElement('input');
@@ -2071,6 +2115,237 @@
           alert(err);
         }
       };
+
+      // 여기 아래부터는 재료추가 버튼 컨트롤
+      const addIngredientBtn = document.getElementsByClassName("btn btn-secondary addIngredientBtn");
+
+
+
+      function addIngredientBtnHandler(num) {
+
+        /* <![CDATA[ */
+        let ingrelist = [[${ ingredientList3 }]];
+        /* ]]>*/
+
+        // event.preventDefault()
+        // 루트 정해주기
+        const rootDiv = document.getElementById("addForm" + num);
+
+        // 본격적인 폼 요소 작성
+        const newAddForm = document.createElement("form");
+        newAddForm.setAttribute("th:action", "@{/appfridgebox}");
+
+        // 나오는 내용들의 그리드를 잡아주는 부분(첫번째 col)
+        const addDivClassCol = document.createElement("div");
+        addDivClassCol.setAttribute("class", "col");
+
+        // 실질적으로 유저들이 볼 수 있는 입력부분(첫번째 입력칸)
+        const addDivClassInputGroup = document.createElement("div");
+        addDivClassInputGroup.setAttribute("class", "input-group mb-3");
+
+        // label 및 input 태그 작성부분
+        const addLabel = document.createElement("label");
+        addLabel.setAttribute("class", "input-group-text");
+        // 여기에서 말하는 for 어트리뷰트는 참조할 라벨 가능 요소의 id 속성 값을 의미함.
+        addLabel.setAttribute("for", "inputGroupFile01");
+        // 라벨 안에 들어갈 텍스트 작성
+        const productName = document.createTextNode("상품명");
+        addLabel.appendChild(productName);
+
+        // 아래의 input 태그 대신 select 태그를 만든다.
+        const addSelect = document.createElement("select");
+        // addSelect.setAttribute("id", "ingredientlist" + num);
+        addSelect.setAttribute("class", "form-select form-select-sm");
+        addSelect.setAttribute("size", "1");
+        addSelect.setAttribute("aria-label", ".form-select-sm example");
+        addSelect.setAttribute("name", "ingredientcode");
+
+        // input 태그에 append할 option 태그를 만든다.
+        // const addOption = document.createElement("option");
+        // addOption.setAttribute("th:each", "m:${ingredientList3}");
+        // addOption.setAttribute("th:value", "${m.ingredientcode}");
+        // addOption.setAttribute("th:text", "${m.ingredientname}");
+
+        // option만드는 부분에서 for문을 돌려서 만들어본다.
+        for (let eachingre of ingrelist) {
+          let addOption = document.createElement("option");
+          addOption.value = eachingre.ingredientcode;
+          addOption.innerText = eachingre.ingredientname;
+          addSelect.append(addOption);
+        }
+
+        // 첫번째 col에서 첫번째 입력칸 요소 만들기 끝
+
+        // 실질적으로 유저들이 볼 수 있는 입력부분(두번째 입력칸)
+        const addDivClassInputGroup2 = document.createElement("div");
+        addDivClassInputGroup2.setAttribute("class", "input-group mb-3");
+
+        // label 및 input 태그 작성부분
+        const addLabel2 = document.createElement("label");
+        addLabel2.setAttribute("class", "input-group-text");
+        // 여기에서 말하는 for 어트리뷰트는 참조할 라벨 가능 요소의 id 속성 값을 의미함.
+        addLabel2.setAttribute("for", "inputGroupFile02");
+        // 라벨 안에 들어갈 텍스트 작성
+        const productAmount = document.createTextNode("수량");
+        addLabel2.appendChild(productAmount);
+        // input 태그 생성 및 속성 지정
+        const addInput2 = document.createElement("input");
+        addInput2.setAttribute("type", "text");
+        addInput2.setAttribute("name", "ingredientquantityinfridgebox");
+        addInput2.setAttribute("class", "form-control");
+        addInput2.setAttribute("id", "inputGroupFile02");
+        // 첫번째 col에서 두번째 입력칸 요소 만들기 끝
+
+        // 나오는 내용들의 그리드를 잡아주는 부분(두번째 col)
+        const addDivClassCol2 = document.createElement("div");
+        addDivClassCol2.setAttribute("class", "col");
+
+        // 실질적으로 유저들이 볼 수 있는 입력부분(세번째 입력칸)
+        const addDivClassInputGroup3 = document.createElement("div");
+        addDivClassInputGroup3.setAttribute("class", "input-group mb-3");
+
+        // label 및 input 태그 작성부분
+        const addLabel3 = document.createElement("label");
+        addLabel3.setAttribute("class", "input-group-text");
+        // 여기에서 말하는 for 어트리뷰트는 참조할 라벨 가능 요소의 id 속성 값을 의미함.
+        addLabel3.setAttribute("for", "inputGroupFile03");
+        // 라벨 안에 들어갈 텍스트 작성
+        const productPosition = document.createTextNode("보관위치");
+        addLabel3.appendChild(productPosition);
+
+        // ==========================================================================> 양성아 여기서 부터 시작해!!!!
+        const addSelect2 = document.createElement("select");
+        addSelect2.setAttribute("class", "form-select form-select-sm");
+        addSelect2.setAttribute("size", "1");
+        addSelect2.setAttribute("aria-label", ".form-select-sm example");
+        addSelect2.setAttribute("name", "storagecode");
+
+        // 위의 select 에다가 더해줄 option태그 만들기
+        const addOption1 = document.createElement("option");
+        const addOption2 = document.createElement("option");
+        const addOption3 = document.createElement("option");
+        addOption1.setAttribute("value", "1");
+        addOption1.innerText = "냉장";
+        addOption2.setAttribute("value", "2");
+        addOption2.innerText = "냉동";
+        addOption3.setAttribute("value", "3");
+        addOption3.innerText = "실온";
+
+        // input 태그 생성 및 속성 지정
+        // const addInput3 = document.createElement("input");
+        // addInput3.setAttribute("type", "text");
+        // addInput3.setAttribute("class", "form-control");
+        // addInput3.setAttribute("id", "inputGroupFile03");
+        // 첫번째 col에서 첫번째 입력칸 요소 만들기 끝
+
+        // 실질적으로 유저들이 볼 수 있는 입력부분(두번째 입력칸)
+        const addDivClassInputGroup4 = document.createElement("div");
+        addDivClassInputGroup4.setAttribute("class", "input-group mb-3");
+
+        // label 및 input 태그 작성부분
+        const addLabel4 = document.createElement("label");
+        addLabel4.setAttribute("class", "input-group-text");
+        // 여기에서 말하는 for 어트리뷰트는 참조할 라벨 가능 요소의 id 속성 값을 의미함.
+        addLabel4.setAttribute("for", "inputGroupFile04");
+        // 라벨 안에 들어갈 텍스트 작성
+        const productExpireDate = document.createTextNode("유통기한");
+        addLabel4.appendChild(productExpireDate);
+        // input 태그 생성 및 속성 지정
+        const addInput4 = document.createElement("input");
+        addInput4.setAttribute("type", "date");
+        addInput4.setAttribute("value", "xxx");
+        addInput4.setAttribute("min", "yyy");
+        addInput4.setAttribute("max", "zzz");
+        addInput4.setAttribute("class", "form-control input-large");
+        addInput4.setAttribute("name", "expiredate");
+        addInput4.setAttribute("id", "expiredate");
+        addInput4.setAttribute("placeholder", "유통기한");
+        addInput4.setAttribute("required", "");
+
+        // 첫번째 col에서 첫번째 입력칸을 만드는 과정
+        addDivClassInputGroup.appendChild(addLabel);
+        // addSelect.appendChild(addOption);
+        addDivClassInputGroup.appendChild(addSelect);
+        addDivClassCol.appendChild(addDivClassInputGroup);
+
+        // 첫번째 col에서 두번째 입력칸을 만드는 과정
+        addDivClassInputGroup2.appendChild(addLabel2);
+        addDivClassInputGroup2.appendChild(addInput2);
+        addDivClassCol.appendChild(addDivClassInputGroup2);
+
+        // 두번째 col에서 세번째 입력칸을 만드는 과정
+        addDivClassInputGroup3.appendChild(addLabel3);
+        addSelect2.appendChild(addOption1);
+        addSelect2.appendChild(addOption2);
+        addSelect2.appendChild(addOption3);
+        addDivClassInputGroup3.appendChild(addSelect2);
+        addDivClassCol2.appendChild(addDivClassInputGroup3);
+
+        // 두번째 col에서 네번째 입력칸을 만드는 과정
+        addDivClassInputGroup4.appendChild(addLabel4);
+        addDivClassInputGroup4.appendChild(addInput4);
+        addDivClassCol2.appendChild(addDivClassInputGroup4);
+
+        // form태그에 첫번째, 두번째 col append
+        newAddForm.appendChild(addDivClassCol);
+        newAddForm.appendChild(addDivClassCol2);
+
+        // <hr>로 줄 그어줄 요소 만들기
+        const addHr = document.createElement("hr");
+
+        // 여기 아래 부분에는 루트div에 하나씩 붙이는 동작.
+        rootDiv.appendChild(newAddForm);
+        rootDiv.appendChild(addHr);
+      }
+
+      // addIngredientBtn.addEventListener("click", addIngredientBtnHandler);
+
+      // 닫기 버튼 눌렀을 때 만들어진 요소 초기화(힘들거 같다 싶으면 그냥 페이지 리로드 시켜버려!!)
+      const $closeBtnIcon = document.getElementById("closeBtnIcon");
+      const $closeBtn = document.getElementById("closeBtn");
+
+      function closeBtnHandler() { }
+
+      $closeBtn.addEventListener("click", closeBtnHandler);
+      $closeBtnIcon.addEventListener("click", closeBtnHandler);
+
+      // 재료 다중등록 삭제 버튼 로직
+      function deleteinputtable(num) {
+        let addform = document.getElementById("addForm" + num);
+        console.log(addform);
+        console.log(addform.childElementCount);
+        if (addform.childElementCount > 2) {
+          addform.removeChild(addform.lastChild);
+          addform.removeChild(addform.lastChild);
+
+        }
+      };
+
+      // 셀렉트 박스 옆에 검색을 위한 함수
+      function optionchoice(num) {
+        let keyword = document.getElementById("ki-" + num).value;
+        let brotherinput = document.getElementById("ki-" + num).nextSibling;
+        console.log(brotherinput);
+        let options = brotherinput.childNodes;
+
+        for (op of options) {
+          if (op.text.includes(keyword)) {
+            op.hidden = false;
+          } else {
+            op.hidden = true;
+          }
+        }
+      }
+
+      // selectpicker사용을 위한 구문
+      // $('.my-select').selectpicker(); // select피커 작동
+      // $('#test').chosen({
+      //   no_results_text: "검색 결과가 없습니다"
+      //   , width: "200px"
+      // });
+      // jQuery(document).ready(function () {
+      //   jQuery(".chosen").chosen();
+      // })
 
 
 

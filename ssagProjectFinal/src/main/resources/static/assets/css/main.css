@@ -61,6 +61,7 @@ p {
 * {
   margin: 0;
   padding: 0;
+  /* font-family: 'Courier New', Courier, monospace; */
 }
 
 .navbar-toggler:focus,
@@ -2398,7 +2399,7 @@ ol {
   top: 0;
   height: 300px;
   width: 300px;
-  background: #208b47;
+  background: none;
   border-radius: 50%;
   left: -50px;
   top: -110px;
@@ -2411,7 +2412,7 @@ ol {
   top: 0;
   height: 300px;
   width: 300px;
-  background: #208b47;
+  background: none;
   border-radius: 50%;
   left: -40px;
   top: -110px;
@@ -2427,7 +2428,7 @@ ol {
   font-size: 35px;
   line-height: 56px;
   font-weight: 700;
-  color: #fff;
+  color: rgb(22, 21, 21);
 }
 
 .pricing-table .single-table .table-head .duration {
@@ -2453,7 +2454,7 @@ ol {
 .pricing-table .single-table .table-list {
   position: relative;
   display: block;
-  margin-top: 90px;
+  margin-top: 20px;
 }
 
 .pricing-table .single-table .table-list li {
@@ -5459,11 +5460,29 @@ blockquote .shape {
 .my-items .single-item-list .item-image img {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 40;
   height: auto;
   width: 130px;
   border-radius: 3px;
 }
+
+/* .price-img {
+  position: absolute;
+  left: 0;
+  top: 40;
+  height: auto;
+  width: 94px;
+  border-radius: 3px;
+} */
+/* price페이지 용으로 작성된 이미지 사이즈 조정 */
+/* .my-items .single-item-list .item-image .price-img img {
+  position: relative;
+  left: 0;
+  top: 0;
+  height: auto;
+  width: 94px;
+  border-radius: 3px;
+} */
 
 .my-items .single-item-list .item-image .title a {
   font-size: 15px;

@@ -241,6 +241,71 @@ table td.tdDelete {
 /* overflow 및 scroll-bar 설정 */
 .scroll-css {
   width: auto;
+  height: 700px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+.scroll-css::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-css::-webkit-scrollbar-thumb {
+  background-color: #1a5e3e;
+}
+.scroll-css::-webkit-scrollbar-track {
+  background-color: #dfeee7;
+}
+
+.deletememobtn-0 {
+  display: none;
+}
+
+/* input-group-margin 위에 마진 */
+
+.input-group-margin {
+  margin-top: 15px;
+}
+
+/* 재료 목록 부분 */
+.checklist {
+  /* width: 280px;
+  height: 487px; */
+
+  background-color: none;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  border-style: none;
+  border-color: none;
+  padding: 10px;
+}
+
+.infridge-1{
+  background-color: rgba(124, 173, 98, 0.2);
+}
+
+
+.ingreline {
+  text-align: center;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0px;
+}
+
+.ingreimg {
+  width: 30px;
+  height: 30px;
+}
+
+.checkbtn {
+  border-radius: 15px;
+  padding: 5px;
+}
+
+/* .scroll-css {
+  width: auto;
   height: 500px;
   overflow: auto;
   overflow-x: hidden;
@@ -257,4 +322,27 @@ table td.tdDelete {
 
 .deletememobtn-0 {
   display: none;
+} */
+
+.iamfixed {
+  position: fixed;
+  top: 40%;
+  left:5%;
+}
+
+/* price페이지 냉장고에 있는 것 색깔처리 */
+.price-1{
+  background-color: rgba(124, 173, 98, 0.2);
+}
+
+.price-card {
+  padding: 20px 0 30px;
+  border-bottom:#1a5e3e;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+}
+
+.totalsum {
+  background-color: #ccc;
+  margin-top: 20px;
 }

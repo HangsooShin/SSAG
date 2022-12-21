@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.ssag.model.CookVo;
 import com.ssag.model.CookbasketVo;
 import com.ssag.model.IngredientVo;
+import com.ssag.model.MerchandiseVo;
 import com.ssag.model.SimilarnameVo;
 
 @Mapper
@@ -42,4 +43,6 @@ public interface SearchDao {
   public void deletecookbasket2(Integer usercode, Integer cookcode);
 
   public List<IngredientVo> ingredientchecklist(HashMap<String, Object> data);
+  
+  public List<MerchandiseVo> ingredientprice(HashMap<String, Object> data);
 }

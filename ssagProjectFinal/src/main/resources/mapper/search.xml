@@ -3,7 +3,8 @@
 
 <mapper namespace="com.ssag.dao.SearchDao">
 
-  <!--*******************************제품 검색 (감자) ************************************************************ -->
+  <!--*******************************제품 검색 (감자)
+  ************************************************************ -->
   <resultMap id='ingredient' type="com.ssag.model.IngredientVo">
     <result property="ingredientcode" column="ingredientcode" />
     <result property="ingredientname" column="ingredientname" />
@@ -14,16 +15,17 @@
     <result property="ingrequantity" column="ingrequantity" />
   </resultMap>
 
+<!-- <result property="expiredate" column="expiredate" /> -->
   <resultMap id='merchandise' type="com.ssag.model.MerchandiseVo">
     <result property="merchandisecode" column="merchandisecode" />
     <result property="companycode" column="companycode" />
     <result property="ingredientcode" column="ingredientcode" />
     <result property="itemname" column="itemname" />
     <result property="merchandisecost" column="merchandisecost" />
-    <result property="expiredate" column="expiredate" />
     <result property="outofstock" column="outofstock" />
     <result property="merchandiselink" column="merchandiselink" />
     <result property="merchandiseimglink" column="merchandiseimglink" />
+    <collection property="ingredientVo" resultMap="ingredient"></collection>
   </resultMap>
 
 
@@ -34,18 +36,21 @@
     <collection property="merchandiseVo22" resultMap="merchandise"></collection>
   </resultMap>
 
-  <select id="similarname" parameterType="com.ssag.model.SimilarnameVo" resultType="com.ssag.model.SimilarnameVo" resultMap="join">
+  <select id="similarname" parameterType="com.ssag.model.SimilarnameVo"
+    resultType="com.ssag.model.SimilarnameVo" resultMap="join">
     <![CDATA[
 		select * from (select i.ingredientcode as code from (select * from similarname where similar=#{similar}) co1 join ingredient i on co1.originalname=i.ingredientname) co2 join merchandise m  on co2.code=m.ingredientcode;
 		]]>
   </select>
 
-  <!--***************************************키워드로 레시피 검색 프로시저**************************************************** -->
-  <select id="recipeProcedureCall" parameterType="com.ssag.model.SimilarnameVo" resultMap="procedure" resultType="com.ssag.model.SimilarnameVo">
-		call string_split(#{similar},' ');
-	</select>
+  <!--***************************************키워드로 레시피 검색
+  프로시저**************************************************** -->
+  <select id="recipeProcedureCall" parameterType="com.ssag.model.SimilarnameVo"
+    resultMap="procedure" resultType="com.ssag.model.SimilarnameVo"> call string_split(#{similar},'
+    '); </select>
 
-  <select id="recipeSearchbyname" parameterType="com.ssag.model.SimilarnameVo" resultMap="procedure" resultType="com.ssag.model.SimilarnameVo">
+  <select id="recipeSearchbyname" parameterType="com.ssag.model.SimilarnameVo" resultMap="procedure"
+    resultType="com.ssag.model.SimilarnameVo">
     <![CDATA[
 		select * from (select * from cook where cookname like CONCAT('%', #{cookname}, '%')) co1
 		join cookingredient on co1.cookcode=cookingredient.cookcode join ingredient on cookingredient.ingredientcode=ingredient.ingredientcode;
@@ -76,19 +81,17 @@
     <result property="ingredientquantityincook" column="ingredientquantityincook" />
   </resultMap>
 
-  <insert id="getcookbasket" parameterType="com.ssag.model.CookbasketVo">
-		insert into ingredientbasket select usercode, ingredientcode, #{cookquantityinbasket} as cookquantityinbasket, cookcode
-		from (select usercode from users where usercode=#{usercode}) co1 join cookingredient where cookcode=#{cookcode};
-	</insert>
+  <insert id="getcookbasket" parameterType="com.ssag.model.CookbasketVo"> insert into
+    ingredientbasket select usercode, ingredientcode, #{cookquantityinbasket} as
+    cookquantityinbasket, cookcode from (select usercode from users where usercode=#{usercode}) co1
+    join cookingredient where cookcode=#{cookcode}; </insert>
 
-  <update id="updatecookbasket" parameterType="com.ssag.model.CookbasketVo">
-		update ingredientbasket set cookquantityinbasket=cookquantityinbasket+#{cookquantityinbasket} 
-		where usercode=#{usercode} and cookcode=#{cookcode};
-	</update>
+  <update id="updatecookbasket" parameterType="com.ssag.model.CookbasketVo"> update ingredientbasket
+    set cookquantityinbasket=cookquantityinbasket+#{cookquantityinbasket} where usercode=#{usercode}
+    and cookcode=#{cookcode}; </update>
 
-  <select id="findbasket" resultType="com.ssag.model.CookbasketVo">
-		select * from ingredientbasket where usercode=#{usercode} and cookcode=#{cookcode};
-	</select>
+  <select id="findbasket" resultType="com.ssag.model.CookbasketVo"> select * from ingredientbasket
+    where usercode=#{usercode} and cookcode=#{cookcode}; </select>
 
   <resultMap type="com.ssag.model.CookbasketVo" id="cookbasket">
     <result property="usercode" column="usercode" />
@@ -98,32 +101,44 @@
     <collection property="cookVo" resultMap="cook"></collection>
     <collection property="ingredientVo" resultMap="ingredient"></collection>
   </resultMap>
-  <select id="cookbasketlist" resultMap="cookbasket">
-		select *, case when ingredientinfridge is null then 0 else 1 end as infridge from (select usercode, co1.ingredientcode, ingredientname, cookquantityinbasket, co1.cookcode, cookname, cookimglink, cooklink
-from(select * from ingredientbasket ib where usercode=#{usercode} ) co1
-join ingredient i on i.ingredientcode=co1.ingredientcode join cook c on co1.cookcode=c.cookcode order by cookcode) co2
-left join (select distinct ingredientcode as ingredientinfridge from fridgebox join fridge on fridgebox.fridgecode=fridge.fridgecode where fridge.fridgecode=#{fridgecode}) co3
-on co2.ingredientcode=co3.ingredientinfridge order by cookcode;
-	</select>
+  <select id="cookbasketlist" resultMap="cookbasket"> select *, case when ingredientinfridge is null
+    then 0 else 1 end as infridge from (select usercode, co1.ingredientcode, ingredientname,
+    cookquantityinbasket, co1.cookcode, cookname, cookimglink, cooklink from(select * from
+    ingredientbasket ib where usercode=#{usercode} ) co1 join ingredient i on
+    i.ingredientcode=co1.ingredientcode join cook c on co1.cookcode=c.cookcode order by cookcode)
+    co2 left join (select distinct ingredientcode as ingredientinfridge from fridgebox join fridge
+    on fridgebox.fridgecode=fridge.fridgecode where fridge.fridgecode=#{fridgecode}) co3 on
+    co2.ingredientcode=co3.ingredientinfridge order by cookcode; </select>
 
-  <update id="updatecookbasket2" parameterType="Integer">
-		update ingredientbasket set cookquantityinbasket=#{cookquantityinbasket} 
-		where usercode=#{usercode} and cookcode=#{cookcode};
-	</update>
+  <update id="updatecookbasket2" parameterType="Integer"> update ingredientbasket set
+    cookquantityinbasket=#{cookquantityinbasket} where usercode=#{usercode} and
+    cookcode=#{cookcode}; </update>
 
-  <delete id="deletecookbasket2" parameterType="Integer">
-		delete from ingredientbasket where usercode=#{usercode} and cookcode=#{cookcode};
-	</delete>
+  <delete id="deletecookbasket2" parameterType="Integer"> delete from ingredientbasket where
+    usercode=#{usercode} and cookcode=#{cookcode}; </delete>
 
-  <select id="ingredientchecklist" parameterType="hashmap" resultMap="ingredient">
-		select *, case when ingredientinfridge is null then 0 else 1 end as infridge
-		from (select co1.ingredientcode, ingrequantity, ingredientname, ingredienticonlocation
-		from (select ib.ingredientcode, sum(cookquantityinbasket*ingredientquantityincook) as ingrequantity
-		from ingredientbasket ib
-		join cookingredient ci on ib.ingredientcode=ci.ingredientcode and ci.cookcode=ib.cookcode where usercode=#{usercode} group by ib.ingredientcode) co1
-		join ingredient i on co1.ingredientcode=i.ingredientcode) co2
-		left join (select distinct ingredientcode as ingredientinfridge from fridgebox
-		join fridge on fridgebox.fridgecode=fridge.fridgecode where fridge.fridgecode=#{fridgecode}) co3 on co2.ingredientcode=co3.ingredientinfridge;
-	</select>
+  <select id="ingredientchecklist" parameterType="hashmap" resultMap="ingredient"> select *, case
+    when ingredientinfridge is null then 0 else 1 end as infridge from (select co1.ingredientcode,
+    ingrequantity, ingredientname, ingredienticonlocation from (select ib.ingredientcode,
+    sum(cookquantityinbasket*ingredientquantityincook) as ingrequantity from ingredientbasket ib
+    join cookingredient ci on ib.ingredientcode=ci.ingredientcode and ci.cookcode=ib.cookcode where
+    usercode=#{usercode} group by ib.ingredientcode) co1 join ingredient i on
+    co1.ingredientcode=i.ingredientcode) co2 left join (select distinct ingredientcode as
+    ingredientinfridge from fridgebox join fridge on fridgebox.fridgecode=fridge.fridgecode where
+    fridge.fridgecode=#{fridgecode}) co3 on co2.ingredientcode=co3.ingredientinfridge; </select>
+
+  <select id="ingredientprice" resultMap="merchandise"> select * from (select ingredientcode,
+    ingrequantity, ingredientname, case when ingredientinfridge is null then 0 else 1 end as
+    infridge from (select co1.ingredientcode, ingrequantity, ingredientname from (select
+    ib.ingredientcode, sum(cookquantityinbasket*ingredientquantityincook) as ingrequantity from
+    ingredientbasket ib join cookingredient ci on ib.ingredientcode=ci.ingredientcode and
+    ci.cookcode=ib.cookcode where usercode=#{usercode} group by ib.ingredientcode) co1 join
+    ingredient i on co1.ingredientcode=i.ingredientcode) co2 left join (select distinct
+    ingredientcode as ingredientinfridge from fridgebox where fridgebox.fridgecode=#{fridgecode})
+    co3 on co2.ingredientcode=co3.ingredientinfridge) co4 join (select * from merchandise m order by
+    ingredientcode asc, merchandisecost asc limit 1000000) co5 on
+    co4.ingredientcode=co5.ingredientcode group by co5.companycode, co5.ingredientcode order by
+    co4.ingredientcode; </select>
+
 
 </mapper>

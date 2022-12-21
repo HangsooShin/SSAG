@@ -12,6 +12,7 @@ import com.ssag.model.CookIngredientListVo;
 import com.ssag.model.CookbasketListVo;
 import com.ssag.model.CookbasketVo;
 import com.ssag.model.IngredientVo;
+import com.ssag.model.MerchandiseVo;
 import com.ssag.model.SimilarnameVo;
 
 @Service
@@ -191,4 +192,15 @@ public class IngredientService {
     List<IngredientVo> ingredientchecklist = searchDao.ingredientchecklist(data);
     return ingredientchecklist;
   }
+  
+  public List<MerchandiseVo> ingredientprice(Integer usercode, String fridgecode) {
+	  HashMap<String, Object> data = new HashMap<String, Object>();
+	  data.put("usercode", usercode);
+	  data.put("fridgecode", fridgecode);
+	  List<MerchandiseVo> ingredientprice = searchDao.ingredientprice(data);
+	  
+	  return ingredientprice;
+  }
+  
+  
 }

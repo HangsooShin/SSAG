@@ -14,9 +14,9 @@ public class IngredientVo {
 	private String ingredienticonlocation;
 	private Integer ingredientinfridge;
 	private Integer ingrequantity;
-	
 	private Integer infridge;
 	
+
 	public Integer getIngrequantity() {
 		return ingrequantity;
 	}
