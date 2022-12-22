@@ -518,16 +518,14 @@
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
                                                           for="inputGroupFile01">상품명</label>
-                                                        <input type="text" class="form-control" list="ingredientList3"
-                                                          id="inputGroupFile01">
-                                                        <!-- <input list="ingredientList3" id="inputGroupFile01"> -->
-                                                        <select id="ingredientList3"
-                                                          class="form-select form-select-sm my-select" size="1"
+                                                        <input type="text" class="form-control keywordinput" id="ki-0"
+                                                          oninput="optionchoice(0)"><select id="ingrename"
+                                                          class="form-select form-select-sm ingreinput" size="1"
                                                           aria-label=".form-select-sm example" name="ingredientcode">
                                                           <option th:each="m:${ingredientList3}"
                                                             th:class="|value-${m.ingredientcode}|"
-                                                            th:value="${m.ingredientcode}"
-                                                            th:text="${m.ingredientname}"></option>
+                                                            th:value="${m.ingredientcode}" th:text="${m.ingredientname}"
+                                                            required></option>
                                                         </select>
                                                       </div>
                                                       <div class="input-group mb-3">
@@ -926,13 +924,14 @@
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
                                                           for="inputGroupFile01">상품명</label>
-                                                        <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
-                                                        <select id="ingredientList3" class="form-select form-select-sm"
-                                                          size="1" aria-label=".form-select-sm example"
-                                                          name="ingredientcode">
+                                                        <input type="text" class="form-control keywordinput" id="ki1-0"
+                                                          oninput="optionchoice1(0)"><select id="ingrename"
+                                                          class="form-select form-select-sm ingreinput" size="1"
+                                                          aria-label=".form-select-sm example" name="ingredientcode">
                                                           <option th:each="m:${ingredientList3}"
-                                                            th:value="${m.ingredientcode}"
-                                                            th:text="${m.ingredientname}"></option>
+                                                            th:class="|value-${m.ingredientcode}|"
+                                                            th:value="${m.ingredientcode}" th:text="${m.ingredientname}"
+                                                            required></option>
                                                         </select>
                                                       </div>
                                                       <div class="input-group mb-3">
@@ -1317,42 +1316,49 @@
                                               <!-- 여기는 모달바디 -->
                                               <div class="modal-body">
                                                 <div class="row" id="addForm3">
-                                                  <form th:action="@{/appfridgebox}" id="saveIngredientBtn2"
+                                                  <form th:action="@{/appfridgebox}" id="saveIngredientBtn"
                                                     method="post">
-                                                    <div class="input-group mb-3">
-                                                      <label class="input-group-text" for="inputGroupFile01">상품명</label>
-                                                      <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
-                                                      <select id="ingredientList3" class="form-select form-select-sm"
-                                                        size="1" aria-label=".form-select-sm example"
-                                                        name="ingredientcode">
-                                                        <option th:each="m:${ingredientList3}"
-                                                          th:value="${m.ingredientcode}" th:text="${m.ingredientname}">
-                                                        </option>
-                                                      </select>
+                                                    <div class="col">
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile01">상품명</label>
+                                                        <input type="text" class="form-control keywordinput" id="ki2-0"
+                                                          oninput="optionchoice2(0)"><select id="ingrename"
+                                                          class="form-select form-select-sm ingreinput" size="1"
+                                                          aria-label=".form-select-sm example" name="ingredientcode">
+                                                          <option th:each="m:${ingredientList3}"
+                                                            th:class="|value-${m.ingredientcode}|"
+                                                            th:value="${m.ingredientcode}" th:text="${m.ingredientname}"
+                                                            required></option>
+                                                        </select>
+                                                      </div>
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile02">수량</label>
+                                                        <input type="text" name="ingredientquantityinfridgebox"
+                                                          class="form-control" id="inputGroupFile02">
+                                                      </div>
                                                     </div>
-                                                    <div class="input-group mb-3">
-                                                      <label class="input-group-text"
-                                                        for="inputGroupFile02">&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp</label>
-                                                      <input type="text" name="ingredientquantityinfridgebox"
-                                                        class="form-control" id="inputGroupFile02">
-                                                    </div>
-                                                    <div class="input-group mb-3">
-                                                      <label class="input-group-text"
-                                                        for="inputGroupFile03">보관위치</label>
-                                                      <select class="form-select form-select-sm" size="1"
-                                                        aria-label=".form-select-sm example" name="storagecode">
-                                                        <option value="1">냉장</option>
-                                                        <option value="2">냉동</option>
-                                                        <option value="3">실온</option>
-                                                      </select>
-                                                    </div>
-                                                    <div class="input-group mb-3">
-                                                      <label class="input-group-text"
-                                                        for="inputGroupFile04">유통기한</label>
-                                                      <!-- <input type="text" class="form-control" id="inputGroupFile04"> -->
-                                                      <input type="date" value="xxx" min="yyy" max="zzz"
-                                                        class="form-control input-large" name="expiredate"
-                                                        id="expiredate" placeholder="유통기한" required>
+                                                    <div class="col">
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile03">보관위치</label>
+                                                        <!-- 이 아래에서 부터 시작해!! -->
+                                                        <select class="form-select form-select-sm" size="1"
+                                                          aria-label=".form-select-sm example" name="storagecode">
+                                                          <option value="1">냉장</option>
+                                                          <option value="2">냉동</option>
+                                                          <option value="3">실온</option>
+                                                        </select>
+                                                      </div>
+                                                      <div class="input-group mb-3">
+                                                        <label class="input-group-text"
+                                                          for="inputGroupFile04">유통기한</label>
+                                                        <!-- <input type="text" class="form-control" id="inputGroupFile04"> -->
+                                                        <input type="date" value="xxx" min="yyy" max="zzz"
+                                                          class="form-control input-large" name="expiredate"
+                                                          id="expiredate" placeholder="유통기한" required>
+                                                      </div>
                                                     </div>
                                                   </form>
 
@@ -1643,12 +1649,7 @@
 
 
     <hr>
-    <select id="test">
-      <option value="">사과</option>
-      <option value="">딸기</option>
-      <option value="">오렌지</option>
-      <option value="">감귤</option>
-    </select>
+
 
     <!-- Start Footer Area -->
     <footer class="footer">
@@ -1955,8 +1956,9 @@
           div2.append(div3);
           div1.append(div2);
           itemlist.append(div1);
+          cardcount++;
+
         }
-        cardcount++;
       };
 
       function countup(num) {
@@ -2122,6 +2124,8 @@
 
 
       function addIngredientBtnHandler(num) {
+        let keyindexes = document.getElementsByClassName("keywordinput");
+        let keyindex = keyindexes.length;
 
         /* <![CDATA[ */
         let ingrelist = [[${ ingredientList3 }]];
@@ -2152,6 +2156,14 @@
         const productName = document.createTextNode("상품명");
         addLabel.appendChild(productName);
 
+        // input부분 만들어주기
+        const addInput = document.createElement("input");
+        addInput.setAttribute("type", "text");
+        addInput.setAttribute("class", "form-control keywordinput");
+        addInput.setAttribute("id", "ki-" + keyindex);
+        addInput.setAttribute("oninput", "optionchoice(" + (keyindex) + ")");
+        addInput.placeholder = "키워드 입력";
+
         // 아래의 input 태그 대신 select 태그를 만든다.
         const addSelect = document.createElement("select");
         // addSelect.setAttribute("id", "ingredientlist" + num);
@@ -2159,12 +2171,6 @@
         addSelect.setAttribute("size", "1");
         addSelect.setAttribute("aria-label", ".form-select-sm example");
         addSelect.setAttribute("name", "ingredientcode");
-
-        // input 태그에 append할 option 태그를 만든다.
-        // const addOption = document.createElement("option");
-        // addOption.setAttribute("th:each", "m:${ingredientList3}");
-        // addOption.setAttribute("th:value", "${m.ingredientcode}");
-        // addOption.setAttribute("th:text", "${m.ingredientname}");
 
         // option만드는 부분에서 for문을 돌려서 만들어본다.
         for (let eachingre of ingrelist) {
@@ -2213,7 +2219,6 @@
         const productPosition = document.createTextNode("보관위치");
         addLabel3.appendChild(productPosition);
 
-        // ==========================================================================> 양성아 여기서 부터 시작해!!!!
         const addSelect2 = document.createElement("select");
         addSelect2.setAttribute("class", "form-select form-select-sm");
         addSelect2.setAttribute("size", "1");
@@ -2264,6 +2269,7 @@
 
         // 첫번째 col에서 첫번째 입력칸을 만드는 과정
         addDivClassInputGroup.appendChild(addLabel);
+        addDivClassInputGroup.appendChild(addInput);
         // addSelect.appendChild(addOption);
         addDivClassInputGroup.appendChild(addSelect);
         addDivClassCol.appendChild(addDivClassInputGroup);
@@ -2324,18 +2330,95 @@
       // 셀렉트 박스 옆에 검색을 위한 함수
       function optionchoice(num) {
         let keyword = document.getElementById("ki-" + num).value;
+        console.log(keyword);
         let brotherinput = document.getElementById("ki-" + num).nextSibling;
         console.log(brotherinput);
         let options = brotherinput.childNodes;
+        console.log(options);
 
         for (op of options) {
-          if (op.text.includes(keyword)) {
-            op.hidden = false;
+          if (op.text == null) {
+            console.log("null이지라")
           } else {
-            op.hidden = true;
+            if (op.text.includes(keyword)) {
+              op.hidden = false;
+            } else {
+              op.hidden = true;
+            }
           }
+
         }
       }
+
+      function optionchoice1(num) {
+        let keyword = document.getElementById("ki1-" + num).value;
+        console.log(keyword);
+        let brotherinput = document.getElementById("ki1-" + num).nextSibling;
+        console.log(brotherinput);
+        let options = brotherinput.childNodes;
+        console.log(options);
+
+        for (op of options) {
+          if (op.text == null) {
+            console.log("null이지라")
+          } else {
+            if (op.text.includes(keyword)) {
+              op.hidden = false;
+            } else {
+              op.hidden = true;
+            }
+          }
+
+        }
+      }
+
+      function optionchoice2(num) {
+        let keyword = document.getElementById("ki2-" + num).value;
+        console.log(keyword);
+        let brotherinput = document.getElementById("ki2-" + num).nextSibling;
+        console.log(brotherinput);
+        let options = brotherinput.childNodes;
+        console.log(options);
+
+        for (op of options) {
+          if (op.text == null) {
+            console.log("null이지라")
+          } else {
+            if (op.text.includes(keyword)) {
+              op.hidden = false;
+            } else {
+              op.hidden = true;
+            }
+          }
+
+        }
+      }
+
+      // 이 아래에서 부터는 사진 업로드를 위한 ajax 부분 => 아래 함수는 이미지 서브밋 버튼이 눌렸을 때 일어나야 하는 동작이다.
+      // async function dlinput() {
+      //   console.log("dlinput 진입");
+      //   let image = document.getElementById("dl-image");
+      //   let processtype = "dl"; // 딥러닝이냐 영수증이냐 바코드냐 구분하는 코드
+
+      //   const targetUrl = "/uploadimage";
+      //   let formData = new FormData();
+      //   formData.append("file", image.files[0]);
+      //   formData.append("processtype", processtype);
+      //   const options = {
+      //     method: "post",
+      //     body: formData,
+      //   }
+
+      //   try {
+      //     let response = await fetch(targetUrl, options);
+      //     let searchdata = await response.json();
+
+      //     console.log("searchdata: ", searchdata);
+
+      //     // 여기에 결국에 수정하기와 같은 모달을 만들어주는 function을 만들어야 한다.
+
+      //   }
+      // };
 
       // selectpicker사용을 위한 구문
       // $('.my-select').selectpicker(); // select피커 작동
