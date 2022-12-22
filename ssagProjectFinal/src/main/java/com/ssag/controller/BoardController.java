@@ -43,7 +43,7 @@ public class BoardController {
 //	
 
 	
-	//글 작성에서 등록하기 버튼 누르ㅏ면
+	//글 작성에서 등록하기 버튼 누르면 시작
 	@PostMapping(value="/addArticle")
 	public String addArticle(Model model,FridgeBoardVo fridgeBoardVo, @AuthenticationPrincipal UserVo userVo) {
 		System.out.println("여기는 AddArticle");
