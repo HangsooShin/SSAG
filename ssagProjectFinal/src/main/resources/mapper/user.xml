@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssag.dao.UserDao">
+	<resultMap id='userResult' type="userVo">
+		<result property="usercode" column="usercode" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="telephone" column="telephone" />
+		<result property="address" column="address" />
+		<result property="companycode" column="companycode" />
+		<result property="detailcompanyname" column="detailcompanyname" />
+		<result property="fridgecode" column="fridgecode" />
+		<result property="birth" column="birth" />
+
+	</resultMap>
+
+	<resultMap id="companyResult" type="com.ssag.model.CompanyVo">
+		<result property="companycode" column="companycode" />
+		<result property="companylink" column="companylink" />
+		<result property="companyname" column="companyname" />
+	</resultMap>
+
+	<resultMap id="boardResult" type="com.ssag.model.FridgeBoardVo">
+		<result property="fridgecode" column="fridgecode" />
+		<result property="memocode" column="memocode" />
+		<result property="memocreateddate" column="memocreateddate" />
+		<result property="writer" column="writer" />
+		<result property="memotext" column="memotext" />
+	</resultMap>
+
+	<insert id="insertUser" parameterType="userVo">
+		<![CDATA[
+			
+			insert into users(username,password,role,name,email,telephone,address,fridgecode,companycode,detailcompanyname,birth)
+			value(#{username},#{password},#{role},#{name},#{email},#{telephone},#{address},#{fridgecode},#{companycode},#{detailcompanyname},#{birth});
+			
+		]]>
+	</insert>
+
+	<select id="findByUsername" parameterType="String" resultType="com.ssag.model.UserVo">
+		SELECT * FROM users WHERE username=#{username};
+	</select>
+
+
+	<insert id="procedureCall" parameterType="userVo">
+	{ CALL insertData()}	
+	</insert>
+
+	<!--회원정보 업데이트 -->
+	<update id="updateUser" parameterType="userVo">
+		<![CDATA[
+			update users set name=#{name},email=#{email},telephone=#{telephone},address=#{address},fridgecode=#{fridgecode} where usercode=#{code};
+		]]>
+	</update>
+
+	<select id="companyList" resultMap="companyResult">
+		<![CDATA[
+		select * from company;
+	]]>
+	</select>
+
+	<select id="memoList" resultMap="boardResult">
+		<![CDATA[
+		select fridgecode, memocode, writer, memotext, substring(memocreateddate, 3, 14) as memocreateddate from fridgeboard where fridgecode=#{fridgecode} order by memocode desc;
+	]]>
+	</select>
+
+	<!-- 냉장고 메모 입력-->
+	<insert id="insertMemo" parameterType="com.ssag.model.FridgeBoardVo">
+		<![CDATA[
+			
+			insert into fridgeboard (fridgecode,memotext,writer)
+			value(#{fridgecode},#{memotext},#{writer});
+			
+		]]>
+	</insert>
+
+	<delete id="deleteMemo" parameterType="int">
+		<![CDATA[
+			delete from fridgeboard where memocode=#{memocode};
+		]]>
+	</delete>
+
+
+</mapper>
+
