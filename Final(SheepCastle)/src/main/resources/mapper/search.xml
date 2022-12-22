@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssag.dao.SearchDao">
+
+	<!--*******************************제품 검색 (감자) ************************************************************ -->
+	<resultMap id='ingredient' type="com.ssag.model.IngredientVo">
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="ingredientname" column="ingredientname" />
+		<result property="ingredientgroup" column="ingredientgroup" />
+		<result property="ingredienticonlocation" column="ingredienticonlocation" />
+		<result property="ingredientinfridge" column="ingredientinfridge" />
+		<result property="infridge" column="infridge" />
+		<result property="ingrequantity" column="ingrequantity" />
+	</resultMap>
+
+	<resultMap id='merchandise' type="com.ssag.model.MerchandiseVo">
+		<result property="merchandisecode" column="merchandisecode" />
+		<result property="companycode" column="companycode" />
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="itemname" column="itemname" />
+		<result property="merchandisecost" column="merchandisecost" />
+		<result property="outofstock" column="outofstock" />
+		<result property="merchandiselink" column="merchandiselink" />
+		<result property="merchandiseimglink" column="merchandiseimglink" />
+		<collection property="ingredientVo" resultMap="ingredient"></collection>
+	</resultMap>
+
+
+	<resultMap type="com.ssag.model.SimilarnameVo" id="join">
+
+		<result property="similar" column="similar" />
+		<result property="originalname" column="originalname" />
+		<collection property="ingredientVo22" resultMap="ingredient"></collection>
+		<collection property="merchandiseVo22" resultMap="merchandise"></collection>
+	</resultMap>
+
+	<resultMap type="com.ssag.model.SimilarnameVo" id="procedure">
+		<result property="similar" column="similar" />
+		<result property="originalname" column="originalname" />
+		<collection property="ingredientVo22" resultMap="ingredient"></collection>
+		<collection property="cookIngredientVo22" resultMap="cookingredient"></collection>
+		<collection property="cookVo22" resultMap="cook"></collection>
+	</resultMap>
+
+	<resultMap id='cook' type="com.ssag.model.CookVo">
+		<result property="cookcode" column="cookcode" />
+		<result property="cookname" column="cookname" />
+		<result property="companycode" column="companycode" />
+		<result property="serve" column="serve" />
+		<result property="howtomake" column="howtomake" />
+		<result property="cooklink" column="cooklink" />
+		<result property="cookimglink" column="cookimglink" />
+	</resultMap>
+
+	<resultMap id='cookingredient' type="com.ssag.model.CookIngredientVo">
+		<result property="cookcode" column="cookcode" />
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="ingredientquantityincook" column="ingredientquantityincook" />
+	</resultMap>
+
+
+	<resultMap id='ingredientbasket' type="com.ssag.model.IngredientbasketVo">
+		<result property="usercode" column="usercode" />
+		<result property="cookcode" column="cookcode" />
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="cookquantityinbasket" column="cookquantityinbasket" />
+	</resultMap>
+
+
+	<select id="similarname" parameterType="com.ssag.model.SimilarnameVo" resultType="com.ssag.model.SimilarnameVo" resultMap="join">
+		<![CDATA[
+		select * from (select i.ingredientcode as code from (select * from similarname where similar=#{similar}) co1 join ingredient i on co1.originalname=i.ingredientname) co2 join merchandise m  on co2.code=m.ingredientcode;
+		]]>
+	</select>
+
+
+	<!--***************************************키워드로 레시피 검색 프로시저**************************************************** -->
+	<select id="recipeProcedureCall" parameterType="com.ssag.model.SimilarnameVo" resultMap="procedure" resultType="com.ssag.model.SimilarnameVo">
+		
+		call string_split(#{similar},' ');
+		
+	</select>
+
+
+	<!--*****************************************레시피 검색(튀김)************************************************** -->
+	<select id="selectRecipe" resultMap="cook">
+		<![CDATA[
+		select * from cook where cookname like CONCAT('%', #{cookname}, '%');
+		]]>
+	</select>
+
+
+	<insert id="getcookbasket" parameterType="com.ssag.model.CookbasketVo">
+		<![CDATA[
+		insert into
+	    ingredientbasket select usercode, ingredientcode, #{cookquantityinbasket} as
+	    cookquantityinbasket, cookcode from (select usercode from users where usercode=#{usercode}) co1 join cookingredient where cookcode=#{cookcode}; 
+    ]]>
+	</insert>
+
+	<update id="updatecookbasket" parameterType="com.ssag.model.IngredientbasketVo">
+		<![CDATA[
+	update ingredientbasket
+    set cookquantityinbasket=cookquantityinbasket+#{cookquantityinbasket} where usercode=#{usercode} and cookcode=#{cookcode};
+	]]>
+	</update>
+
+	<select id="findbasket" parameterType="com.ssag.model.IngredientbasketVo" resultType="com.ssag.model.IngredientbasketVo">
+		<![CDATA[
+	select * from ingredientbasket where usercode=#{usercode} and cookcode=#{cookcode}; 
+	]]>
+	</select>
+
+	<select id="recipeSearchbyname" parameterType="com.ssag.model.SimilarnameVo" resultMap="procedure" resultType="com.ssag.model.SimilarnameVo">
+		<![CDATA[
+		select * from (select * from cook where cookname like CONCAT('%', #{cookname}, '%')) co1
+		join cookingredient on co1.cookcode=cookingredient.cookcode join ingredient on cookingredient.ingredientcode=ingredient.ingredientcode;
+		]]>
+	</select>
+
+
+	<resultMap type="com.ssag.model.CookbasketVo" id="cookbasket">
+		<result property="cookquantityinbasket" column="cookquantityinbasket" />
+		<result property="usercode" column="usercode" />
+		<result property="ingredientcode" column="ingredientcode" />
+		<result property="cookcode" column="cookcode" />
+		<collection property="cookVo" resultMap="cook"></collection>
+		<collection property="ingredientVo" resultMap="ingredient"></collection>
+	</resultMap>
+
+
+	<select id="cookbasketlist" resultMap="cookbasket">
+		<![CDATA[
+select *, case when ingredientinfridge is null
+    then 0 else 1 end as infridge from (select usercode, co1.ingredientcode, ingredientname,
+    cookquantityinbasket, co1.cookcode, cookname, cookimglink, cooklink from(select * from
+    ingredientbasket ib where usercode=#{usercode} ) co1 join ingredient i on
+    i.ingredientcode=co1.ingredientcode join cook c on co1.cookcode=c.cookcode order by cookcode)
+    co2 left join (select distinct ingredientcode as ingredientinfridge from fridgebox join fridge
+    on fridgebox.fridgecode=fridge.fridgecode where fridge.fridgecode=#{fridgecode}) co3 on
+    co2.ingredientcode=co3.ingredientinfridge order by cookcode; 
+    ]]>
+	</select>
+
+	<update id="updatecookbasket2" parameterType="Integer">
+		<![CDATA[
+  update ingredientbasket set
+    cookquantityinbasket=#{cookquantityinbasket} where usercode=#{usercode} and
+    cookcode=#{cookcode};]]>
+	</update>
+
+	<delete id="deletecookbasket2" parameterType="Integer">
+		<![CDATA[
+  delete from ingredientbasket where
+    usercode=#{usercode} and cookcode=#{cookcode}; ]]>
+	</delete>
+
+	<select id="ingredientchecklist" parameterType="hashmap" resultMap="ingredient">
+		<![CDATA[
+  select *, case
+    when ingredientinfridge is null then 0 else 1 end as infridge from (select co1.ingredientcode,
+    ingrequantity, ingredientname, ingredienticonlocation from (select ib.ingredientcode,
+    sum(cookquantityinbasket*ingredientquantityincook) as ingrequantity from ingredientbasket ib
+    join cookingredient ci on ib.ingredientcode=ci.ingredientcode and ci.cookcode=ib.cookcode where
+    usercode=#{usercode} group by ib.ingredientcode) co1 join ingredient i on
+    co1.ingredientcode=i.ingredientcode) co2 left join (select distinct ingredientcode as
+    ingredientinfridge from fridgebox join fridge on fridgebox.fridgecode=fridge.fridgecode where
+    fridge.fridgecode=#{fridgecode}) co3 on co2.ingredientcode=co3.ingredientinfridge; ]]>
+	</select>
+
+	<select id="ingredientprice" resultMap="merchandise">
+		<![CDATA[
+  select * from (select ingredientcode,
+    ingrequantity, ingredientname, case when ingredientinfridge is null then 0 else 1 end as
+    infridge from (select co1.ingredientcode, ingrequantity, ingredientname from (select
+    ib.ingredientcode, sum(cookquantityinbasket*ingredientquantityincook) as ingrequantity from
+    ingredientbasket ib join cookingredient ci on ib.ingredientcode=ci.ingredientcode and
+    ci.cookcode=ib.cookcode where usercode=#{usercode} group by ib.ingredientcode) co1 join
+    ingredient i on co1.ingredientcode=i.ingredientcode) co2 left join (select distinct
+    ingredientcode as ingredientinfridge from fridgebox where fridgebox.fridgecode=#{fridgecode})
+    co3 on co2.ingredientcode=co3.ingredientinfridge) co4 join (select * from merchandise m order by
+    ingredientcode asc, merchandisecost asc limit 1000000) co5 on
+    co4.ingredientcode=co5.ingredientcode group by co5.companycode, co5.ingredientcode order by
+    co4.ingredientcode;]]>
+	</select>
+
+
+</mapper>

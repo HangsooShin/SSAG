@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>회원가입 - SSAG</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="assets/images/favicon.svg"
+    />
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="../css/animate.css" />
+    <link rel="stylesheet" href="../css/tiny-slider.css" />
+    <link rel="stylesheet" href="../css/glightbox.min.css" />
+    <link rel="stylesheet" href="../css/main_test2.css" />
+    <link rel="stylesheet" href="../css/app.css" />
+  </head>
+
+  <body>
+    <section class="hero-whoareu-area">
+      <div style="padding-top: 45%">
+        <!-- 클릭하면 메인 -->
+        <a href="/app"
+          ><div
+            style="
+              font-family: Tenada;
+              padding-top: 10%;
+              padding-left: 10%;
+              width: 300px;
+              height: 130px;
+              padding-top: 0px;
+              padding-left: 0px;
+            "
+          ></div
+        ></a>
+        <!-- 클릭하면 메인 끝 -->
+        <dev>
+          <p
+            style="
+              font-family: SeoulHangangM;
+              display: flex;
+              justify-content: center;
+              font-size: 15pt;
+              color: black;
+            "
+          >
+            가입 목적을 선택해 주세요.
+          </p>
+        </dev>
+        <a href="/app/user-register" style="display: flex">
+          <div
+            id="rectangle"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-top: 5%;
+            "
+          >
+            <p style="font-size: 15pt">일반 회원가입</p>
+          </div>
+        </a>
+        <div class="hr-sect">Or</div>
+        <a href="/app/company-register" style="display: flex">
+          <div
+            id="rectangle"
+            style="display: flex; align-items: center; justify-content: center"
+          >
+            <p style="font-size: 15pt">기업 회원가입</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <script>
+      $button1 = document.getElementById("userRegisterBtn")
+
+      function goUserRegister() {
+        location.replace("user-register")
+      }
+
+      $button1.addEventListener("click", goUserRegister)
+
+      $button2 = document.getElementById("companyRegisterBtn")
+
+      function goCompanyRegister() {
+        location.replace("company-register")
+      }
+
+      $button2.addEventListener("click", goCompanyRegister)
+    </script>
+  </body>
+</html>

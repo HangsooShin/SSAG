@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>비밀번호 찾기</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" /> -->
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="../css/animate.css" />
+    <link rel="stylesheet" href="../css/tiny-slider.css" />
+    <link rel="stylesheet" href="../css/glightbox.min.css" />
+    <link rel="stylesheet" href="../css/app.css" />
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+      $(function () {
+        $("#findBtn").click(function () {
+          $.ajax({
+            url: "/app/find_pw",
+            type: "POST",
+            data: {
+              username: $("#username").val(),
+              email: $("#email").val(),
+            },
+            success: function (result) {
+              alert(result)
+            },
+          })
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <section class="hero-area">
+      <!-- Start Header Area -->
+      <div th:replace="layout/app-header::mainheader"></div>
+      <!-- End app-header -->
+      <div style="padding-top: 30%">
+      
+              <div style="text-align: center">
+   
+          <h3>비밀번호 찾기</h3>
+        </div>
+        <div>
+          <p>
+            <label style="margin-left: 5%;">ID</label>
+            <input
+              class="w3-input"
+              type="text"
+              id="username"
+              name="username"
+              style="margin-left: 5%;"
+
+              required
+            />
+          </p>
+          <p>
+            <label style="margin-left: 5%;">Email</label>
+            <input
+              class="w3-input"
+              type="text"
+              id="email"
+              name="email"
+              style="margin-left: 5%;"
+              required
+            />
+          </p>
+          <p class="w3-center">
+            <button
+              type="button"
+              id="findBtn"
+              class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round"
+              style="margin-left: 3%; margin-right: 20px; width: 370px;"
+            >
+              find
+            </button>
+            <button
+              type="button"
+              onclick="history.go(-1);"
+              class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round"
+              style="margin-left: 3%; margin-right: 20px; width: 370px;"
+            >
+              Cancel
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- ========================= JS here ========================= -->
+    <script src="../js/bootstrap.min.js"></script>
+</html>

@@ -1,0 +1,337 @@
+.fridge-search {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 35px;
+}
+
+.fridge-btn-group {
+  margin-top: 60px;
+}
+
+.fridge-icon-name {
+  text-align: center;
+}
+
+/* 여기 아래쪽에는 레시피 리스트 관련 내용 */
+.recipeBtn {
+  float: right;
+  background-color: #1a5e3e;
+  border-color: #1a5e3e;
+}
+
+.recipeImg {
+  max-width: 130px;
+  max-height: 130px;
+  object-fit: cover;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.recipeImgCol {
+  align-items: right;
+}
+
+.recipeTextCol {
+  margin-bottom: 20px;
+}
+
+.recipeListName {
+  /* text-align: center; */
+  margin: auto;
+  margin-top: 20px;
+}
+
+.recipeListValue {
+  font-family: 맑은 고딕;
+  font-size: 20px;
+}
+
+/* 레시피 리스트 관련 내용 끝 */
+
+/* 내 냉장고 부분 관련 내용 시작 */
+.imgIconBorder {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: cover;
+}
+
+#newProductBtn {
+  margin: auto;
+  float: right;
+}
+
+.newProductBtn {
+  /* font-size: 12px; */
+  float: right;
+  background-color: #1a5e3e;
+  border-color: #1a5e3e;
+  margin-bottom: 10px;
+  /* margin-right: 5px; */
+}
+
+.newSelectBtn {
+  background-color: #1a5e3e;
+  border-color: #1a5e3e;
+  margin-bottom: 10px;
+}
+
+/* 재료 이미지 등록 모달 페이지 관련 내용 */
+.uploadContainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.image-upload {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+}
+
+label {
+  cursor: pointer;
+  font-size: 1em;
+}
+
+#chooseFile {
+  visibility: hidden;
+}
+
+.fileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fileInput {
+  display: flex;
+  align-items: center;
+  border-bottom: solid 2px black;
+  width: 60%;
+  height: 30px;
+}
+
+#fileName {
+  margin-left: 5px;
+}
+
+.buttonContainer {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  background-color: black;
+  color: white;
+  border-radius: 30px;
+  padding: 10px;
+  font-size: 0.8em;
+
+  cursor: pointer;
+}
+
+.image-show {
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* .img {
+  position: absolute;
+} */
+
+/* 내 냉장고 관련 내용 끝 */
+
+/* 게시판 CSS부분 */
+table {
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  border-top: 1px solid #ccc;
+  border-left: 5px solid #1a5e3e;
+  margin: 20px 10px;
+}
+
+table th {
+  width: 147px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #1a5e3e;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+table td.author {
+  width: 20px;
+  padding: 10px;
+  vertical-align: top;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+table td.tdText {
+  width: 300px;
+  padding: 10px;
+  vertical-align: top;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+table td.tdTime {
+  width: 150px;
+  padding: 10px;
+  vertical-align: top;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+table td.tdDelete {
+  width: 100px;
+  padding: 10px;
+  vertical-align: top;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.footer {
+  margin-top: 200px;
+}
+
+.memoSubmitForm {
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+}
+
+.memoSubmitBtn {
+  width: 100px;
+}
+
+.deleteMemoBtn {
+}
+
+/* .newIngBtn {
+  margin: 5px;
+  padding-right: 50px;
+  text-align: right;
+  border: 10px;
+  border-color: #208b47;
+  background-color: #208b47;
+} */
+
+/* overflow 및 scroll-bar 설정 */
+.scroll-css {
+  width: auto;
+  height: 700px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+.scroll-css::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-css::-webkit-scrollbar-thumb {
+  background-color: #1a5e3e;
+}
+.scroll-css::-webkit-scrollbar-track {
+  background-color: #dfeee7;
+}
+
+.deletememobtn-0 {
+  display: none;
+}
+
+/* input-group-margin 위에 마진 */
+
+.input-group-margin {
+  margin-top: 15px;
+}
+
+/* 재료 목록 부분 */
+.checklist {
+  /* width: 280px;
+  height: 487px; */
+
+  background-color: none;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  border-style: none;
+  border-color: none;
+  padding: 10px;
+}
+
+.infridge-1 {
+  background-color: rgba(124, 173, 98, 0.2);
+}
+
+.ingreline {
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0px;
+}
+
+.ingreimg {
+  width: 30px;
+  height: 30px;
+}
+
+.checkbtn {
+  border-radius: 15px;
+  padding: 5px;
+}
+
+/* .scroll-css {
+  width: auto;
+  height: 500px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+.scroll-css::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-css::-webkit-scrollbar-thumb {
+  background-color: #1a5e3e;
+}
+.scroll-css::-webkit-scrollbar-track {
+  background-color: #dfeee7;
+}
+.deletememobtn-0 {
+  display: none;
+} */
+
+.iamfixed {
+  position: fixed;
+  top: 40%;
+  left: 5%;
+}
+
+/* price페이지 냉장고에 있는 것 색깔처리 */
+.price-1 {
+  background-color: rgba(124, 173, 98, 0.2);
+}
+
+.price-card {
+  padding: 20px 0 30px;
+  border-bottom: #1a5e3e;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+}
+
+.totalsum {
+  background-color: #ccc;
+  margin-top: 20px;
+}

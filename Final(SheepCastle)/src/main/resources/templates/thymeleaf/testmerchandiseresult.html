@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>SSAG.R</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" /> -->
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="../css/animate.css" />
+    <link rel="stylesheet" href="../css/tiny-slider.css" />
+    <link rel="stylesheet" href="../css/glightbox.min.css" />
+    <link rel="stylesheet" href="../css/app2.css" />
+  </head>
+
+  <body>
+    <section class="background">
+      <!-- Start app-header -->
+      <div th:replace="layout/app-header2::appheader"></div>
+      <!-- End app-header -->
+
+      <div>
+        <div>
+          <div>
+            <div>
+              <!-- Start Search Form -->
+              <div class="search-back">
+                <input
+                  type="text"
+                  class="search-input"
+                  name="similar"
+                  id="similar"
+                  th:value="${similar}"
+                  placeholder="상품명을 입력하세요"
+                  onkeyup="if(window.event.keyCode==13){datasearch()}"
+                />
+                <div class="search-btn">
+                  <button
+                    type="submit"
+                    id="search-btn"
+                    class="btn btn-submit"
+                    onclick="datasearch()"
+                  >
+                    <i class="lni lni-search-alt"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- </div> -->
+              <!-- </form> -->
+
+              <!-- End Search Form -->
+
+              <!-- start searchdata insert -->
+              <div>
+                <div id="data"></div>
+              </div>
+              <!-- end searchdata insert -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      async function datasearch() {
+        console.log("datasearch진입")
+        const targetUrl = "/app/testmerch"
+        let formData = new FormData()
+        let similar = document.getElementById("similar").value
+        formData.append("similar", similar)
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        const tb = document.querySelector("#data")
+        while (tb.firstChild) {
+          tb.removeChild(tb.firstChild)
+        }
+
+        try {
+          let response = await fetch(targetUrl, options)
+          let searchdata = await response.json()
+
+          console.log(searchdata)
+
+          if (searchdata.length == 0) {
+            console.log("데이터 없어요")
+            let sel = document.getElementById("data")
+            let empty = document.createElement("div")
+            empty.innerText = "검색 결과가 없습니다."
+            empty.className = "no-data"
+            sel.append(empty)
+          } else {
+            for (let item of searchdata) {
+              let sel = document.getElementById("data")
+
+              let card = document.createElement("div")
+              card.className = "merchandisecard"
+
+              let img = document.createElement("img")
+              img.className = "merchandiseimg"
+              img.src = item.merchandiseVo22.merchandiseimglink
+
+              let company = document.createElement("img")
+              company.className = "merchandisecompanyicon"
+              company.src =
+                "../images/companyicon/" +
+                item.merchandiseVo22.companycode +
+                ".png"
+
+              let title = document.createElement("div")
+              title.className = "merchandisetitle"
+              title.innerText = item.merchandiseVo22.itemname
+
+              let cost = document.createElement("div")
+              cost.className = "merchandisecost"
+              cost.innerText = item.merchandiseVo22.merchandisecost + " 원"
+
+              card.append(img)
+              card.append(company)
+              card.append(title)
+              card.append(cost)
+              sel.append(card)
+            }
+          }
+        } catch (err) {
+          alert(err)
+        }
+        // console.log("끝");
+      }
+    </script>
+
+    <script>
+      // console.log("타이밍확인");
+      datasearch()
+    </script>
+
+    <!-- End Hero Area -->
+
+    <!-- ========================= scroll-top ========================= -->
+    <!-- <a href="#" class="scroll-top btn-hover">
+    <i class="lni lni-chevron-up"></i>
+  </a> -->
+
+    <!-- ========================= JS here ========================= -->
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/tiny-slider.js"></script>
+    <script src="../js/glightbox.min.js"></script>
+    <script src="../js/main.js"></script>
+    <!-- <script src="js/index-search.js"></script> -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/javascript">
+      //========= Category Slider
+      tns({
+        container: ".category-slider",
+        items: 3,
+        slideBy: "page",
+        autoplay: false,
+        mouseDrag: true,
+        gutter: 0,
+        nav: false,
+        controls: true,
+        controlsText: [
+          '<i class="lni lni-chevron-left"></i>',
+          '<i class="lni lni-chevron-right"></i>',
+        ],
+        responsive: {
+          0: {
+            items: 1,
+          },
+          540: {
+            items: 2,
+          },
+          768: {
+            items: 4,
+          },
+          992: {
+            items: 5,
+          },
+          1170: {
+            items: 6,
+          },
+        },
+      })
+
+      //========= testimonial
+      tns({
+        container: ".testimonial-slider",
+        items: 3,
+        slideBy: "page",
+        autoplay: false,
+        mouseDrag: true,
+        gutter: 0,
+        nav: true,
+        controls: false,
+        controlsText: [
+          '<i class="lni lni-arrow-left"></i>',
+          '<i class="lni lni-arrow-right"></i>',
+        ],
+        responsive: {
+          0: {
+            items: 1,
+          },
+          540: {
+            items: 1,
+          },
+          768: {
+            items: 2,
+          },
+          992: {
+            items: 2,
+          },
+          1170: {
+            items: 2,
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

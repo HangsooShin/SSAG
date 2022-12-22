@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>SSAG.R</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" /> -->
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/LineIcons.2.0.css" />
+    <link rel="stylesheet" href="../css/animate.css" />
+    <link rel="stylesheet" href="../css/tiny-slider.css" />
+    <link rel="stylesheet" href="../css/glightbox.min.css" />
+    <link rel="stylesheet" href="../css/app2.css" />
+  </head>
+
+  <body>
+    <!-- Start Hero Area -->
+    <section class="background">
+      <!-- Start app-header -->
+      <div th:replace="layout/app-header2::appheader"></div>
+      <!-- End app-header -->
+      <div>
+        <div>
+          <div>
+            <div>
+              <!-- Start Search Form -->
+              <div id="search-form-1">
+                <!-- <form th:action="@{/searchresult}" method="post" id="search-form-1"> -->
+                <div class="search-back">
+                  <!-- <div id="search-input" class="search-input"> -->
+                  <!-- <label for="keyword"> -->
+                  <!-- <i class="lni lni-search-alt theme-color"></i> -->
+                  <!-- </label> -->
+                  <input
+                    type="text"
+                    class="search-input"
+                    id="similar-ingre"
+                    placeholder="ex)'감자 당근 양파'"
+                    onkeyup="if(window.event.keyCode==13){datatypeingre()}"
+                  />
+                  <div class="search-btn">
+                    <button
+                      type="submit"
+                      id="search-btn"
+                      class="btn btn-submit"
+                      onclick="datatypeingre();"
+                    >
+                      <i class="lni lni-search-alt"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- </div> -->
+                <!-- </form> -->
+              </div>
+              <div hidden id="search-form-2">
+                <!-- <form hidden th:action="@{/searchresult}" method="post" id="search-form-2"> -->
+                <div class="search-back">
+                  <!-- <div id="search-input" class="search-input"> -->
+                  <!-- <label for="keyword"> -->
+                  <!-- <i class="lni lni-search-alt theme-color"></i> -->
+                  <!-- </label> -->
+                  <input
+                    type="text"
+                    class="search-input"
+                    id="similar-cook"
+                    placeholder="ex)'스파게티'"
+                    onkeyup="if(window.event.keyCode==13){datatypecookname()}"
+                  />
+                  <div class="search-btn">
+                    <button
+                      type="submit"
+                      id="search-btn"
+                      class="btn btn-submit"
+                      onclick="datatypecookname();"
+                    >
+                      <i class="lni lni-search-alt"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- </div> -->
+                <!-- </form> -->
+              </div>
+              <!-- End Search Form -->
+
+              <!-- start Search type selecter -->
+              <div style="text-align: center">
+                <button
+                  class="merchandisesearchbtn"
+                  type="button"
+                  onclick="searchtypeingre();"
+                >
+                  재료 이름으로 검색
+                </button>
+                <button
+                  class="merchandisesearchbtn"
+                  type="button"
+                  onclick="searchtypecook();"
+                >
+                  요리 이름으로 검색
+                </button>
+              </div>
+              <!-- end Search type selecter -->
+
+              <!-- start recipedata insert -->
+              <div>
+                <div id="data"></div>
+              </div>
+              <!-- end recipedata insert -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- End Hero Area -->
+
+    <!-- ========================= scroll-top ========================= -->
+    <!-- ========================= JS here ========================= -->
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/tiny-slider.js"></script>
+    <script src="../js/glightbox.min.js"></script>
+    <!-- <script src="js/main.js"></script> -->
+    <!-- <script src="js/index-search.js"></script> -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      function makerecipecard(searchdata) {
+        let cardcount = 1
+        for (let item of searchdata) {
+          let sel = document.getElementById("data")
+
+          let cookcard = document.createElement("div")
+          cookcard.className = "cookcard"
+          let cookname = document.createElement("div")
+          cookname.className = "cookname"
+          cookname.innerText = item.cookVo.cookname
+          let cookcode = document.createElement("div")
+          cookcode.className = "cookcode" + cardcount
+          cookcode.hidden = true
+          cookcode.value = item.cookVo.cookcode
+          let cookinfo = document.createElement("div")
+          cookinfo.className = "cookinfo"
+
+          let cookimg = document.createElement("img")
+          cookimg.className = "cookimg"
+
+          let cookingre = document.createElement("div")
+          cookingre.className = "cookingre"
+
+          let cookbasket = document.createElement("div")
+          cookbasket.className = "cookbasket"
+          let cookserve = document.createElement("input")
+          cookserve.className = "cookserve cookserve" + cardcount
+          cookserve.type = "number"
+          cookserve.value = 1
+          cookserve.setAttribute("min", "1")
+
+          let cookserveup = document.createElement("button")
+          cookserveup.className = "cookservebtn cookserveup"
+          cookserveup.type = "button"
+          cookserveup.setAttribute("onclick", "countup(" + cardcount + ")")
+          cookserveup.innerText = ">"
+          let cookservedown = document.createElement("button")
+          cookservedown.className = "cookservebtn cookservedown"
+          cookservedown.type = "button"
+          cookservedown.setAttribute("onclick", "countdown(" + cardcount + ")")
+          cookservedown.innerText = "<"
+
+          let basketbutton = document.createElement("button")
+          basketbutton.className = "basketbutton"
+          basketbutton.innerText = "장바구니 담기"
+          basketbutton.setAttribute("onclick", "addbasket(" + cardcount + ")")
+
+          for (mini of item.ingredientVoList) {
+            let ingredient = document.createElement("button")
+            ingredient.className = "ingredient"
+            ingredient.innerText = mini.ingredientname
+            cookingre.append(ingredient)
+          }
+          cookcard.append(cookname)
+          cookcard.append(cookcode)
+          cookinfo.append(cookimg)
+          cookinfo.append(cookingre)
+          cookcard.append(cookinfo)
+          cookbasket.append(cookservedown)
+          cookbasket.append(cookserve)
+          cookbasket.append(cookserveup)
+          cookbasket.append(basketbutton)
+          cookcard.append(cookbasket)
+
+          sel.append(cookcard)
+          cardcount++
+        }
+      }
+
+      function countup(num) {
+        if (document.getElementsByClassName("cookserve" + num)[0].value < 50) {
+          document.getElementsByClassName("cookserve" + num)[0].value++
+        }
+      }
+
+      function countdown(num) {
+        if (document.getElementsByClassName("cookserve" + num)[0].value > 1) {
+          document.getElementsByClassName("cookserve" + num)[0].value--
+        }
+      }
+
+      function make_no_data() {
+        let sel = document.getElementById("data")
+        let empty = document.createElement("div")
+        empty.innerText = "검색 결과가 없습니다."
+        empty.className = "no-data"
+        sel.append(empty)
+      }
+
+      async function datatypeingre() {
+        console.log("datatypeingre진입")
+        const targetUrl = "/app/recipetypeingredient"
+        let formData = new FormData()
+        let similar = document.getElementById("similar-ingre").value
+        formData.append("similar", similar)
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        const tb = document.querySelector("#data")
+        while (tb.firstChild) {
+          tb.removeChild(tb.firstChild)
+        }
+
+        try {
+          let response = await fetch(targetUrl, options)
+          let searchdata = await response.json()
+
+          console.log(searchdata)
+          makerecipecard(searchdata)
+        } catch (err) {
+          console.log("데이터 없어요")
+          make_no_data()
+        }
+      }
+
+      async function datatypecookname() {
+        console.log("datatypecookname진입")
+        const targetUrl = "/app/recipetypename"
+        let formData = new FormData()
+        let similar = document.getElementById("similar-cook").value
+        formData.append("similar", similar)
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        const tb = document.querySelector("#data")
+        while (tb.firstChild) {
+          tb.removeChild(tb.firstChild)
+        }
+
+        try {
+          let response = await fetch(targetUrl, options)
+          let searchdata = await response.json()
+
+          console.log(searchdata)
+          makerecipecard(searchdata)
+        } catch (err) {
+          console.log("데이터 없어요")
+          make_no_data()
+        }
+      }
+
+      async function addbasket(num) {
+        console.log("addbasket" + num + "진입")
+        const targetUrl = "/app/getcookbasket"
+        let formData = new FormData()
+
+        let cookcode = document.getElementsByClassName("cookcode" + num)[0]
+          .value
+        let cookquantityinbasket = document.getElementsByClassName(
+          "cookserve" + num
+        )[0].value
+
+        formData.append("cookcode", cookcode)
+        formData.append("cookquantityinbasket", cookquantityinbasket)
+
+        console.log("데이터 확인", cookcode, cookquantityinbasket)
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        try {
+          let response = await fetch(targetUrl, options)
+          alert("장바구니 담기에 성공했습니다.")
+        } catch (err) {
+          alert(err)
+        }
+      }
+
+      function searchtypeingre() {
+        document.getElementById("search-form-1").hidden = false
+        document.getElementById("search-form-2").hidden = true
+      }
+
+      function searchtypecook() {
+        document.getElementById("search-form-1").hidden = true
+        document.getElementById("search-form-2").hidden = false
+      }
+    </script>
+    <!-- <script type="text/javascript">
+    //========= Category Slider
+    tns({
+      container: '.category-slider',
+      items: 3,
+      slideBy: 'page',
+      autoplay: false,
+      mouseDrag: true,
+      gutter: 0,
+      nav: false,
+      controls: true,
+      controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        540: {
+          items: 2,
+        },
+        768: {
+          items: 4,
+        },
+        992: {
+          items: 5,
+        },
+        1170: {
+          items: 6,
+        }
+      }
+    });
+    //========= testimonial
+    tns({
+      container: '.testimonial-slider',
+      items: 3,
+      slideBy: 'page',
+      autoplay: false,
+      mouseDrag: true,
+      gutter: 0,
+      nav: true,
+      controls: false,
+      controlsText: ['<i class="lni lni-arrow-left"></i>', '<i class="lni lni-arrow-right"></i>'],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        540: {
+          items: 1,
+        },
+        768: {
+          items: 2,
+        },
+        992: {
+          items: 2,
+        },
+        1170: {
+          items: 2,
+        }
+      }
+    });
+  </script> -->
+  </body>
+</html>
