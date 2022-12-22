@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+  <div th:fragment="appheader">
+    <!-- Start Header Area -->
+    <header class="header navbar-area">
+      <div class="app-header">
+        <a class="navbar-brand" href="/app">
+          <h1>SSAG.M</h1>
+        </a>
+        <div class="login-button">
+          <ul>
+            <li sec:authorize="isAuthenticated()">
+              <a th:href="@{/appmemo}" style="color: white"
+                ><i class="lni lni-enter"></i>momo</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+  </div>
+</html>
