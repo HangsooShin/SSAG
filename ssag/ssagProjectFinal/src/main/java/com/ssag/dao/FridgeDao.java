@@ -22,8 +22,8 @@ public interface FridgeDao {
 	public List<IngredientVo> ingredientAll() throws DataAccessException;
 	//냉장고 재료 등록
 	public void insertFridge(FridgeVo fridgeVo) throws DataAccessException;
-	//findgeCode로 검색해서 일치하는 사용자의 냉장고 재료 모두 보여줌
-	public FridgeVo userfridgeList(String usercode) throws DataAccessException;
+	//fridgecode로 검색해서 일치하는 사용자의 냉장고 재료 모두 보여줌
+	public FridgeVo userfridgeList(String fridgecode) throws DataAccessException;
 	//레시피 검색
 	public StringSplitVo selectRecipeList(StringSplitVo stringSplitVo) throws DataAccessException;
 	//냉장고 재료 수정

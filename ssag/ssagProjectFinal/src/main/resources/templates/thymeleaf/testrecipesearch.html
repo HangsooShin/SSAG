@@ -26,7 +26,119 @@
     <link rel="stylesheet" href="../css/tiny-slider.css" />
     <link rel="stylesheet" href="../css/glightbox.min.css" />
     <link rel="stylesheet" href="../css/app2.css" />
+  </head>
 
+  <body>
+    <!-- Start Hero Area -->
+    <section class="background">
+      <!-- Start app-header -->
+      <div th:replace="layout/app-header2::appheader"></div>
+      <!-- End app-header -->
+      <div>
+        <div>
+          <div>
+            <div>
+              <!-- Start Search Form -->
+              <div id="search-form-1">
+                <!-- <form th:action="@{/searchresult}" method="post" id="search-form-1"> -->
+                <div class="search-back">
+                  <!-- <div id="search-input" class="search-input"> -->
+                  <!-- <label for="keyword"> -->
+                  <!-- <i class="lni lni-search-alt theme-color"></i> -->
+                  <!-- </label> -->
+                  <input
+                    type="text"
+                    class="search-input"
+                    id="similar-ingre"
+                    placeholder="ex)'감자 당근 양파'"
+                    onkeyup="if(window.event.keyCode==13){datatypeingre()}"
+                  />
+                  <div class="search-btn">
+                    <button
+                      type="submit"
+                      id="search-btn"
+                      class="btn btn-submit"
+                      onclick="datatypeingre();"
+                    >
+                      <i class="lni lni-search-alt"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- </div> -->
+                <!-- </form> -->
+              </div>
+              <div hidden id="search-form-2">
+                <!-- <form hidden th:action="@{/searchresult}" method="post" id="search-form-2"> -->
+                <div class="search-back">
+                  <!-- <div id="search-input" class="search-input"> -->
+                  <!-- <label for="keyword"> -->
+                  <!-- <i class="lni lni-search-alt theme-color"></i> -->
+                  <!-- </label> -->
+                  <input
+                    type="text"
+                    class="search-input"
+                    id="similar-cook"
+                    placeholder="ex)'스파게티'"
+                    onkeyup="if(window.event.keyCode==13){datatypecookname()}"
+                  />
+                  <div class="search-btn">
+                    <button
+                      type="submit"
+                      id="search-btn"
+                      class="btn btn-submit"
+                      onclick="datatypecookname();"
+                    >
+                      <i class="lni lni-search-alt"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- </div> -->
+                <!-- </form> -->
+              </div>
+              <!-- End Search Form -->
+
+              <!-- start Search type selecter -->
+              <div style="text-align: center">
+                <button
+                  class="merchandisesearchbtn"
+                  type="button"
+                  onclick="searchtypeingre();"
+                >
+                  재료 이름으로 검색
+                </button>
+                <button
+                  class="merchandisesearchbtn"
+                  type="button"
+                  onclick="searchtypecook();"
+                >
+                  요리 이름으로 검색
+                </button>
+              </div>
+              <!-- end Search type selecter -->
+
+              <!-- start recipedata insert -->
+              <div>
+                <div id="data"></div>
+              </div>
+              <!-- end recipedata insert -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- End Hero Area -->
+
+    <!-- ========================= scroll-top ========================= -->
+    <!-- ========================= JS here ========================= -->
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/tiny-slider.js"></script>
+    <script src="../js/glightbox.min.js"></script>
+    <!-- <script src="js/main.js"></script> -->
+    <!-- <script src="js/index-search.js"></script> -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       function makerecipecard(searchdata) {
         let cardcount = 1
@@ -119,7 +231,7 @@
 
       async function datatypeingre() {
         console.log("datatypeingre진입")
-        const targetUrl = "/apprecipetypeingredient"
+        const targetUrl = "/app/recipetypeingredient"
         let formData = new FormData()
         let similar = document.getElementById("similar-ingre").value
         formData.append("similar", similar)
@@ -147,7 +259,7 @@
 
       async function datatypecookname() {
         console.log("datatypecookname진입")
-        const targetUrl = "/app/apprecipetypename"
+        const targetUrl = "/app/recipetypename"
         let formData = new FormData()
         let similar = document.getElementById("similar-cook").value
         formData.append("similar", similar)
@@ -162,10 +274,9 @@
         }
 
         try {
-          console.log("fetch 전")
           let response = await fetch(targetUrl, options)
           let searchdata = await response.json()
-          console.log("fetch 후")
+
           console.log(searchdata)
           makerecipecard(searchdata)
         } catch (err) {
@@ -176,7 +287,7 @@
 
       async function addbasket(num) {
         console.log("addbasket" + num + "진입")
-        const targetUrl = "/app/getcookbasket2"
+        const targetUrl = "/app/getcookbasket"
         let formData = new FormData()
 
         let cookcode = document.getElementsByClassName("cookcode" + num)[0]
@@ -196,18 +307,11 @@
 
         try {
           let response = await fetch(targetUrl, options)
+          alert("장바구니 담기에 성공했습니다.")
         } catch (err) {
           alert(err)
         }
       }
-
-      // function bring_modal(index) {
-      //   document.getElementsByClassName("modal-popup-"+index)[0].style.display = "block";
-      // };
-      //
-      // function shutdown_modal(index) {
-      //   document.getElementsByClassName("modal-popup-"+index)[0].style.display = "none";
-      // };
 
       function searchtypeingre() {
         document.getElementById("search-form-1").hidden = false
@@ -219,176 +323,65 @@
         document.getElementById("search-form-2").hidden = false
       }
     </script>
-  </head>
-
-  <body>
-    <section class="background">
-      <!-- Start app-header -->
-      <div th:replace="layout/app-header::mainheader"></div>
-      <!-- End app-header -->
-      <div>
-        <div>
-          <div>
-            <div>
-              <!-- Start Search Form -->
-              <div id="search-form-1">
-                <!-- <form th:action="@{/searchresult}" method="post" id="search-form-1"> -->
-                <div class="search-back">
-                  <!-- <div id="search-input" class="search-input"> -->
-                  <!-- <label for="keyword"> -->
-                  <!-- <i class="lni lni-search-alt theme-color"></i> -->
-                  <!-- </label> -->
-                  <input
-                    type="text"
-                    class="search-input"
-                    id="similar-ingre"
-                    placeholder="ex)'감자 당근 양파'"
-                    onkeyup="if(window.event.keyCode==13){datatypeingre()}"
-                  />
-                  <div class="search-btn">
-                    <button
-                      type="submit"
-                      id="search-btn"
-                      class="btn btn-submit"
-                      onclick="datatypeingre();"
-                    >
-                      <i class="lni lni-search-alt"></i>
-                    </button>
-                  </div>
-                </div>
-                <!-- </div> -->
-                <!-- </form> -->
-              </div>
-              <div hidden id="search-form-2">
-                <!-- <form hidden th:action="@{/searchresult}" method="post" id="search-form-2"> -->
-                <div class="search-back">
-                  <!-- <div id="search-input" class="search-input"> -->
-                  <!-- <label for="keyword"> -->
-                  <!-- <i class="lni lni-search-alt theme-color"></i> -->
-                  <!-- </label> -->
-                  <input
-                    type="text"
-                    class="search-input"
-                    id="similar-cook"
-                    placeholder="ex)'스파게티'"
-                    onkeyup="if(window.event.keyCode==13){datatypecookname()}"
-                  />
-                  <div class="search-btn">
-                    <button
-                      type="submit"
-                      id="search-btn"
-                      class="btn btn-submit"
-                      onclick="datatypecookname();"
-                    >
-                      <i class="lni lni-search-alt"></i>
-                    </button>
-                  </div>
-                </div>
-                <!-- </div> -->
-                <!-- </form> -->
-              </div>
-              <!-- End Search Form -->
-
-              <!-- start Search type selecter -->
-              <div style="text-align: center">
-                <button type="button" onclick="searchtypeingre();">
-                  재료 이름으로 검색
-                </button>
-                <button type="button" onclick="searchtypecook();">
-                  요리 이름으로 검색
-                </button>
-              </div>
-              <!-- end Search type selecter -->
-
-              <!-- start recipedata insert -->
-              <div>
-                <div id="data"></div>
-              </div>
-              <!-- end recipedata insert -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- End Hero Area -->
-
-    <!-- ========================= scroll-top ========================= -->
-    <!-- <a href="#" class="scroll-top btn-hover">
-    <i class="lni lni-chevron-up"></i>
-  </a> -->
-
-    <!-- ========================= JS here ========================= -->
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- <script src="js/index-search.js"></script> -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    <script type="text/javascript">
-      //========= Category Slider
-      tns({
-        container: ".category-slider",
-        items: 3,
-        slideBy: "page",
-        autoplay: false,
-        mouseDrag: true,
-        gutter: 0,
-        nav: false,
-        controls: true,
-        controlsText: [
-          '<i class="lni lni-chevron-left"></i>',
-          '<i class="lni lni-chevron-right"></i>',
-        ],
-        responsive: {
-          0: {
-            items: 1,
-          },
-          540: {
-            items: 2,
-          },
-          768: {
-            items: 4,
-          },
-          992: {
-            items: 5,
-          },
-          1170: {
-            items: 6,
-          },
+    <!-- <script type="text/javascript">
+    //========= Category Slider
+    tns({
+      container: '.category-slider',
+      items: 3,
+      slideBy: 'page',
+      autoplay: false,
+      mouseDrag: true,
+      gutter: 0,
+      nav: false,
+      controls: true,
+      controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
+      responsive: {
+        0: {
+          items: 1,
         },
-      })
-
-      //========= testimonial
-      tns({
-        container: ".testimonial-slider",
-        items: 3,
-        slideBy: "page",
-        autoplay: false,
-        mouseDrag: true,
-        gutter: 0,
-        nav: true,
-        controls: false,
-        controlsText: [
-          '<i class="lni lni-arrow-left"></i>',
-          '<i class="lni lni-arrow-right"></i>',
-        ],
-        responsive: {
-          0: {
-            items: 1,
-          },
-          540: {
-            items: 1,
-          },
-          768: {
-            items: 2,
-          },
-          992: {
-            items: 2,
-          },
-          1170: {
-            items: 2,
-          },
+        540: {
+          items: 2,
         },
-      })
-    </script>
+        768: {
+          items: 4,
+        },
+        992: {
+          items: 5,
+        },
+        1170: {
+          items: 6,
+        }
+      }
+    });
+    //========= testimonial
+    tns({
+      container: '.testimonial-slider',
+      items: 3,
+      slideBy: 'page',
+      autoplay: false,
+      mouseDrag: true,
+      gutter: 0,
+      nav: true,
+      controls: false,
+      controlsText: ['<i class="lni lni-arrow-left"></i>', '<i class="lni lni-arrow-right"></i>'],
+      responsive: {
+        0: {
+          items: 1,
+        },
+        540: {
+          items: 1,
+        },
+        768: {
+          items: 2,
+        },
+        992: {
+          items: 2,
+        },
+        1170: {
+          items: 2,
+        }
+      }
+    });
+  </script> -->
   </body>
 </html>

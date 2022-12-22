@@ -26,6 +26,55 @@
     <link rel="stylesheet" href="../css/tiny-slider.css" />
     <link rel="stylesheet" href="../css/glightbox.min.css" />
     <link rel="stylesheet" href="../css/app2.css" />
+  </head>
+
+  <body>
+    <section class="background">
+      <!-- Start app-header -->
+      <div th:replace="layout/app-header2::appheader"></div>
+      <!-- End app-header -->
+
+      <div>
+        <div>
+          <div>
+            <div>
+              <!-- Start Search Form -->
+              <div class="search-back">
+                <input
+                  type="text"
+                  class="search-input"
+                  name="similar"
+                  id="similar"
+                  th:value="${similar}"
+                  placeholder="상품명을 입력하세요"
+                  onkeyup="if(window.event.keyCode==13){datasearch()}"
+                />
+                <div class="search-btn">
+                  <button
+                    type="submit"
+                    id="search-btn"
+                    class="btn btn-submit"
+                    onclick="datasearch()"
+                  >
+                    <i class="lni lni-search-alt"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- </div> -->
+              <!-- </form> -->
+
+              <!-- End Search Form -->
+
+              <!-- start searchdata insert -->
+              <div>
+                <div id="data"></div>
+              </div>
+              <!-- end searchdata insert -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <script>
       async function datasearch() {
@@ -68,9 +117,12 @@
               img.className = "merchandiseimg"
               img.src = item.merchandiseVo22.merchandiseimglink
 
-              let company = document.createElement("div")
-              company.innerText =
-                "companycode:" + item.merchandiseVo22.companycode
+              let company = document.createElement("img")
+              company.className = "merchandisecompanyicon"
+              company.src =
+                "../images/companyicon/" +
+                item.merchandiseVo22.companycode +
+                ".png"
 
               let title = document.createElement("div")
               title.className = "merchandisetitle"
@@ -92,96 +144,7 @@
         }
         // console.log("끝");
       }
-
-      window.onload = datasearch()
     </script>
-  </head>
-
-  <body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
-
-    <!-- Start Header Area -->
-
-    <!-- End Header Area -->
-
-    <section class="background-test"></section>
-
-    <!-- Start Hero Area -->
-    <section class="background">
-      <!-- Start app-header -->
-      <div class="app-header">
-        <a href="/app"><h1>SSAG.M</h1></a>
-        <div>
-          <ul>
-            <li>
-              <a href="/app/login"><i class="lni lni-enter"></i> 로그인</a>
-            </li>
-            <li>
-              <a href="/app/whoareu"><i class="lni lni-user"></i> 회원가입</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- End app-header -->
-
-      <div>
-        <!-- <h2 class="wow fadeInUp" data-wow-delay=".3s">Welcome to SSAG.R</h2> -->
-        <p class="head-txt">○○○님 냉장고</p>
-      </div>
-
-      <div>
-        <div>
-          <div>
-            <div>
-              <!-- Start Search Form -->
-
-              <!-- <form action="@{/datasearch}" method="post" id="search-form"> -->
-              <div class="search-back">
-                <!-- <div id="search-input" class="search-input"> -->
-                <!-- <label for="keyword"> -->
-                <!-- <i class="lni lni-search-alt theme-color"></i> -->
-                <!-- </label> -->
-                <input
-                  type="text"
-                  class="search-input"
-                  name="similar"
-                  id="similar"
-                  th:value="${similar}"
-                  placeholder="상품명을 입력하세요"
-                  onkeyup="if(window.event.keyCode==13){datasearch()}"
-                />
-                <div class="search-btn">
-                  <button
-                    type="submit"
-                    id="search-btn"
-                    class="btn btn-submit"
-                    onclick="datasearch()"
-                  >
-                    <i class="lni lni-search-alt"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- </div> -->
-              <!-- </form> -->
-
-              <!-- End Search Form -->
-
-              <!-- start searchdata insert -->
-              <div>
-                <div id="data"></div>
-              </div>
-              <!-- end searchdata insert -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <script>
       // console.log("타이밍확인");
@@ -197,7 +160,12 @@
 
     <!-- ========================= JS here ========================= -->
     <script src="../js/bootstrap.min.js"></script>
-    <!-- <script src="../js/index-search.js"></script> -->
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/tiny-slider.js"></script>
+    <script src="../js/glightbox.min.js"></script>
+    <script src="../js/main.js"></script>
+    <!-- <script src="js/index-search.js"></script> -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script type="text/javascript">

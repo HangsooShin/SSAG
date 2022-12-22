@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssag.config.auth.PrincipalDetails;
-import com.ssag.model.CompanyVo;
 import com.ssag.model.CookIngredientListVo;
 import com.ssag.model.CookVo;
+import com.ssag.model.CookbasketListVo;
 import com.ssag.model.FridgeBoardVo;
 import com.ssag.model.FridgeBoxVo;
-import com.ssag.model.FridgeVo;
 import com.ssag.model.IngredientVo;
+import com.ssag.model.MerchandiseVo;
 import com.ssag.model.SimilarnameVo;
 import com.ssag.model.UserVo;
 import com.ssag.service.FridgeService;
@@ -55,7 +54,7 @@ public class FridgeController {
 	private CookVo cookVo;
 
 //	private final PasswordEncoder passwordEncoder;
-	
+
 	Logger logger = LoggerFactory.getLogger("com.ssag.controller.FridgeController");
 
 	List<SimilarnameVo> similarnameList = new ArrayList<SimilarnameVo>();
@@ -78,18 +77,17 @@ public class FridgeController {
 		return "redirect:/myFridge";
 	}
 
-	
-
 	// 메인 냉장고 페이지
 	@GetMapping("/myFridge")
-	public String addFridge(@AuthenticationPrincipal PrincipalDetails principal, Model model, UserVo user,
+	public String addFridge(@AuthenticationPrincipal PrincipalDetails principal, Model model,
 			FridgeBoardVo fridgeBoardVo) throws Exception {
-		String userFridgeCode = principal.getUser().getFridgecode();
 		logger.info("Fridge Contrller MyFridgeBox 진입!!!");
 
 		// *********************************************** 게시판
-		
-		memoList = userService.memoList(userFridgeCode);
+
+		String fridgecode = principal.getUser().getFridgecode();
+		memoList = userService.memoList(fridgecode, principal.getUser().getUsercode());
+		System.out.println("MemoList!!! : " + memoList);
 		model.addAttribute("memoList", memoList);
 
 		// *********************************************** 재료 리스트 보여줌
@@ -97,8 +95,8 @@ public class FridgeController {
 		model.addAttribute("ingredientList3", ingredientList3);
 
 		// *********************************************** 냉장고 재료보여줌
-		
-		fridgeService.selectMyFridge(userFridgeCode);
+		String userFridgeCode = userService.findById(principal.getUser().getUsername()).getFridgecode();
+		System.out.println("과연 변경 후 fridgecode 인가" + userFridgeCode);
 		fridgeBoxList = fridgeService.selectMyFridge(userFridgeCode);
 		model.addAttribute("fridgeBoxList", fridgeBoxList);
 		return "myfridge";
@@ -122,42 +120,155 @@ public class FridgeController {
 		return "search-result";
 	}
 
-	// 감자 양파 검색했을 때 짜장밥 나오는 프로시저
-	@PostMapping("/procedureList")
-	@ResponseBody
-	public List<SimilarnameVo> procedure2(SimilarnameVo similarnameVo, String similar, Model model) {
-		fridgeService.procedure2(similarnameVo.getSimilar());
-		procedureList = fridgeService.procedure2(similar);
-		model.addAttribute("procedureList", procedureList);
-		return procedureList;
-	}
 
 	// 엡 - 감자 양파 >> 짜장밥 검색데이터페이지
-	@PostMapping("/apprecipetypeingredient")
+	@PostMapping("/recipeList")
 	@ResponseBody
-	public List<CookIngredientListVo> procedure3(SimilarnameVo similarnameVo, String similar, Model model) {
-		System.out.println("=============== 검색어로 입력된 데이터 ================" + similarnameVo.getSimilar());
-		List<CookIngredientListVo> list = ingredientService.joinDic(similarnameVo.getSimilar());
+	public List<CookIngredientListVo> recipeList(String cookname, Model model) {
+		System.out.println("=============== 검색어로 입력된 데이터 ================" + cookname);
+		List<CookIngredientListVo> list = ingredientService.joinDic2(cookname);
 //		System.out.println("=============== 데이터가 나오는지 확인 ================"+ list);
 		return list;
 	}
 
-	// 튀김 검색하면 튀김레시피 나옴
-	@GetMapping("/recipeList")
-	public String recipeList() {
-		return "recipeList";
+	  // 엡 - 감자 양파 >> 짜장밥 검색데이터페이지
+	  @PostMapping("/procedureList")
+	  @ResponseBody
+	  public List<CookIngredientListVo> procedureList(String similar, Model model) {
+	    System.out.println("=============== 검색어로 입력된 데이터 ================" + similar);
+	    List<CookIngredientListVo> list = ingredientService.joinDic(similar);
+	    // System.out.println("=============== 데이터가 나오는지 확인 ================"+ list);
+	    return list;
+	  }
+
+
+	// 12/21추가
+
+	  //장바구니 추가
+	  @PostMapping("/getcookbasket")
+	  @ResponseBody
+	  public void cookbasketVo(Integer cookcode, Integer cookquantityinbasket, @AuthenticationPrincipal PrincipalDetails details) {
+	    System.out.println("=============== 장바구니 추가 ===============");
+	    System.out.println(cookcode + " " + cookquantityinbasket + " " + details.getUser().getUsercode());
+	    ingredientService.updatecookcode(cookquantityinbasket, details.getUser().getUsercode(), cookcode);
+	    System.out.println("끝났는지 확인");
+	  }
+	  
+	  
+	// 여기 아래에서 부터는 웹 장바구니
+	@GetMapping("/webbasket")
+	public String webBasket(Model model, @AuthenticationPrincipal PrincipalDetails details) {
+
+		List<IngredientVo> ingredientchecklist = ingredientService.ingredientchecklist(details.getUser().getUsercode(),
+				details.getUser().getFridgecode());
+		List<CookbasketListVo> cookbasket = ingredientService.cookbasket(details.getUser().getUsercode(), details.getUser().getFridgecode());
+
+		System.out.println("ingredientchecklist==" + ingredientchecklist);
+		System.out.println("cookbasket==" + cookbasket);
+
+		model.addAttribute("ingredientchecklist", ingredientchecklist);
+		model.addAttribute("cookbasket", cookbasket);
+
+		return "webbasket";
 	}
 
-	// 레시피 리스트 검색
-	@PostMapping("/recipeList")
-	@ResponseBody
-	public List<CookVo> recipeList(String name, CookVo cookVo, Model model) {
-		fridgeService.selectRecipe(cookVo.getCookname());
-		recipeList = fridgeService.selectRecipe(name);
-		model.addAttribute("recipeList", recipeList);
-		return recipeList;
+	// 여기 아래에서 부터는 price 페이지
+	@GetMapping("/price")
+	// @ResponseBody
+	public String ingredientmerchandise(Model model, @AuthenticationPrincipal PrincipalDetails details) {
+		List<MerchandiseVo> ingredientprice = ingredientService.ingredientprice(details.getUser().getUsercode(),
+				details.getUser().getFridgecode());
+		model.addAttribute("ingredientprice", ingredientprice);
+		return "price";
 	}
 
+	@PostMapping("/appfridgebox")
+	public String createFridgeBox2(String ingredientcode, String ingredientquantityinfridgebox, String storagecode,
+			String expiredate, FridgeBoxVo fridgeBoxVo, @AuthenticationPrincipal PrincipalDetails details) {
+
+		String[] storagecodelist = storagecode.split(",");
+		String[] ingredientcodelist = ingredientcode.split(",");
+		String[] ingredientquantityinfridgeboxlist = ingredientquantityinfridgebox.split(",");
+		String[] expiredatelist = expiredate.split(",");
+
+		fridgeBoxVo = new FridgeBoxVo();
+
+		for (int i = 0; i < storagecodelist.length; i++) {
+			fridgeBoxVo.setStoragecode(Integer.parseInt(storagecodelist[i]));
+			fridgeBoxVo.setIngredientcode(Integer.parseInt(ingredientcodelist[i]));
+			fridgeBoxVo.setIngredientquantityinfridgebox(Integer.parseInt(ingredientquantityinfridgeboxlist[i]));
+			fridgeBoxVo.setExpiredate(expiredatelist[i]);
+			fridgeBoxVo.setFridgecode(details.getUser().getFridgecode());
+
+			System.out
+					.println("=============== 설정된 FridgeCode ===================" + details.getUser().getFridgecode());
+			System.out.println("=============== 설정된 Ingredientcode ===============" + fridgeBoxVo.getIngredientcode());
+
+			fridgeService.createFridgeBox(fridgeBoxVo);
+		}
+		return "redirect:/myFridge";
+	}
 	
-	
+	  @PostMapping("/changefridgebox")
+	  public String changeFridgeBox4(FridgeBoxVo originalfridgeBoxVo, FridgeBoxVo fridgeBoxVo, String ingredientcreateddate,
+	      String expiredate,
+	      Integer ingredientcode, Integer storagecode, Integer ingredientquantityinfridgebox,
+	      @AuthenticationPrincipal PrincipalDetails details) {
+	    // DB에서 선택할 PK 기준
+	    originalfridgeBoxVo.setIngredientcode(ingredientcode);
+	    originalfridgeBoxVo.setIngredientcreateddate(ingredientcreateddate);
+	    originalfridgeBoxVo.setFridgecode(details.getUser().getFridgecode());
+	    System.out.println("=============== 기존 재료 코드 ===============" + originalfridgeBoxVo.getIngredientcode());
+	    System.out.println("=============== 기존 생성 시간 ===============" + originalfridgeBoxVo.getIngredientcreateddate());
+	    System.out.println("=============== 기존 냉장 코드 ===============" + details.getUser().getFridgecode());
+
+	    // 바꾸고싶은 내용
+	    fridgeBoxVo.setStoragecode(storagecode);
+	    fridgeBoxVo.setExpiredate(expiredate);
+	    fridgeBoxVo.setIngredientquantityinfridgebox(ingredientquantityinfridgebox);
+	    System.out.println("=============== 설정된 저장 위치 ===============" + fridgeBoxVo.getStoragecode());
+	    System.out.println("=============== 설정된 유통 기한 ===============" + fridgeBoxVo.getExpiredate());
+	    System.out.println("=============== 설정된 저장 수량 ===============" + fridgeBoxVo.getIngredientquantityinfridgebox());
+
+	    fridgeService.changeFridgeBox(originalfridgeBoxVo, fridgeBoxVo);
+	    return "redirect:/myFridge";
+	  }
+	  @PostMapping("/deletefridgebox")
+	  public String createFridgeBox4(FridgeBoxVo fridgeBoxVo, String ingredientcreateddate, Integer ingredientcode,
+	      @AuthenticationPrincipal PrincipalDetails details) {
+	    fridgeBoxVo.setIngredientcode(ingredientcode);
+	    fridgeBoxVo.setIngredientcreateddate(ingredientcreateddate);
+	    fridgeBoxVo.setFridgecode(details.getUser().getFridgecode());
+	    System.out.println("=============== 설정된 등록 시간 ===============" + fridgeBoxVo.getIngredientcreateddate());
+	    System.out.println("=============== 설정된 재료 코드 ===============" + fridgeBoxVo.getIngredientcode());
+	    System.out.println("=============== 설정된 냉장 코드 ===============" + details.getUser().getFridgecode());
+	    fridgeService.deleteFridgeBox(fridgeBoxVo);
+	    return "redirect:/myFridge";
+	  }
+	  
+	  @GetMapping("/ingredientSearch")
+	  public String searchresult() {
+
+	    return "ingredientSearch";
+	  }
+	  
+	  @PostMapping("/deletecookbasket")
+	  public String cookbasketVo3(Integer cookcode, @AuthenticationPrincipal UserVo user) {
+	    System.out.println("=============== 장바구니 요리 삭제 ===============");
+	    System.out.println(cookcode + " " + user.getUsercode());
+	    ingredientService.deletecookbasket(user.getUsercode(), cookcode);
+	    System.out.println("끝났는지 확인");
+	    return "redirect:/basket";
+	  }
+
+
+	  @GetMapping("/checklist")
+	  public String checklist(Model model, @AuthenticationPrincipal UserVo user) {
+	    Integer usercode = user.getUsercode();
+	    String fridgecode = user.getFridgecode();
+	    List<IngredientVo> ingredientchecklist = ingredientService.ingredientchecklist(usercode, fridgecode);
+	    model.addAttribute("ingredientlist", ingredientchecklist);
+	    return "/checklist";
+	  }
+
 }

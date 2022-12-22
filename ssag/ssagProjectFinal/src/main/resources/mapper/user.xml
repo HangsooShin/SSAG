@@ -25,12 +25,15 @@
 		<result property="companyname" column="companyname" />
 	</resultMap>
 
+
 	<resultMap id="boardResult" type="com.ssag.model.FridgeBoardVo">
 		<result property="fridgecode" column="fridgecode" />
 		<result property="memocode" column="memocode" />
 		<result property="memocreateddate" column="memocreateddate" />
 		<result property="writer" column="writer" />
+		<result property="imwriter" column="imwriter" />
 		<result property="memotext" column="memotext" />
+		<result property="name" column="name" />
 	</resultMap>
 
 	<insert id="insertUser" parameterType="userVo">
@@ -52,9 +55,11 @@
 	</insert>
 
 	<!--회원정보 업데이트 -->
+	<!--	update users set name=#{name},email=#{email},telephone=#{telephone},address=#{address},fridgecode=#{fridgecode} where usercode=#{usercode};-->
 	<update id="updateUser" parameterType="userVo">
 		<![CDATA[
-			update users set name=#{name},email=#{email},telephone=#{telephone},address=#{address},fridgecode=#{fridgecode} where usercode=#{usercode};
+		update users set name=#{name},email=#{email},telephone=#{telephone},address=#{address},fridgecode=#{fridgecode} where usercode=#{usercode};
+			
 		]]>
 	</update>
 
@@ -64,9 +69,12 @@
 	]]>
 	</select>
 
-	<select id="memoList" resultMap="boardResult">
+	<select id="memoList" parameterType="hashmap" resultMap="boardResult">
 		<![CDATA[
-		select fridgecode, memocode, writer, memotext, substring(memocreateddate, 3, 14) as memocreateddate from fridgeboard where fridgecode=#{fridgecode} order by memocode desc;
+		select memocode, memotext, memocreateddate, name, imwriter
+		from (select memocode, fridgecode, writer, memotext, substring(memocreateddate, 3, 14) as memocreateddate, case when writer=#{usercode} then 1 else 0 end as imwriter
+		from fridgeboard where fridgecode=#{fridgecode} order by memocode desc limit 500) co1
+		join users u on u.usercode=co1.writer;
 	]]>
 	</select>
 
@@ -91,20 +99,26 @@
 		SELECT * FROM users WHERE provider = #{provider} and providerId = #{providerId};
 		]]>
 	</select>
-	
-<!--	아이디 찾기-->
+
+	<!--	아이디 찾기-->
 	<select id="find_id" parameterType="String" resultType="String">
 		<![CDATA[
 		select username from users where email = #{email}
 		]]>
 	</select>
 
-<!-- 비밀번호 변경 -->
+	<!-- 비밀번호 변경 -->
 	<update id="update_pw" parameterType="userVo">
-	<![CDATA[
+		<![CDATA[
 		update users set password = #{password} where username = #{username}
 		]]>
 	</update>
 
+	<!--count user-->
+	<select id="count_id" parameterType="String" resultType="int">
+		<![CDATA[
+		select count(*) from users where username=#{username};
+		]]>
+	</select>
 </mapper>
 

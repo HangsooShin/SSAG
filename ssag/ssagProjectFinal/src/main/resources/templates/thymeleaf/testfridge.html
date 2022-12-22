@@ -31,13 +31,24 @@
       function tab_change(nav_Id) {
         if (nav_Id == 1) {
           var selection = "nav-detail-1"
+          var selectid = "nav-cool-tab"
         }
         if (nav_Id == 2) {
           var selection = "nav-detail-2"
+          var selectid = "nav-ice-tab"
         }
         if (nav_Id == 3) {
           var selection = "nav-detail-3"
+          var selectid = "nav-room-tab"
         }
+
+        document.getElementById("nav-cool-tab").style.backgroundColor =
+          "#f0f8ff"
+        document.getElementById("nav-ice-tab").style.backgroundColor = "#f0f8ff"
+        document.getElementById("nav-room-tab").style.backgroundColor =
+          "#f0f8ff"
+
+        document.getElementById(selectid).style.backgroundColor = "#00ffff"
 
         var x = document.getElementsByClassName("nav-detail")
         // console.log(x);
@@ -53,6 +64,7 @@
       }
 
       function bring_modal(index) {
+        console.log("모달 띄우기", index)
         document.getElementsByClassName(
           "modal-popup-" + index
         )[0].style.display = "block"
@@ -109,49 +121,29 @@
   <body>
     <!-- Start Hero Area -->
     <section class="background">
-      <!-- Start Header Area -->
-      <div th:replace="layout/app-header::mainheader"></div>
+      <!-- Start app-header -->
+      <div th:replace="layout/app-header2::appheader"></div>
       <!-- End app-header -->
-
-      <div>
-        <!-- <h2 class="wow fadeInUp" data-wow-delay=".3s">Welcome to SSAG.R</h2> -->
-        <p class="head-txt">○○○님 냉장고</p>
-      </div>
 
       <div>
         <div>
           <div>
             <div>
               <!-- Start Search Form -->
-              <form
-                th:action="@{/app/testmerchandiseresult}"
-                method="post"
-                id="search-form"
-              >
-                <div class="search-back">
-                  <!-- <div id="search-input" class="search-input"> -->
-                  <!-- <label for="keyword"> -->
-                  <!-- <i class="lni lni-search-alt theme-color"></i> -->
-                  <!-- </label> -->
-                  <input
-                    type="text"
-                    class="search-input"
-                    name="similar"
-                    id="similar"
-                    placeholder="재료 이름으로 상품 검색 ex) '사과'"
-                  />
-                  <div class="search-btn">
-                    <button
-                      type="submit"
-                      id="search-btn"
-                      class="btn btn-submit"
-                    >
-                      <i class="lni lni-search-alt" onclick=""></i>
-                    </button>
-                  </div>
+              <!-- <form th:action="@{/testmerchandiseresult}" method="post" id="search-form">
+              <div class="search-back"> -->
+              <!-- <div id="search-input" class="search-input"> -->
+              <!-- <label for="keyword"> -->
+              <!-- <i class="lni lni-search-alt theme-color"></i> -->
+              <!-- </label> -->
+              <!-- <input type="text" class="search-input"  name="similar" id="similar" placeholder="재료 이름으로 상품 검색 ex) '사과'">
+                <div class="search-btn">
+                  <button type="submit" id="search-btn" class="btn btn-submit"><i class="lni lni-search-alt"
+                      onclick=""></i></button>
                 </div>
-                <!-- </div> -->
-              </form>
+              </div> -->
+              <!-- </div> -->
+              <!-- </form> -->
               <!-- End Search Form -->
 
               <!-- Start fridge nav tab -->
@@ -166,7 +158,7 @@
                     id="nav-cool-tab"
                     onclick="tab_change(1);"
                     type="button"
-                    style="display: inline-block; margin: 20px"
+                    style="background-color: #1e90ff"
                   >
                     냉장
                   </button>
@@ -175,7 +167,6 @@
                     id="nav-ice-tab"
                     onclick="tab_change(2);"
                     type="button"
-                    style="display: inline-block; margin: 20px"
                   >
                     냉동
                   </button>
@@ -184,7 +175,6 @@
                     id="nav-room-tab"
                     onclick="tab_change(3);"
                     type="button"
-                    style="display: inline-block; margin: 20px"
                   >
                     실온
                   </button>
@@ -203,21 +193,28 @@
                     <button
                       th:id="|nav-${fB.storagecode}|"
                       th:onclick="|bring_modal(${n.index})|"
-                      style="width: 100%; height: 100%; text-align: center"
+                      class="fridgeiconbtn"
                     >
                       <img
                         th:src="|../images/fridgeicon/${fB.ingredientVo22.ingredientname}.png|"
-                        style="width: 40px; height: 40px"
-                        onerror="this.src='../images/fridgeicon/사과.png'"
+                        style="width: 50px; height: 50px"
+                        onerror="this.src='../images/fridgeicon/바구니.png';"
                       />
-                      <div th:text="${fB.ingredientVo22.ingredientname}"></div>
+                      <div
+                        th:text="${fB.ingredientVo22.ingredientname}"
+                        style="
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        "
+                      ></div>
                     </button>
                     <!-- end ingredient button -->
 
                     <!-- start modal ingredient info -->
                     <div th:class="|modal-popup modal-popup-${n.index}|">
                       <form
-                        th:action="@{/app/appdeletefridgebox}"
+                        th:action="@{/app/deletefridgebox}"
                         th:id="|modal-form-${n.index}|"
                         method="post"
                       >
@@ -237,7 +234,7 @@
                               height: 40px;
                               margin-right: 20px;
                             "
-                            onerror="this.src='../images/fridgeicon/사과.png'"
+                            onerror="this.src='../images/fridgeicon/바구니.png'"
                           />
                           <input
                             hidden
@@ -256,7 +253,7 @@
                               <td>
                                 <select
                                   id="ingrestore"
-                                  th:class="|modal-input modal-select-${n.index}|"
+                                  th:class="|ingreinputdouble modal-input modal-select-${n.index}|"
                                   name="storagecode"
                                   disabled
                                 >
@@ -282,7 +279,7 @@
                               <td>등록일자</td>
                               <td>
                                 <input
-                                  th:class="|modal-input modal-input-1-${n.index}|"
+                                  th:class="|ingreinputdouble modal-input modal-input-1-${n.index}|"
                                   name="ingredientcreateddate"
                                   th:value="${fB.ingredientcreateddate}"
                                   readonly
@@ -293,7 +290,7 @@
                               <td>유통기한</td>
                               <td>
                                 <input
-                                  th:class="|modal-input modal-input-2-${n.index}|"
+                                  th:class="|ingreinputdouble modal-input modal-input-2-${n.index}|"
                                   name="expiredate"
                                   type="date"
                                   th:value="${fB.expiredate}"
@@ -305,7 +302,7 @@
                               <td>수량</td>
                               <td>
                                 <input
-                                  th:class="|modal-input modal-input-3-${n.index}|"
+                                  th:class="|ingreinputdouble modal-input modal-input-3-${n.index}|"
                                   name="ingredientquantityinfridgebox"
                                   th:value="${fB.ingredientquantityinfridgebox}"
                                   readonly
@@ -316,7 +313,7 @@
                         </table>
                       </form>
 
-                      <div style="display: inline-block">
+                      <div style="display: inline-block; margin: 10px">
                         <button th:onclick="|shutdown_modal(${n.index})|">
                           닫기
                         </button>
@@ -348,24 +345,95 @@
 
               <!-- start addingredient -->
               <div style="text-align: center">
+                <!-- start dl process -->
+                <button
+                  onclick="bring_modal('dlinput')"
+                  class="ingredientaddbtn"
+                >
+                  <img
+                    class="ingreinputicon"
+                    src="../images/index/cam.png"
+                  /><br />이미지<br />입력
+                </button>
+                <div class="modal-popup modal-popup-dlinput">
+                  <input
+                    type="file"
+                    id="dl-image"
+                    accept="image/*;capture=camera"
+                  />
+                  <button onclick="dlinput()">제출</button>
+                  <button onclick="shutdown_modal('dlinput')">닫기</button>
+                </div>
+                <!-- end dl process -->
+
+                <!-- start rcprocess -->
+                <button
+                  onclick="bring_modal('rcinput')"
+                  class="ingredientaddbtn"
+                >
+                  <img
+                    class="ingreinputicon"
+                    src="../images/index/rec.png"
+                  /><br />영수증<br />입력
+                </button>
+                <div class="modal-popup modal-popup-rcinput">
+                  <input
+                    type="file"
+                    id="rc-image"
+                    accept="image/*;capture=camera"
+                  />
+                  <button onclick="rcinput()">제출</button>
+                  <button onclick="shutdown_modal('rcinput')">닫기</button>
+                </div>
+                <!-- end rcprocess -->
+
+                <!-- start bcprocess -->
+                <button
+                  onclick="bring_modal('bcinput')"
+                  class="ingredientaddbtn"
+                >
+                  <img
+                    class="ingreinputicon"
+                    src="../images/index/bar.png"
+                  /><br />바코드<br />입력
+                </button>
+                <div class="modal-popup modal-popup-bcinput">
+                  <input
+                    type="file"
+                    id="bc-image"
+                    accept="image/*;capture=camera"
+                  />
+                  <button onclick="bcinput()">제출</button>
+                  <button onclick="shutdown_modal('bcinput')">닫기</button>
+                </div>
+                <!-- end bcprocess -->
+
                 <button
                   onclick="bring_modal('addingredient')"
-                  style="margin: 20px"
+                  class="ingredientaddbtn"
                 >
-                  재료 추가
+                  <img
+                    class="ingreinputicon"
+                    src="../images/index/box.png"
+                  /><br />직접<br />입력
                 </button>
                 <div class="modal-popup modal-popup-addingredient">
                   <form
-                    th:action="@{/app/appfridgebox}"
+                    th:action="@{/app/addfridgebox}"
                     id="saveingredientbtn"
                     method="post"
+                    style="padding: auto"
                   >
                     <table style="float: center">
-                      <tbody>
+                      <tbody id="inputtable">
                         <tr>
                           <td>저장위치</td>
                           <td>
-                            <select id="ingrestore" name="storagecode">
+                            <select
+                              class="ingreinputdouble"
+                              id="ingrestore"
+                              name="storagecode"
+                            >
                               <option value="1" th:text="냉장" />
                               <option value="2" th:text="냉동" />
                               <option value="3" th:text="실온" />
@@ -375,11 +443,23 @@
                         <tr>
                           <td>재료명</td>
                           <td>
-                            <select id="ingrename" name="ingredientcode">
+                            <input
+                              type="text"
+                              id="ki-0"
+                              placeholder="키워드 입력"
+                              class="ingreinput keywordinput"
+                              oninput="optionchoice(0)"
+                            /><select
+                              class="ingreinput"
+                              id="ingrename"
+                              name="ingredientcode"
+                            >
                               <option
                                 th:each="ingre:${ingredientList3}"
+                                th:class="|value-${ingre.ingredientcode}|"
                                 th:value="${ingre.ingredientcode}"
                                 th:text="${ingre.ingredientname}"
+                                required
                               />
                             </select>
                           </td>
@@ -388,6 +468,7 @@
                           <td>수량</td>
                           <td>
                             <input
+                              class="ingreinputdouble"
                               type="text"
                               name="ingredientquantityinfridgebox"
                               id="ingrequantity"
@@ -400,12 +481,10 @@
                           <td>유통기한</td>
                           <td>
                             <input
+                              class="ingreinputdouble"
                               id="ingreexpire"
                               name="expiredate"
                               type="date"
-                              value="xxx"
-                              min="yyy"
-                              max="zzz"
                               required
                             />
                           </td>
@@ -413,16 +492,13 @@
                       </tbody>
                     </table>
                   </form>
-                  <div style="display: inline-block">
-                    <button
-                      th:onclick="shutdown_modal('addingredient')"
-                      th:text="닫기"
-                    />
-                    <button
-                      type="submit"
-                      form="saveingredientbtn"
-                      th:text="저장"
-                    />
+                  <div style="display: inline-block; margin: 10px">
+                    <button th:onclick="shutdown_modal('addingredient')">
+                      닫기
+                    </button>
+                    <button type="submit" form="saveingredientbtn">저장</button>
+                    <button onclick="addinputtable()">입력 추가</button>
+                    <button onclick="deleteinputtable()">입력 삭제</button>
                   </div>
                 </div>
               </div>
@@ -433,15 +509,347 @@
       </div>
     </section>
 
+    <script>
+      function tab_change(nav_Id) {
+        if (nav_Id == 1) {
+          var selection = "nav-detail-1"
+          var selectid = "nav-cool-tab"
+        }
+        if (nav_Id == 2) {
+          var selection = "nav-detail-2"
+          var selectid = "nav-ice-tab"
+        }
+        if (nav_Id == 3) {
+          var selection = "nav-detail-3"
+          var selectid = "nav-room-tab"
+        }
+
+        document.getElementById("nav-cool-tab").style.backgroundColor =
+          "#f0f8ff"
+        document.getElementById("nav-ice-tab").style.backgroundColor = "#f0f8ff"
+        document.getElementById("nav-room-tab").style.backgroundColor =
+          "#f0f8ff"
+
+        document.getElementById(selectid).style.backgroundColor = "#1E90FF"
+
+        var x = document.getElementsByClassName("nav-detail")
+        // console.log(x);
+        for (var i = 0; i < x.length; i++) {
+          x[i].style.display = "none"
+        }
+
+        var y = document.getElementsByClassName(selection)
+        // console.log(y);
+        for (var j = 0; j < y.length; j++) {
+          y[j].style.display = "block"
+        }
+      }
+
+      function bring_modal(index) {
+        console.log("모달 띄우기", index)
+        document.getElementsByClassName(
+          "modal-popup-" + index
+        )[0].style.display = "block"
+      }
+
+      function shutdown_modal(index) {
+        document.getElementsByClassName(
+          "modal-popup-" + index
+        )[0].style.display = "none"
+        document.getElementsByClassName(
+          "modal-select-" + index
+        )[0].disabled = true
+        document.getElementById("changeinfobtn-" + index).hidden = false
+        document.getElementById("completeinfobtn-" + index).hidden = true
+        for (var k = 2; k < 4; k++) {
+          document.getElementsByClassName(
+            "modal-input-" + k + "-" + index
+          )[0].readOnly = true
+          document.getElementsByClassName(
+            "modal-input-" + k + "-" + index
+          )[0].style.backgroundColor = "transparent"
+        }
+        document.getElementById("modal-form-" + index).reset()
+      }
+
+      function change_info(index) {
+        document.getElementsByClassName(
+          "modal-select-" + index
+        )[0].disabled = false
+        document.getElementsByClassName(
+          "modal-select-" + index
+        )[0].style.backgroundColor = "#ffffff"
+        document.getElementsByClassName(
+          "modal-input-2-" + index
+        )[0].readOnly = false
+        document.getElementsByClassName(
+          "modal-input-2-" + index
+        )[0].style.backgroundColor = "#ffffff"
+        document.getElementsByClassName(
+          "modal-input-3-" + index
+        )[0].readOnly = false
+        document.getElementsByClassName(
+          "modal-input-3-" + index
+        )[0].style.backgroundColor = "#ffffff"
+        document.getElementsByClassName(
+          "modal-input-3-" + index
+        )[0].style.backgroundColor = "#ffffff"
+        document.getElementById("changeinfobtn-" + index).hidden = true
+        document.getElementById("completeinfobtn-" + index).hidden = false
+      }
+    </script>
+
+    <script th:inline="javascript">
+      function addinputtable() {
+        let keyindexes = document.getElementsByClassName("keywordinput");
+        let keyindex = keyindexes.length;
+        console.log(keyindex);
+
+        let inputtable = document.getElementById("inputtable");
+
+        let tr0 = document.createElement("tr");
+        let tdhr = document.createElement("td");
+        tdhr.setAttribute("colspan","2");
+        let hr = document.createElement("hr");
+        tdhr.append(hr);
+        tr0.append(tdhr);
+
+        let tr1 = document.createElement("tr");
+        let savepoint1 = document.createElement("td");
+        savepoint1.innerText="저장위치";
+        let savepoint2 = document.createElement("td");
+        let store = document.createElement("select");
+        store.id="ingresrore";
+        store.name="storagecode";
+        store.className="ingreinputdouble";
+        let cool = document.createElement("option");
+        cool.value=1;
+        cool.innerText="냉장";
+        let ice = document.createElement("option");
+        ice.value=2;
+        ice.innerText="냉동";
+        let room = document.createElement("option");
+        room.value=3;
+        room.innerText="실온";
+        store.append(cool);
+        store.append(ice);
+        store.append(room);
+        savepoint2.append(store);
+        tr1.append(savepoint1);
+        tr1.append(savepoint2);
+
+        let tr2 = document.createElement("tr");
+        let ingredientname1 = document.createElement("td");
+        ingredientname1.innerText="재료";
+        let ingredientname2 = document.createElement("td");
+        let keywordinput = document.createElement("input");
+        keywordinput.type="text";
+        keywordinput.id="ki-"+keyindex;
+        keywordinput.className="ingreinput keywordinput";
+        keywordinput.setAttribute("oninput","optionchoice("+(keyindex)+")");
+        keywordinput.placeholder="키워드 입력";
+        let ingrename = document.createElement("select");
+        ingrename.id="ingrename";
+        ingrename.name="ingredientcode";
+        ingrename.className="ingreinput";
+
+        ingredientname2.append(keywordinput);
+        /*<![CDATA[*/
+        let ingrelist = [[${ingredientList3}]];
+        /*]]>*/
+        // console.log(ingrelist);
+        for (let eachingre of ingrelist) {
+          let ing = document.createElement("option");
+          ing.value=eachingre.ingredientcode;
+          ing.innerText=eachingre.ingredientname;
+          ing.className="value-"+eachingre.ingredientcode;
+          ingrename.append(ing);
+        }
+        ingredientname2.append(ingrename);
+        tr2.append(ingredientname1);
+        tr2.append(ingredientname2);
+
+
+        let tr3 = document.createElement("tr");
+        let quantity1 = document.createElement("td");
+        quantity1.innerText="수량";
+        let quantity2 = document.createElement("td");
+        let quantityinput = document.createElement("input");
+        quantityinput.name = "ingredientquantityinfridgebox";
+        quantityinput.id = "ingrequantity";
+        quantityinput.placeholder = "몇개나 있나요?";
+        quantityinput.required = true;
+        quantityinput.className="ingreinputdouble";
+        quantity2.append(quantityinput);
+        tr3.append(quantity1);
+        tr3.append(quantity2);
+
+
+        let tr4 = document.createElement("tr");
+        let expiredate1 = document.createElement("td");
+        expiredate1.innerText="유통기한"
+        let expiredate2 = document.createElement("td");
+        let dateinput = document.createElement("input");
+        dateinput.id="ingreexpire";
+        dateinput.name = "expiredate";
+        dateinput.type = "date";
+        dateinput.required = true;
+        dateinput.className="ingreinputdouble";
+        expiredate2.append(dateinput);
+        tr4.append(expiredate1);
+        tr4.append(expiredate2);
+
+        inputtable.append(tr0);
+        inputtable.append(tr1);
+        inputtable.append(tr2);
+        inputtable.append(tr3);
+        inputtable.append(tr4);
+      };
+
+      function deleteinputtable() {
+        let inputtable = document.getElementById("inputtable");
+        // console.log(inputtable.childElementCount);
+        if (inputtable.childElementCount > 5) {
+          inputtable.removeChild(inputtable.lastChild);
+          inputtable.removeChild(inputtable.lastChild);
+          inputtable.removeChild(inputtable.lastChild);
+          inputtable.removeChild(inputtable.lastChild);
+          inputtable.removeChild(inputtable.lastChild);
+        }
+      };
+
+      async function dlinput() {
+        console.log("dlinput 진입");
+        let image = document.getElementById("dl-image");
+        let processtype = "dl";
+
+        const targetUrl = "/uploadimage";
+        let formData = new FormData();
+        formData.append("file",image.files[0]);
+        formData.append("processtype", processtype);
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        try {
+          let response = await fetch(targetUrl, options);
+          let searchdata = await response.json();
+
+          console.log(searchdata);
+
+          bring_modal("addingredient");
+          let inputcount = searchdata.response.codelist.length;
+          for (let i=0; i < inputcount; i++) {
+            document.getElementsByClassName("value-"+searchdata.response.codelist[i])[i].selected=true;
+            if (i != inputcount-1){
+              addinputtable();
+            }
+          }
+
+      } catch(err) {
+          console.log("데이터 없어요");
+        }
+        shutdown_modal('dlinput');
+      };
+
+      async function rcinput() {
+        console.log("rcinput 진입");
+        let image = document.getElementById("rc-image");
+        let processtype = "rc";
+
+        const targetUrl = "/uploadimage";
+        let formData = new FormData();
+        formData.append("file",image.files[0]);
+        formData.append("processtype", processtype);
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        try {
+          let response = await fetch(targetUrl, options);
+          let searchdata = await response.json();
+
+          console.log(searchdata);
+
+          bring_modal("addingredient");
+          let inputcount = searchdata.response.codelist.length;
+          for (let i=0; i < inputcount; i++) {
+            document.getElementsByClassName("value-"+searchdata.response.codelist[i])[i].selected=true;
+            if (i != inputcount-1){
+              addinputtable();
+            }
+          }
+
+      } catch(err) {
+          console.log("데이터 없어요");
+        }
+        shutdown_modal('rcinput');
+      };
+
+      async function bcinput() {
+        console.log("bcinput 진입");
+        let image = document.getElementById("bc-image");
+        let processtype = "bc";
+
+        const targetUrl = "/uploadimage";
+        let formData = new FormData();
+        formData.append("file",image.files[0]);
+        formData.append("processtype", processtype);
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        try {
+          let response = await fetch(targetUrl, options);
+          let searchdata = await response.json();
+
+          console.log(searchdata);
+
+          bring_modal("addingredient");
+          let inputcount = searchdata.response.codelist.length;
+          for (let i=0; i < inputcount; i++) {
+            document.getElementsByClassName("value-"+searchdata.response.codelist[i])[i].selected=true;
+            if (i != inputcount-1){
+              addinputtable();
+            }
+          }
+
+      } catch(err) {
+          console.log("데이터 없어요");
+        }
+        shutdown_modal('bcinput');
+      };
+
+      function optionchoice(num) {
+        let keyword = document.getElementById("ki-"+num).value;
+        let brotherinput = document.getElementById("ki-"+num).nextSibling;
+        console.log(brotherinput);
+        let options = brotherinput.childNodes;
+
+        for (op of options) {
+          if (op.text!=null && op.text.includes(keyword)) {
+            op.hidden=false;
+          } else {
+            op.hidden=true;
+          }
+        }
+      };
+    </script>
+
     <!-- End Hero Area -->
 
     <!-- ========================= scroll-top ========================= -->
-    <!-- <a href="#" class="scroll-top btn-hover">
-    <i class="lni lni-chevron-up"></i>
-  </a> -->
 
     <!-- ========================= JS here ========================= -->
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/tiny-slider.js"></script>
+    <script src="../js/glightbox.min.js"></script>
+    <script src="../js/main.js"></script>
     <!-- <script src="js/index-search.js"></script> -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 

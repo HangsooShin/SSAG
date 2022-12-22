@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>내 냉장고 - SSAG</title>
+  <title>내 냉장고 - SSAG222</title>
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- <link rel="shortcut icon" type="image/x-icon" th:href="@{images/favicon.svg" />} -->
@@ -24,24 +24,42 @@
   <link rel="stylesheet" href="css/glightbox.min.css" />
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/sheepcastle.css" />
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
+
+  <!-- Latest compiled and minified JavaScript 한국어 번역 파일 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/i18n/defaults-ko_KR.min.js"></script>
+  <!-- <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script> -->
 
 
-
+  <style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  </style>
 
 </head>
 
 <body>
 
 
+
+
   <!-- Preloader -->
-  <div class="preloader">
+  <!-- <div class="preloader">
     <div class="preloader-inner">
       <div class="preloader-icon">
         <span></span>
         <span></span>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- /End Preloader -->
 
   <!-- Start Header Area -->
@@ -130,6 +148,8 @@
   </div>
   <!-- End Breadcrumbs -->
 
+
+
   <!-- start Freezy section -->
 
 
@@ -152,6 +172,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-12">
                   <!-- 냉장고 nav-tab -->
@@ -176,12 +197,13 @@
                       <div class="row">
                         <div class="input-group mb-3">
                           <!-- 아래의 form 부분에서 지원해주는 방식이 아닌 js파일을 통한 fetch메소드를 활용 할 것이다. -->
-                          <form class="memoSubmitForm" id="memoSubmitForm">
-                            <input type="text" name="memotext" class="form-control" placeholder="내용을 입력하세요"
-                              aria-label="default input example" aria-describedby="button-addon2" id="memotext">
-                            <button class="btn btn-outline-secondary memoSubmitBtn" type="submit"
-                              id="memoSubmitBtn">등록</button>
-                          </form>
+                          <!-- <form class="memoSubmitForm" id="memoSubmitForm"> -->
+                          <input type="text" name="memotext" class="form-control" placeholder="내용을 입력하세요"
+                            aria-label="default input example" aria-describedby="button-addon2" id="memotext"
+                            onkeyup="if(window.event.keyCode==13){addMemo()}">
+                          <button class="btn btn-outline-secondary memoSubmitBtn" type="button" id="memoSubmitBtn"
+                            onclick="addMemo()">등록</button>
+                          <!-- </form> -->
 
                         </div>
                       </div>
@@ -199,26 +221,22 @@
                                 </tr>
                               </form>
                             </thead>
-                              <tr th:each="memo : ${memoList}" id="realmemo">
+                            <!-- 여기에서 부터 -->
+                            <tbody id="memoData">
+                              <tr th:each="memo, i : ${memoList}" id="realmemo">
                                 <!-- <td th:text="${memo.memocode}"></td>  -->
-                                <td th:text="${memo.writer}" class="author"></td>
+                                <input hidden name="memocode" th:value="${memo.memocode}" th:id="|memocode${i.index}|">
+                                <td th:text="${memo.name}" class="author"></td>
                                 <td th:text="${memo.memotext}" class="tdText"></td>
                                 <td th:text="${memo.memocreateddate}" class="tdTime"></td>
-                                <form th:action="@{'/removeArticle/' + ${memo.memocode}}" id="deleteMemoBtn">
-
-                                  <td type="text" class="tdDelete"><button class="button btn deleteMemoBtn"
-                                    type="submit" id="deleteBtn">삭제</button></td>
-                                </form>
-                                <!-- <button type="submit" class="button btn btn-secondary" id="memoDeleteBtn">삭제</button> -->
-                                <!-- <td><button type="button" onclick="deleteMemo()" id="memo${memo.memocode}" class="button btn btn-secondary">삭제</button></td> -->
-                                <!-- <input type="button" value="삭제하기" onclick="fn_remove_memo('${contextPath}/removeArticle', ${memo.memocode})" /> -->
-                                <!-- <form id="delete-form" th:action="@{'/removeArticle/' + ${memo.memocode}}" method="post">
-                                  <input type="hidden" name="_method" value="delete" />
-                                  <button id="delete-btn">삭제</button>
-                                </form> -->
+                                <td type="text" class="tdDelete"><button
+                                    th:class="|button btn deleteMemoBtn deletememobtn-${memo.imwriter}|" type="button"
+                                    id="deleteBtn" th:onclick="|deleteMemo(${i.index})|">삭제</button></td>
                               </tr>
-                            
-                            
+                            </tbody>
+
+
+
                           </table>
                         </div>
 
@@ -294,14 +312,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                       aria-label="Close"></button>
                                   </div>
-                                  <!-- 여기는 모달바디 -->
+                                  <!-- 여기는 모달바디3 -->
                                   <div class="modal-body">
                                     <div class="row">
                                       <div class="col">
                                         <!-- 내부 모달버튼 트리거 -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#ingredientUploadModal">
-                                          재료 이미지 등록
+                                          이미지로 재료 등록
                                         </button>
 
                                         <!-- 내부 모달 부분 -->
@@ -312,7 +330,7 @@
                                           <div class="modal-dialog">
                                             <div class="modal-content">
                                               <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">재료 이미지 등록</h1>
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">이미지로 재료 등록</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                   aria-label="Close"></button>
                                               </div>
@@ -471,7 +489,7 @@
                                         </div>
                                         <!-- 내부 모달 끝 -->
 
-                                        <!-- 내부 모달버튼 트리거 -->
+                                        <!-- 재료 등록 버튼(직접입력1) -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#selftypingUploadModal">
                                           직접 입력
@@ -491,41 +509,45 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                   aria-label="Close" id="closeBtnIcon"></button>
                                               </div>
-                                              <!-- 여기는 모달바디 -->
+                                              <!-- 여기는 모달바디4 -->
                                               <div class="modal-body">
-                                                <div class="row" id="addForm">
-                                                  <form th:action="@{/fridgebox}" id="saveIngredientBtn" method="post">
+                                                <div class="row" id="addForm1">
+                                                  <form th:action="@{/appfridgebox}" id="saveIngredientBtn"
+                                                    method="post">
                                                     <div class="col">
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
                                                           for="inputGroupFile01">상품명</label>
-                                                        <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
-                                                        <select id="ingredientList3" class="form-select form-select-sm"
-                                                          size="1" aria-label=".form-select-sm example"
-                                                          name="ingredientcode">
+                                                        <input type="text" class="form-control" list="ingredientList3"
+                                                          id="inputGroupFile01">
+                                                        <!-- <input list="ingredientList3" id="inputGroupFile01"> -->
+                                                        <select id="ingredientList3"
+                                                          class="form-select form-select-sm my-select" size="1"
+                                                          aria-label=".form-select-sm example" name="ingredientcode">
                                                           <option th:each="m:${ingredientList3}"
+                                                            th:class="|value-${m.ingredientcode}|"
                                                             th:value="${m.ingredientcode}"
                                                             th:text="${m.ingredientname}"></option>
                                                         </select>
                                                       </div>
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
-                                                          for="inputGroupFile02">&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp</label>
-                                                        <input type="text" name="ingredientquantityinfridgebox" class="form-control"
-                                                          id="inputGroupFile02">
+                                                          for="inputGroupFile02">수량</label>
+                                                        <input type="text" name="ingredientquantityinfridgebox"
+                                                          class="form-control" id="inputGroupFile02">
                                                       </div>
                                                     </div>
                                                     <div class="col">
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
                                                           for="inputGroupFile03">보관위치</label>
-                                                          <select class="form-select form-select-sm"
-                                                          size="1" aria-label=".form-select-sm example"
-                                                          name="storagecode">
+                                                        <!-- 이 아래에서 부터 시작해!! -->
+                                                        <select class="form-select form-select-sm" size="1"
+                                                          aria-label=".form-select-sm example" name="storagecode">
                                                           <option value="1">냉장</option>
                                                           <option value="2">냉동</option>
                                                           <option value="3">실온</option>
-                                                          </select>
+                                                        </select>
                                                       </div>
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
@@ -540,13 +562,19 @@
 
                                                   <hr>
 
+
+
                                                 </div>
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                   id="closeBtn">닫기</button>
-                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn">재료
+                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn"
+                                                  onclick="addIngredientBtnHandler(1)">재료
                                                   추가</button>
+                                                <!-- 다중 재료 삭제 -->
+                                                <button type="submit" class="btn btn-danger"
+                                                  onclick="deleteinputtable(1)">삭제</button>
                                                 <button type="submit" form="saveIngredientBtn" class="btn btn-primary"
                                                   id="saveBtn">저장</button>
                                               </div>
@@ -572,51 +600,89 @@
 
 
                         <div class="row">
-                          <!-- 여기 아래에서 부터 냉장 -->
-                          <div class="col-lg-3 col-md-4 col-12" th:each="fridgeList, fridgeStat : ${fridgeBoxList}" th:if="${fridgeList.storagecode.toString().equals('1')}">
+                          <!-- 여기 아래에서 부터 냉장상품 출력 -->
+                          <div class="col-lg-3 col-md-4 col-12" th:each="fridgeList, fridgeStat : ${fridgeBoxList}"
+                            th:if="${fridgeList.storagecode.toString().equals('1')}">
                             <!-- Start Single Item -->
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#code'+${fridgeList.ingredientcode}+'_'+${fridgeStat.index}">
-                              <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';" class="imgIconBorder">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                              th:attr="data-bs-target='#code'+${fridgeList.ingredientcode}+'_'+${fridgeStat.index}">
+                              <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}"
+                                onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
+                                class="imgIconBorder">
                             </button>
 
                             <p class="fridge-icon-name" th:text="${fridgeList.ingredientVo22.ingredientname}"></p>
 
                             <!-- Modal -->
-                            <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}" data-bs-backdrop="static"
-                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                              aria-hidden="true">
+                            <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}"
+                              data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                              aria-labelledby="staticBackdropLabel" aria-hidden="true">
                               <div class="modal-dialog">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
+                                    <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}"
+                                      onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
                                       style="height: 50px; width: 50px;"><br>
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel" th:text="${fridgeList.ingredientVo22.ingredientname}"></h1>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel"
+                                      th:text="${fridgeList.ingredientVo22.ingredientname}"></h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                       aria-label="Close"></button>
                                   </div>
-                                  <!-- 여기는 모달바디 -->
+                                  <!-- 여기는 모달바디1 -->
+                                  <!-- 수정하기 기능 만드는 부분1 -->
                                   <div class="modal-body">
                                     <div class="row">
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text"
-                                          for="inputGroupFile01" >&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
-                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientquantityinfridgebox}">
-                                      </div>
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text" for="inputGroupFile01">등록일자</label>
-                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientcreateddate}">
-                                      </div>
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text" for="inputGroupFile01">유통기한</label>
-                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.expiredate}">
-                                      </div>
+                                      <form th:action="@{/deletefridgebox}" th:id="|modal-form-${fridgeStat.index}|"
+                                        method="post">
+                                        <input hidden name="ingredientcode"
+                                          th:value="${fridgeList.ingredientVo22.ingredientcode}" />
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                          <input type="text"
+                                            th:class="|form-control form-control-1-${fridgeStat.index}|"
+                                            id="inputGroupFile01" name="ingredientquantityinfridgebox"
+                                            th:value="${fridgeList.ingredientquantityinfridgebox}" readonly>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                          <input type="text" class="form-control " name="ingredientcreateddate"
+                                            id="inputGroupFile01" th:value="${fridgeList.ingredientcreateddate}"
+                                            readonly>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile03">보관위치</label>
+                                          <select
+                                            th:class="|form-select form-select-sm form-control-2-${fridgeStat.index}|"
+                                            size="1" aria-label=".form-select-sm example" name="storagecode" disabled>
+                                            <option value="1" selected="true">냉장</option>
+                                            <option value="2">냉동</option>
+                                            <option value="3">실온</option>
+                                          </select>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                          <input type="date"
+                                            th:class="|form-control form-control-3-${fridgeStat.index}|"
+                                            id="inputGroupFile01" name="expiredate" th:value="${fridgeList.expiredate}"
+                                            readonly>
+                                        </div>
+                                      </form>
+
                                     </div>
                                   </div>
+                                  <!-- 모달 내부 버튼 -->
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                    <button type="button" class="btn btn-secondary">수정</button>
-                                    <button type="button" class="btn btn-primary">저장</button>
+                                    <button type="button" class="btn btn-secondary"
+                                      th:id="|changeinfobtn-${fridgeStat.index}|"
+                                      th:onclick="|change_info(${fridgeStat.index})|">수정</button>
+                                    <button type="submit" class="btn btn-secondary" th:formaction="@{/changefridgebox}"
+                                      th:form="|modal-form-${fridgeStat.index}|"
+                                      th:id="|completeinfobtn-${fridgeStat.index}|" hidden>수정완료</button>
+                                    <button type="submit" class="btn btn-danger"
+                                      th:form="|modal-form-${fridgeStat.index}|">삭제</button>
                                   </div>
                                 </div>
                               </div>
@@ -654,14 +720,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                       aria-label="Close"></button>
                                   </div>
-                                  <!-- 여기는 모달바디 -->
+                                  <!-- 여기는 모달바디5 -->
                                   <div class="modal-body">
                                     <div class="row">
                                       <div class="col">
                                         <!-- 내부 모달버튼 트리거 -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#ingredientUploadModal1">
-                                          재료 이미지 등록
+                                          이미지로 재료 등록
                                         </button>
 
                                         <!-- 내부 모달 부분 -->
@@ -672,7 +738,7 @@
                                           <div class="modal-dialog">
                                             <div class="modal-content">
                                               <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">재료 이미지 등록</h1>
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">이미지로 재료 등록</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                   aria-label="Close"></button>
                                               </div>
@@ -831,7 +897,7 @@
                                         </div>
                                         <!-- 내부 모달 끝 -->
 
-                                        <!-- 내부 모달버튼 트리거 -->
+                                        <!-- 재료 등록 버튼(직접입력2) -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#selftypingUploadModal1">
                                           직접 입력
@@ -851,10 +917,11 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                   aria-label="Close" id="closeBtnIcon"></button>
                                               </div>
-                                              <!-- 여기는 모달바디 -->
+                                              <!-- 여기는 모달바디6 -->
                                               <div class="modal-body">
-                                                <div class="row" id="addForm">
-                                                  <form th:action="@{/fridgebox}" id="saveIngredientBtn1" method="post">
+                                                <div class="row" id="addForm2">
+                                                  <form th:action="@{/appfridgebox}" id="saveIngredientBtn1"
+                                                    method="post">
                                                     <div class="col">
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
@@ -871,21 +938,20 @@
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
                                                           for="inputGroupFile02">&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp</label>
-                                                        <input type="text" name="ingredientquantityinfridgebox" class="form-control"
-                                                          id="inputGroupFile02">
+                                                        <input type="text" name="ingredientquantityinfridgebox"
+                                                          class="form-control" id="inputGroupFile02">
                                                       </div>
                                                     </div>
                                                     <div class="col">
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
                                                           for="inputGroupFile03">보관위치</label>
-                                                          <select class="form-select form-select-sm"
-                                                          size="1" aria-label=".form-select-sm example"
-                                                          name="storagecode">
+                                                        <select class="form-select form-select-sm" size="1"
+                                                          aria-label=".form-select-sm example" name="storagecode">
                                                           <option value="1">냉장</option>
                                                           <option value="2">냉동</option>
                                                           <option value="3">실온</option>
-                                                          </select>
+                                                        </select>
                                                       </div>
                                                       <div class="input-group mb-3">
                                                         <label class="input-group-text"
@@ -905,8 +971,12 @@
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                   id="closeBtn">닫기</button>
-                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn">재료
+                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn"
+                                                  onclick="addIngredientBtnHandler(2)">재료
                                                   추가</button>
+                                                <!-- 다중 재료 삭제 -->
+                                                <button type="submit" class="btn btn-danger"
+                                                  onclick="deleteinputtable(2)">삭제</button>
                                                 <button type="submit" form="saveIngredientBtn1" class="btn btn-primary"
                                                   id="saveBtn">저장</button>
                                               </div>
@@ -929,51 +999,89 @@
                         </div>
 
                         <div class="row">
-                          <!-- 여기 아래에서 부터 냉동 -->
-                          <div class="col-lg-3 col-md-4 col-12" th:each="fridgeList, fridgeStat : ${fridgeBoxList}" th:if="${fridgeList.storagecode.toString().equals('2')}">
+                          <!-- 여기 아래에서 부터 냉동상품 출력 -->
+                          <div class="col-lg-3 col-md-4 col-12" th:each="fridgeList, fridgeStat : ${fridgeBoxList}"
+                            th:if="${fridgeList.storagecode.toString().equals('2')}">
                             <!-- Start Single Item -->
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#code'+${fridgeList.ingredientcode}+'_'+${fridgeStat.index}">
-                              <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';" class="imgIconBorder">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                              th:attr="data-bs-target='#code'+${fridgeList.ingredientcode}+'_'+${fridgeStat.index}">
+                              <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}"
+                                onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
+                                class="imgIconBorder">
                             </button>
 
                             <p class="fridge-icon-name" th:text="${fridgeList.ingredientVo22.ingredientname}"></p>
 
                             <!-- Modal -->
-                            <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}" data-bs-backdrop="static"
-                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                              aria-hidden="true">
+                            <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}"
+                              data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                              aria-labelledby="staticBackdropLabel" aria-hidden="true">
                               <div class="modal-dialog">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
+                                    <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}"
+                                      onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
                                       style="height: 50px; width: 50px;"><br>
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel" th:text="${fridgeList.ingredientVo22.ingredientname}"></h1>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel"
+                                      th:text="${fridgeList.ingredientVo22.ingredientname}"></h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                       aria-label="Close"></button>
                                   </div>
-                                  <!-- 여기는 모달바디 -->
+                                  <!-- 여기는 모달바디7 -->
+                                  <!-- 수정하기 기능 만드는 부분 -->
                                   <div class="modal-body">
                                     <div class="row">
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text"
-                                          for="inputGroupFile01" >&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
-                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientquantityinfridgebox}">
-                                      </div>
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text" for="inputGroupFile01">등록일자</label>
-                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientcreateddate}">
-                                      </div>
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text" for="inputGroupFile01">유통기한</label>
-                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.expiredate}">
-                                      </div>
+                                      <form th:action="@{/deletefridgebox}" th:id="|modal-form-${fridgeStat.index}|"
+                                        method="post">
+                                        <input hidden name="ingredientcode"
+                                          th:value="${fridgeList.ingredientVo22.ingredientcode}" />
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                          <input type="text"
+                                            th:class="|form-control form-control-1-${fridgeStat.index}|"
+                                            id="inputGroupFile01" name="ingredientquantityinfridgebox"
+                                            th:value="${fridgeList.ingredientquantityinfridgebox}" readonly>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                          <input type="text" class="form-control " name="ingredientcreateddate"
+                                            id="inputGroupFile01" th:value="${fridgeList.ingredientcreateddate}"
+                                            readonly>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile03">보관위치</label>
+                                          <select
+                                            th:class="|form-select form-select-sm form-control-2-${fridgeStat.index}|"
+                                            size="1" aria-label=".form-select-sm example" name="storagecode" disabled>
+                                            <option value="1">냉장</option>
+                                            <option value="2" selected="true">냉동</option>
+                                            <option value="3">실온</option>
+                                          </select>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                          <input type="date"
+                                            th:class="|form-control form-control-3-${fridgeStat.index}|"
+                                            id="inputGroupFile01" name="expiredate" th:value="${fridgeList.expiredate}"
+                                            readonly>
+                                        </div>
+                                      </form>
+
                                     </div>
                                   </div>
+                                  <!-- 모달 내부 버튼 -->
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                    <button type="button" class="btn btn-secondary">수정</button>
-                                    <button type="button" class="btn btn-primary">저장</button>
+                                    <button type="button" class="btn btn-secondary"
+                                      th:id="|changeinfobtn-${fridgeStat.index}|"
+                                      th:onclick="|change_info(${fridgeStat.index})|">수정</button>
+                                    <button type="submit" class="btn btn-secondary" th:formaction="@{/changefridgebox}"
+                                      th:form="|modal-form-${fridgeStat.index}|"
+                                      th:id="|completeinfobtn-${fridgeStat.index}|" hidden>수정완료</button>
+                                    <button type="submit" class="btn btn-danger"
+                                      th:form="|modal-form-${fridgeStat.index}|">삭제</button>
                                   </div>
                                 </div>
                               </div>
@@ -1008,14 +1116,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                       aria-label="Close"></button>
                                   </div>
-                                  <!-- 여기는 모달바디 -->
+                                  <!-- 여기는 모달바디8 -->
                                   <div class="modal-body">
                                     <div class="row">
                                       <div class="col">
                                         <!-- 내부 모달버튼 트리거 -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#ingredientUploadModal2">
-                                          재료 이미지 등록
+                                          이미지로 재료 등록
                                         </button>
 
                                         <!-- 내부 모달 부분 -->
@@ -1026,7 +1134,7 @@
                                           <div class="modal-dialog">
                                             <div class="modal-content">
                                               <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">재료 이미지 등록</h1>
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">이미지로 재료 등록</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                   aria-label="Close"></button>
                                               </div>
@@ -1185,7 +1293,7 @@
                                         </div>
                                         <!-- 내부 모달 끝 -->
 
-                                        <!-- 내부 모달버튼 트리거 -->
+                                        <!-- 재료 등록 버튼(직접입력3) -->
                                         <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#selftypingUploadModal2">
                                           직접 입력
@@ -1194,6 +1302,7 @@
                                         <!-- Start Single Item -->
 
                                         <!-- Modal -->
+                                        <!-- 직접입력 수정중 -->
                                         <div class="modal fade" id="selftypingUploadModal2" data-bs-backdrop="static"
                                           data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                           aria-hidden="true">
@@ -1205,50 +1314,45 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                   aria-label="Close" id="closeBtnIcon"></button>
                                               </div>
-                                              <!-- 여기는 모달바디 -->
+                                              <!-- 여기는 모달바디9 -->
                                               <div class="modal-body">
-                                                <div class="row" id="addForm">
-                                                  <form th:action="@{/fridgebox}" id="saveIngredientBtn2" method="post">
-                                                    <div class="col">
-                                                      <div class="input-group mb-3">
-                                                        <label class="input-group-text"
-                                                          for="inputGroupFile01">상품명</label>
-                                                        <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
-                                                        <select id="ingredientList3" class="form-select form-select-sm"
-                                                          size="1" aria-label=".form-select-sm example"
-                                                          name="ingredientcode">
-                                                          <option th:each="m:${ingredientList3}"
-                                                            th:value="${m.ingredientcode}"
-                                                            th:text="${m.ingredientname}"></option>
-                                                        </select>
-                                                      </div>
-                                                      <div class="input-group mb-3">
-                                                        <label class="input-group-text"
-                                                          for="inputGroupFile02">&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp</label>
-                                                        <input type="text" name="ingredientquantityinfridgebox" class="form-control"
-                                                          id="inputGroupFile02">
-                                                      </div>
+                                                <div class="row" id="addForm3">
+                                                  <form th:action="@{/appfridgebox}" id="saveIngredientBtn2"
+                                                    method="post">
+                                                    <div class="input-group mb-3">
+                                                      <label class="input-group-text" for="inputGroupFile01">상품명</label>
+                                                      <!-- <input type="text" class="form-control" id="inputGroupFile01"> -->
+                                                      <select id="ingredientList3" class="form-select form-select-sm"
+                                                        size="1" aria-label=".form-select-sm example"
+                                                        name="ingredientcode">
+                                                        <option th:each="m:${ingredientList3}"
+                                                          th:value="${m.ingredientcode}" th:text="${m.ingredientname}">
+                                                        </option>
+                                                      </select>
                                                     </div>
-                                                    <div class="col">
-                                                      <div class="input-group mb-3">
-                                                        <label class="input-group-text"
-                                                          for="inputGroupFile03">보관위치</label>
-                                                          <select class="form-select form-select-sm"
-                                                          size="1" aria-label=".form-select-sm example"
-                                                          name="storagecode">
-                                                          <option value="1">냉장</option>
-                                                          <option value="2">냉동</option>
-                                                          <option value="3">실온</option>
-                                                          </select>
-                                                      </div>
-                                                      <div class="input-group mb-3">
-                                                        <label class="input-group-text"
-                                                          for="inputGroupFile04">유통기한</label>
-                                                        <!-- <input type="text" class="form-control" id="inputGroupFile04"> -->
-                                                        <input type="date" value="xxx" min="yyy" max="zzz"
-                                                          class="form-control input-large" name="expiredate"
-                                                          id="expiredate" placeholder="유통기한" required>
-                                                      </div>
+                                                    <div class="input-group mb-3">
+                                                      <label class="input-group-text"
+                                                        for="inputGroupFile02">&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp</label>
+                                                      <input type="text" name="ingredientquantityinfridgebox"
+                                                        class="form-control" id="inputGroupFile02">
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                      <label class="input-group-text"
+                                                        for="inputGroupFile03">보관위치</label>
+                                                      <select class="form-select form-select-sm" size="1"
+                                                        aria-label=".form-select-sm example" name="storagecode">
+                                                        <option value="1">냉장</option>
+                                                        <option value="2">냉동</option>
+                                                        <option value="3">실온</option>
+                                                      </select>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                      <label class="input-group-text"
+                                                        for="inputGroupFile04">유통기한</label>
+                                                      <!-- <input type="text" class="form-control" id="inputGroupFile04"> -->
+                                                      <input type="date" value="xxx" min="yyy" max="zzz"
+                                                        class="form-control input-large" name="expiredate"
+                                                        id="expiredate" placeholder="유통기한" required>
                                                     </div>
                                                   </form>
 
@@ -1259,8 +1363,12 @@
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                   id="closeBtn">닫기</button>
-                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn">재료
+                                                <button type="button" class="btn btn-secondary" id="addIngredientBtn"
+                                                  onclick="addIngredientBtnHandler(3)">재료
                                                   추가</button>
+                                                <!-- 다중 재료 삭제 -->
+                                                <button type="submit" class="btn btn-danger"
+                                                  onclick="deleteinputtable(3)">삭제</button>
                                                 <button type="submit" form="saveIngredientBtn2" class="btn btn-primary"
                                                   id="saveBtn">저장</button>
                                               </div>
@@ -1285,50 +1393,88 @@
                         <!-- 이 아래에서 부터 실온상품 출력 -->
                         <div class="row">
                           <!-- 여기 아래에서 부터 실온상품 출력 -->
-                          <div class="col-lg-3 col-md-4 col-12" th:each="fridgeList, fridgeStat : ${fridgeBoxList}" th:if="${fridgeList.storagecode.toString().equals('3')}">
+                          <div class="col-lg-3 col-md-4 col-12" th:each="fridgeList, fridgeStat : ${fridgeBoxList}"
+                            th:if="${fridgeList.storagecode.toString().equals('3')}">
                             <!-- Start Single Item -->
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#code'+${fridgeList.ingredientcode}+'_'+${fridgeStat.index}">
-                              <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';" class="imgIconBorder">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                              th:attr="data-bs-target='#code'+${fridgeList.ingredientcode}+'_'+${fridgeStat.index}">
+                              <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}"
+                                onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
+                                class="imgIconBorder">
                             </button>
 
                             <p class="fridge-icon-name" th:text="${fridgeList.ingredientVo22.ingredientname}"></p>
 
                             <!-- Modal -->
-                            <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}" data-bs-backdrop="static"
-                              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                              aria-hidden="true">
+                            <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}"
+                              data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                              aria-labelledby="staticBackdropLabel" aria-hidden="true">
                               <div class="modal-dialog">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}" onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
+                                    <img th:src="${fridgeList.ingredientVo22.ingredienticonlocation}"
+                                      onerror="this.onerror=null; this.src='images/fridgeicon/아이스크림.png';"
                                       style="height: 50px; width: 50px;"><br>
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel" th:text="${fridgeList.ingredientVo22.ingredientname}"></h1>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel"
+                                      th:text="${fridgeList.ingredientVo22.ingredientname}"></h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                       aria-label="Close"></button>
                                   </div>
-                                  <!-- 여기는 모달바디 -->
+                                  <!-- 여기는 모달바디2 -->
+                                  <!-- 수정하기 기능 만드는 부분 -->
                                   <div class="modal-body">
                                     <div class="row">
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text"
-                                          for="inputGroupFile01" >&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
-                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientquantityinfridgebox}">
-                                      </div>
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text" for="inputGroupFile01">등록일자</label>
-                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.ingredientcreateddate}">
-                                      </div>
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text" for="inputGroupFile01">유통기한</label>
-                                        <p type="text" class="form-control" id="inputGroupFile01" th:text="${fridgeList.expiredate}">
-                                      </div>
+                                      <form th:action="@{/deletefridgebox}" th:id="|modal-form-${fridgeStat.index}|"
+                                        method="post">
+                                        <input hidden name="ingredientcode"
+                                          th:value="${fridgeList.ingredientVo22.ingredientcode}" />
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text"
+                                            for="inputGroupFile01">&nbsp&nbsp&nbsp&nbsp수량&nbsp&nbsp&nbsp&nbsp</label>
+                                          <input type="text"
+                                            th:class="|form-control form-control-1-${fridgeStat.index}|"
+                                            id="inputGroupFile01" name="ingredientquantityinfridgebox"
+                                            th:value="${fridgeList.ingredientquantityinfridgebox}" readonly>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">등록일자</label>
+                                          <input type="text" class="form-control " name="ingredientcreateddate"
+                                            id="inputGroupFile01" th:value="${fridgeList.ingredientcreateddate}"
+                                            readonly>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile03">보관위치</label>
+                                          <select
+                                            th:class="|form-select form-select-sm form-control-2-${fridgeStat.index}|"
+                                            size="1" aria-label=".form-select-sm example" name="storagecode" disabled>
+                                            <option value="1">냉장</option>
+                                            <option value="2">냉동</option>
+                                            <option value="3" selected="true">실온</option>
+                                          </select>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupFile01">유통기한</label>
+                                          <input type="date"
+                                            th:class="|form-control form-control-3-${fridgeStat.index}|"
+                                            id="inputGroupFile01" name="expiredate" th:value="${fridgeList.expiredate}"
+                                            readonly>
+                                        </div>
+                                      </form>
+
                                     </div>
                                   </div>
+                                  <!-- 모달 내부 버튼 -->
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                    <button type="button" class="btn btn-secondary">수정</button>
-                                    <button type="button" class="btn btn-primary">저장</button>
+                                    <button type="button" class="btn btn-secondary"
+                                      th:id="|changeinfobtn-${fridgeStat.index}|"
+                                      th:onclick="|change_info(${fridgeStat.index})|">수정</button>
+                                    <button type="submit" class="btn btn-secondary" th:formaction="@{/changefridgebox}"
+                                      th:form="|modal-form-${fridgeStat.index}|"
+                                      th:id="|completeinfobtn-${fridgeStat.index}|" hidden>수정완료</button>
+                                    <button type="submit" class="btn btn-danger"
+                                      th:form="|modal-form-${fridgeStat.index}|">삭제</button>
                                   </div>
                                 </div>
                               </div>
@@ -1337,7 +1483,7 @@
                           </div>
                         </div>
 
-                        
+
                       </div>
                     </div>
                   </div>
@@ -1381,25 +1527,26 @@
                     <div class="tab-pane fade show active" id="nav-recipeNameSearch" role="tabpanel"
                       aria-labelledby="nav-latest-tab">
                       <div class="row">
-                        <!-- Start Search Form -->
-                        <form th:action="@{/recipeList}" method="post" id="search-form">
-                          <div class="search-form wow fadeInUp fridge-search">
-                            <div class="row">
-                              <div class="col-lg-10 col-md-4 col-12 p-0">
-                                <div id="search-input" class="search-input">
-                                  <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
-                                  <input type="text " name="similar" id="similar" placeholder="레시피 이름으로 검색하세요">
-                                </div>
+                        <!-- 레시피 이름으로 검색하는 폼 -->
+                        <!-- <form th:action="@{/recipeList}" method="post" id="search-form"> -->
+                        <div class="search-form wow fadeInUp fridge-search">
+                          <div class="row">
+                            <div class="col-lg-10 col-md-4 col-12 p-0">
+                              <div id="search-input" class="search-input">
+                                <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
+                                <input type="text " name="similar" id="similarcookname" placeholder="레시피 이름으로 검색하세요"
+                                  onkeyup="if(window.event.keyCode==13){datasearch2()}">
                               </div>
-                              <div class="col-lg-2 col-md-2 col-12 p-0">
-                                <div class="search-btn button">
-                                  <button type="submit" id="search-btn" class="btn btn-submit"><i
-                                      class="lni lni-search-alt"></i> 검색</button>
-                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-12 p-0">
+                              <div class="search-btn button">
+                                <button type="button" id="search-btn" class="btn btn-submit" onclick="datasearch2()"><i
+                                    class="lni lni-search-alt"></i> 검색</button>
                               </div>
                             </div>
                           </div>
-                        </form>
+                        </div>
+                        <!-- </form> -->
                         <!-- End Search Form -->
 
 
@@ -1414,73 +1561,10 @@
                             </div>
                           </div>
                           <!-- End List Title -->
-                          <!-- Start Single List -->
-                          <div class="single-item-list wow fadeInUp">
-                            <div class="row align-items-center">
-                              <div class="col-4 col-12">
-                                <div class="item-image">
-                                  <img
-                                    src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
-                                    alt="#" style="position: none;">
-                                  <div class="content">
-                                    <h3 class="title"><a href="javascript:void(0)"><b>김치 전골</b></a><button type="button"
-                                        class="btn btn-success recipeBtn">장바구니
-                                        담기</button></h3>
-                                    <hr>
-                                    <p>멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
-                                      두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯</p>
-                                  </div>
-                                </div>
-                              </div>
+                          <!-- 레시피 이름으로 검색 아이템 시작 -->
+                          <div id="item-list-data1"></div>
+                          <!-- 레시피 이름으로 검색 아이템 끝 -->
 
-
-                            </div>
-                          </div>
-                          <!-- End Single List -->
-
-                          <!-- Start Single List -->
-                          <div class="single-item-list">
-                            <div class="row align-items-center">
-                              <div class="col-4 col-12">
-                                <div class="item-image">
-                                  <img
-                                    src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
-                                    alt="#" style="position: none;">
-                                  <div class="content">
-                                    <h3 class="title"><a href="javascript:void(0)">김치 전골</a></h3>
-                                    <hr>
-                                    <p>멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
-                                      두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯</p>
-                                  </div>
-                                </div>
-                              </div>
-
-
-                            </div>
-                          </div>
-                          <!-- End Single List -->
-
-                          <!-- Start Single List -->
-                          <div class="single-item-list">
-                            <div class="row align-items-center">
-                              <div class="col-4 col-12">
-                                <div class="item-image">
-                                  <img
-                                    src="https://recipe1.ezmember.co.kr/cache/recipe/2020/03/23/09ec7709d95929d5c7aede82ac91d48d1.jpg"
-                                    alt="#" style="position: none;">
-                                  <div class="content">
-                                    <h3 class="title"><a href="javascript:void(0)">김치 전골</a></h3>
-                                    <hr>
-                                    <p>멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파,
-                                      두부, 새송이버섯,멸치육수, 김치, 김칫국물, 돼지고기, 양파, 대파, 두부, 새송이버섯</p>
-                                  </div>
-                                </div>
-                              </div>
-
-
-                            </div>
-                          </div>
-                          <!-- End Single List -->
                         </div>
                         <!-- 여기 까지 잘라서 들어가야 함 -->
                       </div>
@@ -1489,25 +1573,29 @@
                       aria-labelledby="nav-popular-tab">
                       <div class="row">
                         <!-- Start Search Form -->
-                        <form th:action="@{/procedureList}" method="post" id="search-form">
-                          <div class="search-form wow fadeInUp fridge-search" data-wow-delay=".7s">
-                            <div class="row">
-                              <div class="col-lg-10 col-md-4 col-12 p-0">
-                                <div id="search-input" class="search-input">
-                                  <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
-                                  <input type="text " name="similar" id="similar" placeholder="재료 목록으로 검색하세요">
-                                </div>
+                        <!--  th:action="@{/procedureList}" method="post" -->
+                        <!-- <form id="procedure-search-form" enctype="application/x-www-form-urlencoded"
+                          onsubmit="datasearch()"> -->
+                        <div class="search-form wow fadeInUp fridge-search" data-wow-delay=".7s">
+                          <div class="row">
+                            <div class="col-lg-10 col-md-4 col-12 p-0">
+                              <div id="search-input" class="search-input">
+                                <label for="keyword"><i class="lni lni-search-alt theme-color"></i></label>
+                                <input type="text" name="similar" id="similaringre" placeholder="재료 목록으로 검색하세요"
+                                  onkeyup="if(window.event.keyCode==13){datasearch()}">
                               </div>
-                              <div class="col-lg-2 col-md-2 col-12 p-0">
-                                <div class="search-btn button">
-                                  <button type="submit" id="search-btn" class="btn btn-submit"><i
-                                      class="lni lni-search-alt" onclick=""></i> 검색</button>
-                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-12 p-0">
+                              <div class="search-btn button">
+                                <button type="button" id="search-btn" class="btn btn-submit" onclick="datasearch()"><i
+                                    class="lni lni-search-alt"></i> 검색</button>
                               </div>
                             </div>
                           </div>
-                        </form>
+                        </div>
+                        <!-- </form> -->
                         <!-- End Search Form -->
+
 
 
                         <!-- Start Items Area -->
@@ -1522,12 +1610,14 @@
                           </div>
                           <!-- End List Title -->
                           <!-- Start Single List -->
-                          <div class="single-item-list wow fadeInUp" th:each="recipe : ${keyIndex}">
+                          <div id="item-list-data2"></div>
+
+                          <!-- <div class="single-item-list wow fadeInUp" th:each="recipe : ${keyIndex}">
                             <p th:text="${recipe.get(procedureList.get(0).getCookVo22().getCookname()}"></p>
-                          </div>
+                          </div> -->
                           <!-- End Single List -->
 
-                          
+
                         </div>
                         <!-- 여기 까지 잘라서 들어가야 함 -->
                       </div>
@@ -1551,7 +1641,14 @@
 
     <!-- end Fridge section -->
 
+
     <hr>
+    <select id="test">
+      <option value="">사과</option>
+      <option value="">딸기</option>
+      <option value="">오렌지</option>
+      <option value="">감귤</option>
+    </select>
 
     <!-- Start Footer Area -->
     <footer class="footer">
@@ -1678,83 +1775,580 @@
 
     <!-- ========================= JS here ========================= -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/wow.min.js"></script>
+    <!-- <script src="js/wow.min.js"></script> -->
     <script src="js/tiny-slider.js"></script>
     <script src="js/glightbox.min.js"></script>
     <script src="js/main.js"></script>
     <!-- <script src="js/user-access.js"></script> -->
     <script src="js/imagesubmit.js"></script>
-    <script src="js/add-ingredient.js"></script>
+    <!-- <script th:inline="javascript" src="js/add-ingredient.js"></script> -->
     <!-- <script src="js/btncontrol/memosubmit.js"></script> -->
     <script src="https://code.jquery.com/jquery-latest.js"></script>
-    
-    <script>
+
+    <script th:inline="javascript" type="text/javascript">
+      async function datasearch2() {
+        console.log("레시피 이름으로 검색 진입");
+        const targetUrl = "/recipeList";
+        let formData = new FormData();
+        let similar = document.getElementById("similarcookname").value;
+        formData.append("cookname", similar);
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        let targetid = "#item-list-data1"
+
+        const tb = document.querySelector(targetid);
+        while (tb.firstChild) {
+          tb.removeChild(tb.firstChild);
+        }
+
+        try {
+          let response = await fetch(targetUrl, options);
+          console.log("try부분 까지 왔니????????????????????");
+          let searchdata = await response.json();
+          console.log("searchdata :", searchdata);
+          console.log("첫번째 for직전");
+          makeRecipeCard(searchdata, targetid);
+
+        } catch (err) {
+          alert(err);
+        }
+        console.log("끝")
+
+      };
 
 
-      // 여기 밑에는 메모 등록 버튼
-      $(function () {
-        $("#memoSubmitForm").on("submit", function () {
-          memoSubmitHandler()
-        })
-      })
+      async function datasearch() {
+        console.log("datasearch진입");
+        const targetUrl = "/procedureList";
+        let formData = new FormData();
+        let similar = document.getElementById("similaringre").value;
+        formData.append("similar", similar);
+        const options = {
+          method: "post",
+          body: formData,
+        }
 
-      function memoSubmitHandler() {
-        let form = document.querySelector("#memoSubmitForm")
-        let formData = new FormData(form)
+        let targetid = "#item-list-data2"
 
-        $.ajax({
-          url: "/addArticle",
-          type: "POST",
-          data: formData,
-          contentType: false,
-          processData: false,
-          success: function (data) {
-            console.log("성공 :", data)
-          },
-          error: function (error) {
-            console.error("에러 :", error)
-          },
-          complete: function () {
-            closeModal()
-            console.log("리로드 하는 부분: 여기는 도착 했니================================>??")
-            $("#memo-table").load(location.href + " #memo-table")
-          }
-        })
+        const tb = document.querySelector(targetid);
+        while (tb.firstChild) {
+          tb.removeChild(tb.firstChild);
+        }
+
+        try {
+          let response = await fetch(targetUrl, options);
+          let searchdata = await response.json();
+          console.log("searchdata :", searchdata);
+          console.log("첫번째 for직전");
+          makeRecipeCard(searchdata, targetid);
+
+        } catch (err) {
+          alert(err);
+        }
+        console.log("끝")
+      };
+
+      function makeRecipeCard(searchdata, targetid) {
+        let cardcount = 1;
+        for (let cook of searchdata) {
+          let itemlist = document.querySelector(targetid);
+          let cookcode = document.createElement('div');
+          cookcode.className = "cookcode" + cardcount;
+          cookcode.hidden = true;
+          cookcode.value = cook.cookVo.cookcode;
+
+          let div1 = document.createElement('div');
+          div1.setAttribute("class", "single-item-list")
+
+          let div2 = document.createElement('div');
+          div2.setAttribute("class", "row align-items-center")
+
+          let div3 = document.createElement('div');
+          div3.setAttribute("class", "col-4 col-12");
+
+
+          let form = document.createElement('form');
+          form.setAttribute("th:action", "@{/#}");
+          form.setAttribute("method", "post");
+
+          let div4 = document.createElement('div');
+          div4.setAttribute("class", "item-image");
+
+          let $a = document.createElement('a');
+          $a.href = cook.cookVo.cooklink;
+
+          let img = document.createElement('img');
+          img.src = cook.cookVo.cookimglink;
+          img.setAttribute("onerror", "this.onerror=null; this.src='images/recipe/recipe_tmp.png';");
+          img.setAttribute("style", "position: none;");
+
+          let div5 = document.createElement('div');
+          div5.setAttribute("class", "content");
+
+          let h3 = document.createElement('h3');
+          h3.setAttribute("class", "title");
+          h3.innerText = cook.cookVo.cookname;
+
+
+
+          let addBasketBtn = document.createElement('button');
+          addBasketBtn.setAttribute("type", "button");
+          addBasketBtn.setAttribute("class", "btn btn-success recipeBtn");
+          addBasketBtn.setAttribute("onclick", "addbasket(" + cardcount + ")")
+          addBasketBtn.innerText = "장바구니 담기";
+
+          let inputgroup = document.createElement('div');
+          inputgroup.setAttribute("class", "input-group input-group-margin");
+          inputgroup.setAttribute("style", "align:right");
+
+          let cookserve = document.createElement('input');
+          // style = "text-align:right;"
+          cookserve.setAttribute("style", "text-align:center;");
+          cookserve.className = "form-control cookserve cookserve" + cardcount;
+          cookserve.type = "number";
+          cookserve.value = 1;
+          // cookserve.setAttribute("style", "float=right;");
+          cookserve.setAttribute("min", "1");
+
+          let addBtn = document.createElement("button");
+          addBtn.setAttribute("class", "btn btn-outline-secondary");
+          addBtn.setAttribute("type", "button");
+          addBtn.setAttribute('onclick', "countup(" + cardcount + ")");
+          addBtn.innerText = ">";
+
+          let minusBtn = document.createElement("button");
+          minusBtn.setAttribute("class", "btn btn-outline-secondary");
+          minusBtn.setAttribute("type", "button");
+          minusBtn.setAttribute('onclick', "countdown(" + cardcount + ")");
+          minusBtn.innerText = "<";
+
+          let hr = document.createElement('hr');
+
+          let block = document.createElement('block');
+
+          console.log("두번째 for 직전");
+          // 이 밑에 있는 애들을 여기 블락에다가 순차적으로 appand시켜주려면 어떻게 해야할까?
+          for (let ingredient of cook.ingredientVoList) {
+            let h5 = document.createElement('h5');
+            h5.innerText = ingredient.ingredientname
+            block.append(h5);
+          };
+
+          // 요소 더해주기
+          $a.append(img);
+          h3.append(addBasketBtn);
+          div5.append(h3);
+          inputgroup.append(minusBtn);
+          inputgroup.append(cookserve);
+          inputgroup.append(addBtn);
+          div5.append(inputgroup);
+          div5.append(hr);
+          itemlist.append(cookcode);
+          div5.append(block);
+          div4.append($a);
+          div4.append(div5);
+          form.append(div4);
+          div3.append(form);
+          div2.append(div3);
+          div1.append(div2);
+          itemlist.append(div1);
+        }
+        cardcount++;
+      };
+
+      function countup(num) {
+        if (document.getElementsByClassName("cookserve" + num)[0].value < 50) {
+          document.getElementsByClassName("cookserve" + num)[0].value++;
+        }
+      };
+
+
+      function countdown(num) {
+        if (document.getElementsByClassName("cookserve" + num)[0].value > 1) {
+          document.getElementsByClassName("cookserve" + num)[0].value--;
+        }
+      };
+
+      async function addbasket(num) {
+        console.log("addbasket" + num + "진입");
+        const targetUrl = "/getcookbasket";
+        let formData = new FormData();
+
+        let cookcode = document.getElementsByClassName("cookcode" + num)[0].value;
+        let cookquantityinbasket = document.getElementsByClassName("cookserve" + num)[0].value;
+
+        formData.append("cookcode", cookcode);
+        formData.append("cookquantityinbasket", cookquantityinbasket);
+
+        console.log("데이터 확인", cookcode, cookquantityinbasket);
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        try {
+          let response = await fetch(targetUrl, options);
+        } catch (err) {
+          alert(err);
+        }
+      };
+
+      function change_info(index) {
+        document.getElementsByClassName("form-control-1-" + index)[0].readOnly = false;
+        document.getElementsByClassName("form-control-1-" + index)[0].style.backgroundColor = "#ffffff";
+        document.getElementsByClassName("form-control-2-" + index)[0].disabled = false;
+        document.getElementsByClassName("form-control-2-" + index)[0].style.backgroundColor = "#ffffff";
+        document.getElementsByClassName("form-control-3-" + index)[0].readOnly = false;
+        document.getElementsByClassName("form-control-3-" + index)[0].style.backgroundColor = "#ffffff";
+        document.getElementById("changeinfobtn-" + index).hidden = true;
+        document.getElementById("completeinfobtn-" + index).hidden = false;
+      };
+
+      // 여기 아래에서 부터 memo 관련부분
+
+      function makeMemoCard(searchdata) {
+        let index = 1;
+        for (let memo of searchdata) {
+          tbody = document.querySelector("#memoData");
+
+          tr = document.createElement("tr");
+          tr.setAttribute("id", "realmemo");
+
+          input = document.createElement("input");
+          input.setAttribute("name", "memocode");
+          input.setAttribute("value", memo.memocode);
+          input.setAttribute("id", "memocode" + index);
+          input.hidden = true;
+
+
+          td1 = document.createElement("td");
+          td1.setAttribute("class", "author");
+          td1.innerText = memo.name;
+
+          td2 = document.createElement("td");
+          td2.setAttribute("class", "tdText");
+          td2.innerText = memo.memotext;
+
+          td3 = document.createElement("td");
+          td3.setAttribute("class", "tdTime");
+          td3.innerText = memo.memocreateddate;
+
+          td4 = document.createElement("td");
+          td4.setAttribute("class", "tdDelete");
+          td4.setAttribute("type", "text");
+
+          button = document.createElement("button");
+          button.setAttribute("class", "button btn deleteMemoBtn deletememobtn-" + memo.imwriter);
+          button.setAttribute("type", "button");
+          button.setAttribute("id", "deleteBtn");
+          button.setAttribute("onclick", "deleteMemo(" + index + ")");
+          button.innerText = "삭제";
+
+          tr.append(td1);
+          tr.append(td2);
+          tr.append(td3);
+          td4.append(button);
+          tr.append(td4);
+          tbody.append(tr);
+
+        }
+        index++;
+      };
+
+      async function addMemo() {
+        console.log("addMemo진입");
+        const targetUrl = "/addArticle";
+        let formData = new FormData();
+        let memotext = document.getElementById("memotext").value;
+        formData.append("memotext", memotext);
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        // let targetid = "#memoData"
+
+        const tb = document.querySelector("#memoData");
+        while (tb.firstChild) {
+          tb.removeChild(tb.firstChild);
+        }
+
+        try {
+          let response = await fetch(targetUrl, options);
+          let searchdata = await response.json();
+          console.log("searchdata :", searchdata);
+          console.log("첫번째 for직전");
+          makeMemoCard(searchdata);
+
+        } catch (err) {
+          alert(err);
+        }
+        console.log("끝")
+      };
+
+      async function deleteMemo(index) {
+        console.log("deleteMemo 진입================================>");
+        const targetUrl = "/removeArticle"
+        let formData = new FormData();
+        let memocode = document.getElementById("memocode" + index).value;
+        console.log(memocode);
+        formData.append("memocode", memocode);
+        const options = {
+          method: "post",
+          body: formData,
+        }
+
+        const tb = document.querySelector("#memoData");
+        while (tb.firstChild) {
+          tb.removeChild(tb.firstChild);
+        }
+
+        try {
+          let response = await fetch(targetUrl, options);
+          let searchdata = await response.json();
+          console.log(searchdata);
+          makeMemoCard(searchdata);
+        } catch (err) {
+          alert(err);
+        }
+      };
+
+      // 여기 아래부터는 재료추가 버튼 컨트롤
+      const addIngredientBtn = document.getElementsByClassName("btn btn-secondary addIngredientBtn");
+
+
+
+      function addIngredientBtnHandler(num) {
+
+        /* <![CDATA[ */
+        let ingrelist = [[${ ingredientList3 }]];
+        /* ]]>*/
+
+        // event.preventDefault()
+        // 루트 정해주기
+        const rootDiv = document.getElementById("addForm" + num);
+
+        // 본격적인 폼 요소 작성
+        const newAddForm = document.createElement("form");
+        newAddForm.setAttribute("th:action", "@{/appfridgebox}");
+
+        // 나오는 내용들의 그리드를 잡아주는 부분(첫번째 col)
+        const addDivClassCol = document.createElement("div");
+        addDivClassCol.setAttribute("class", "col");
+
+        // 실질적으로 유저들이 볼 수 있는 입력부분(첫번째 입력칸)
+        const addDivClassInputGroup = document.createElement("div");
+        addDivClassInputGroup.setAttribute("class", "input-group mb-3");
+
+        // label 및 input 태그 작성부분
+        const addLabel = document.createElement("label");
+        addLabel.setAttribute("class", "input-group-text");
+        // 여기에서 말하는 for 어트리뷰트는 참조할 라벨 가능 요소의 id 속성 값을 의미함.
+        addLabel.setAttribute("for", "inputGroupFile01");
+        // 라벨 안에 들어갈 텍스트 작성
+        const productName = document.createTextNode("상품명");
+        addLabel.appendChild(productName);
+
+        // 아래의 input 태그 대신 select 태그를 만든다.
+        const addSelect = document.createElement("select");
+        // addSelect.setAttribute("id", "ingredientlist" + num);
+        addSelect.setAttribute("class", "form-select form-select-sm");
+        addSelect.setAttribute("size", "1");
+        addSelect.setAttribute("aria-label", ".form-select-sm example");
+        addSelect.setAttribute("name", "ingredientcode");
+
+        // input 태그에 append할 option 태그를 만든다.
+        // const addOption = document.createElement("option");
+        // addOption.setAttribute("th:each", "m:${ingredientList3}");
+        // addOption.setAttribute("th:value", "${m.ingredientcode}");
+        // addOption.setAttribute("th:text", "${m.ingredientname}");
+
+        // option만드는 부분에서 for문을 돌려서 만들어본다.
+        for (let eachingre of ingrelist) {
+          let addOption = document.createElement("option");
+          addOption.value = eachingre.ingredientcode;
+          addOption.innerText = eachingre.ingredientname;
+          addSelect.append(addOption);
+        }
+
+        // 첫번째 col에서 첫번째 입력칸 요소 만들기 끝
+
+        // 실질적으로 유저들이 볼 수 있는 입력부분(두번째 입력칸)
+        const addDivClassInputGroup2 = document.createElement("div");
+        addDivClassInputGroup2.setAttribute("class", "input-group mb-3");
+
+        // label 및 input 태그 작성부분
+        const addLabel2 = document.createElement("label");
+        addLabel2.setAttribute("class", "input-group-text");
+        // 여기에서 말하는 for 어트리뷰트는 참조할 라벨 가능 요소의 id 속성 값을 의미함.
+        addLabel2.setAttribute("for", "inputGroupFile02");
+        // 라벨 안에 들어갈 텍스트 작성
+        const productAmount = document.createTextNode("수량");
+        addLabel2.appendChild(productAmount);
+        // input 태그 생성 및 속성 지정
+        const addInput2 = document.createElement("input");
+        addInput2.setAttribute("type", "text");
+        addInput2.setAttribute("name", "ingredientquantityinfridgebox");
+        addInput2.setAttribute("class", "form-control");
+        addInput2.setAttribute("id", "inputGroupFile02");
+        // 첫번째 col에서 두번째 입력칸 요소 만들기 끝
+
+        // 나오는 내용들의 그리드를 잡아주는 부분(두번째 col)
+        const addDivClassCol2 = document.createElement("div");
+        addDivClassCol2.setAttribute("class", "col");
+
+        // 실질적으로 유저들이 볼 수 있는 입력부분(세번째 입력칸)
+        const addDivClassInputGroup3 = document.createElement("div");
+        addDivClassInputGroup3.setAttribute("class", "input-group mb-3");
+
+        // label 및 input 태그 작성부분
+        const addLabel3 = document.createElement("label");
+        addLabel3.setAttribute("class", "input-group-text");
+        // 여기에서 말하는 for 어트리뷰트는 참조할 라벨 가능 요소의 id 속성 값을 의미함.
+        addLabel3.setAttribute("for", "inputGroupFile03");
+        // 라벨 안에 들어갈 텍스트 작성
+        const productPosition = document.createTextNode("보관위치");
+        addLabel3.appendChild(productPosition);
+
+        // ==========================================================================> 양성아 여기서 부터 시작해!!!!
+        const addSelect2 = document.createElement("select");
+        addSelect2.setAttribute("class", "form-select form-select-sm");
+        addSelect2.setAttribute("size", "1");
+        addSelect2.setAttribute("aria-label", ".form-select-sm example");
+        addSelect2.setAttribute("name", "storagecode");
+
+        // 위의 select 에다가 더해줄 option태그 만들기
+        const addOption1 = document.createElement("option");
+        const addOption2 = document.createElement("option");
+        const addOption3 = document.createElement("option");
+        addOption1.setAttribute("value", "1");
+        addOption1.innerText = "냉장";
+        addOption2.setAttribute("value", "2");
+        addOption2.innerText = "냉동";
+        addOption3.setAttribute("value", "3");
+        addOption3.innerText = "실온";
+
+        // input 태그 생성 및 속성 지정
+        // const addInput3 = document.createElement("input");
+        // addInput3.setAttribute("type", "text");
+        // addInput3.setAttribute("class", "form-control");
+        // addInput3.setAttribute("id", "inputGroupFile03");
+        // 첫번째 col에서 첫번째 입력칸 요소 만들기 끝
+
+        // 실질적으로 유저들이 볼 수 있는 입력부분(두번째 입력칸)
+        const addDivClassInputGroup4 = document.createElement("div");
+        addDivClassInputGroup4.setAttribute("class", "input-group mb-3");
+
+        // label 및 input 태그 작성부분
+        const addLabel4 = document.createElement("label");
+        addLabel4.setAttribute("class", "input-group-text");
+        // 여기에서 말하는 for 어트리뷰트는 참조할 라벨 가능 요소의 id 속성 값을 의미함.
+        addLabel4.setAttribute("for", "inputGroupFile04");
+        // 라벨 안에 들어갈 텍스트 작성
+        const productExpireDate = document.createTextNode("유통기한");
+        addLabel4.appendChild(productExpireDate);
+        // input 태그 생성 및 속성 지정
+        const addInput4 = document.createElement("input");
+        addInput4.setAttribute("type", "date");
+        addInput4.setAttribute("value", "xxx");
+        addInput4.setAttribute("min", "yyy");
+        addInput4.setAttribute("max", "zzz");
+        addInput4.setAttribute("class", "form-control input-large");
+        addInput4.setAttribute("name", "expiredate");
+        addInput4.setAttribute("id", "expiredate");
+        addInput4.setAttribute("placeholder", "유통기한");
+        addInput4.setAttribute("required", "");
+
+        // 첫번째 col에서 첫번째 입력칸을 만드는 과정
+        addDivClassInputGroup.appendChild(addLabel);
+        // addSelect.appendChild(addOption);
+        addDivClassInputGroup.appendChild(addSelect);
+        addDivClassCol.appendChild(addDivClassInputGroup);
+
+        // 첫번째 col에서 두번째 입력칸을 만드는 과정
+        addDivClassInputGroup2.appendChild(addLabel2);
+        addDivClassInputGroup2.appendChild(addInput2);
+        addDivClassCol.appendChild(addDivClassInputGroup2);
+
+        // 두번째 col에서 세번째 입력칸을 만드는 과정
+        addDivClassInputGroup3.appendChild(addLabel3);
+        addSelect2.appendChild(addOption1);
+        addSelect2.appendChild(addOption2);
+        addSelect2.appendChild(addOption3);
+        addDivClassInputGroup3.appendChild(addSelect2);
+        addDivClassCol2.appendChild(addDivClassInputGroup3);
+
+        // 두번째 col에서 네번째 입력칸을 만드는 과정
+        addDivClassInputGroup4.appendChild(addLabel4);
+        addDivClassInputGroup4.appendChild(addInput4);
+        addDivClassCol2.appendChild(addDivClassInputGroup4);
+
+        // form태그에 첫번째, 두번째 col append
+        newAddForm.appendChild(addDivClassCol);
+        newAddForm.appendChild(addDivClassCol2);
+
+        // <hr>로 줄 그어줄 요소 만들기
+        const addHr = document.createElement("hr");
+
+        // 여기 아래 부분에는 루트div에 하나씩 붙이는 동작.
+        rootDiv.appendChild(newAddForm);
+        rootDiv.appendChild(addHr);
       }
 
-      // 여기 밑에는 게시판 삭제 버튼
-      
+      // addIngredientBtn.addEventListener("click", addIngredientBtnHandler);
 
+      // 닫기 버튼 눌렀을 때 만들어진 요소 초기화(힘들거 같다 싶으면 그냥 페이지 리로드 시켜버려!!)
+      const $closeBtnIcon = document.getElementById("closeBtnIcon");
+      const $closeBtn = document.getElementById("closeBtn");
 
+      function closeBtnHandler() { }
 
-      // $(function () {
-      //   $(".deleteMemoBtn").on("click", function () {
-      //     deleteMemoHandler()
-      //   })
+      $closeBtn.addEventListener("click", closeBtnHandler);
+      $closeBtnIcon.addEventListener("click", closeBtnHandler);
+
+      // 재료 다중등록 삭제 버튼 로직
+      function deleteinputtable(num) {
+        let addform = document.getElementById("addForm" + num);
+        console.log(addform);
+        console.log(addform.childElementCount);
+        if (addform.childElementCount > 2) {
+          addform.removeChild(addform.lastChild);
+          addform.removeChild(addform.lastChild);
+
+        }
+      };
+
+      // 셀렉트 박스 옆에 검색을 위한 함수
+      function optionchoice(num) {
+        let keyword = document.getElementById("ki-" + num).value;
+        let brotherinput = document.getElementById("ki-" + num).nextSibling;
+        console.log(brotherinput);
+        let options = brotherinput.childNodes;
+
+        for (op of options) {
+          if (op.text.includes(keyword)) {
+            op.hidden = false;
+          } else {
+            op.hidden = true;
+          }
+        }
+      }
+
+      // selectpicker사용을 위한 구문
+      // $('.my-select').selectpicker(); // select피커 작동
+      // $('#test').chosen({
+      //   no_results_text: "검색 결과가 없습니다"
+      //   , width: "200px"
+      // });
+      // jQuery(document).ready(function () {
+      //   jQuery(".chosen").chosen();
       // })
 
-      // function deleteMemoHandler() {
-      //   let button = document.querySelector(".deleteMemoBtn")
-      //   let $button = new $button(button)
 
-      //   $.ajax({
-      //     url: "/removeArticle/' + ${memo.memocode}",
-      //     type: "POST",
-      //     contentType: false,
-      //     processData: false,
-      //     success: function (data) {
-      //       console.log("성공 :", data)
-      //     },
-      //     error: function (error) {
-      //       console.error("에러 :", error)
-      //     },
-      //     complete: function () {
-      //       closeModal()
-      //       console.log("리로드 하는 부분: 여기는 도착 했니================================>??")
-      //       $("#memo-table").load(location.href + " #memo-table")
-      //     }
-      //   })
-      // }
+
     </script>
 </body>
 

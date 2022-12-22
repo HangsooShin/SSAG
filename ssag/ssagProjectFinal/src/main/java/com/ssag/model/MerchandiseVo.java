@@ -24,6 +24,17 @@ public class MerchandiseVo {
 	private String merchandiselink;
 	
 	private String merchandiseimglink;
+	
+	private IngredientVo ingredientVo;
+
+
+	public IngredientVo getIngredientVo() {
+		return ingredientVo;
+	}
+
+	public void setIngredientVo(IngredientVo ingredientVo) {
+		this.ingredientVo = ingredientVo;
+	}
 
 	public int getMerchandisecode() {
 		return merchandisecode;

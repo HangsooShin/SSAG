@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -102,18 +101,20 @@ public class RestApiController {
 		return "redirect:/login";
 	}
 
-	@GetMapping("/usermypage")
-	public String mypage(@AuthenticationPrincipal PrincipalDetails userVo, Model model) throws Exception {
-		UserVo userVo2 = userService.findById(userVo.getUsername());
-		model.addAttribute("account", userVo2);
+	@GetMapping("/mypage")
+	public String mypage(@AuthenticationPrincipal PrincipalDetails details, Model model) throws Exception {
+		UserVo userlist = userService.findById(details.getUsername());
+		model.addAttribute("account", userlist);
 		return "mypage";
 	}
 
 	// mypage 수정요청시 업데이트 user
 	@PostMapping("/mypage")
-	public String updateUser(UserVo userVo, @AuthenticationPrincipal UserVo user) throws Exception {
-		userVo.setUsercode(user.getUsercode());
+	public String updateUser(UserVo userVo,@AuthenticationPrincipal PrincipalDetails user,Model model) throws Exception {
+		userVo.setUsercode(user.getUser().getUsercode());
+		System.out.println("update service 탄 전");
 		userService.updateUser(userVo);
+		System.out.println("update service 탄 후");
 		return "redirect:/";
 	}
 
@@ -167,11 +168,43 @@ public class RestApiController {
 	public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principal) {
 		System.out.println("Principal : " + principal);
 		System.out.println("OAuth2 : "+principal.getUsername());
+		System.out.println("OAuth2 : "+principal.getUser().getName());
 		System.out.println("OAuth2 : "+principal.getUser().getUsername());
 		// iterator 순차 출력 해보기
 		
 
 		return "유저 페이지입니다.";
 	}
+	
+	@PostMapping("/usernameCheck")
+	@ResponseBody
+	public Integer usernameCheck(@RequestParam("username") String username, Model model) {
+		model.addAttribute("username", username);
+		Integer cnt = userService.count_id(username);
+		return cnt;
+	}
+	
+//	@InitBinder("passwordForm")
+//	public void initBinder(WebDataBinder webDataBinder) {
+//		webDataBinder.addValidators(new PasswordFormValidator);
+//	}
+	
+//    @GetMapping(SETTINGS_PASSWORD_URL) // (3)
+//    public String passUpdateForm(@CurrentUser Account account, Model model) {
+//        model.addAttribute(account);
+//        model.addAttribute(new PasswordForm());
+//        return SETTINGS_PASSWORD_VIEW_NAME;
+//    }
+//
+//    @PostMapping(SETTINGS_PASSWORD_URL) // (4) 
+//    public String updatePassword(@CurrentUser Account account, @Valid PasswordForm passwordForm, Errors errors, Model model, RedirectAttributes attributes) {
+//        if (errors.hasErrors()) {
+//            model.addAttribute(account);
+//            return SETTINGS_PASSWORD_VIEW_NAME;
+//        }
+//        accountService.updatePassword(account, passwordForm.getNewPassword()); // (5)
+//        attributes.addFlashAttribute("message", "패스워드를 변경했습니다.");
+//        return "redirect:" + SETTINGS_PASSWORD_URL;
+//    }
 
 }

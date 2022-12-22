@@ -123,7 +123,6 @@
 	</insert>
 
 	<update id="changeItem" parameterType="hashmap">
-		-
 		<![CDATA[
 			update fridgebox set expiredate=#{1.expiredate}, ingredientquantityinfridgebox=#{1.ingredientquantityinfridgebox}, storagecode=#{1.storagecode} 
 			where fridgecode=#{0.fridgecode} and ingredientcode=#{0.ingredientcode} and ingredientcreateddate=#{0.ingredientcreateddate};

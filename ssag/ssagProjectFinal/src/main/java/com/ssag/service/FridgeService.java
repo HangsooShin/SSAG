@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssag.config.auth.PrincipalDetails;
 import com.ssag.dao.FridgeDao;
 import com.ssag.dao.SearchDao;
+import com.ssag.dao.UserDao;
 import com.ssag.model.CookVo;
 import com.ssag.model.FridgeBoxVo;
 import com.ssag.model.FridgeVo;
@@ -38,6 +39,8 @@ public class FridgeService{
 	@Resource
 	private SearchDao searchDao;
 	
+	@Resource
+	private UserDao userDao;
 	
 	@Autowired
 	public FridgeService(FridgeDao fridgeDao) {
@@ -83,15 +86,15 @@ public class FridgeService{
 
 	//fridgecode가 없다면
 	@Transactional
-	public FridgeVo addFridge(@AuthenticationPrincipal PrincipalDetails principal,UserVo user){
-		String fridgeCode = principal.getUser().getFridgecode();
-//		Integer userCode = userVo.getUsercode();
-		Integer userCode = principal.getUser().getUsercode();
+	public FridgeVo addFridge(@AuthenticationPrincipal PrincipalDetails principal){
+//		String fridgeCode = principal.getUser().getFridgecode();
 		String username = principal.getUser().getUsername();
-		System.out.println(username);
-//		String fridgecodeCheck = fridgeDao.userfridgeList(fridgeCode);
+		String fridgeCode = userDao.findByUsername(username).getFridgecode();
+		System.out.println("변경 후 fridgeCode" + fridgeCode);
+		Integer userCode = principal.getUser().getUsercode();
 		
-//		System.out.println("FridgeCode  유무 : " + fridgecodeCheck);
+		System.out.println(username);
+		
 		System.out.println("UserTable 의 GetCode" + userCode);
 		
 		if (fridgeCode == null) {
@@ -105,7 +108,7 @@ public class FridgeService{
 			fridgeDao.insertFridge(fridgeVo);
 			//이렇게 되면 한번에 들어가는게 아닌가 ..?
 //			userVo.setFridgecode(fridgecode2);
-			user.setFridgecode(fridgecode2);
+			principal.getUser().setFridgecode(fridgecode2);
 			
 			System.out.println("FridgeService : fridgecode주입 진입");
 //			fridgeDao.insertUserFridgeCode(fridgecode2, userVo.getUsercode());
@@ -160,6 +163,7 @@ public class FridgeService{
 		System.out.println("fridgeService : procedure2  들어옴");
 		System.out.println("fridgeService procedure2 : " + similar);
 		List<SimilarnameVo> procedureList = searchDao.recipeProcedureCall(similar);
+		System.out.println("검색결과"+procedureList);
 //		System.out.println("여기가 프로시저 리스트 서비스임 : "+procedureList);
 		return procedureList;
 	}
@@ -169,6 +173,7 @@ public class FridgeService{
 		System.out.println("fridgeService : selectRecipe  들어옴");
 		System.out.println("fridgeService selectRecipe : " + cookname);
 		List<CookVo> recipeList = searchDao.selectRecipe(cookname);
+		System.out.println("검색결과"+recipeList);
 		return recipeList;
 	}
 	
@@ -180,23 +185,6 @@ public class FridgeService{
 		return fridgeBoxList;
 		
 	}
-	
-	//냉장고 재료 리스트(ALL)
-//	@Transactional
-//	public List<String> myFridgeBox(FridgeVo fridgeVo) {
-//		System.out.println("fridgeService MyfridgeBox!!!");
-//		List<FridgeVo> fridgeInfo = fridgeDao.myfridgeBox();
-//		List<String> fridgeInfoName = new ArrayList<String>();
-//		fridgeInfoName.add(fridgeInfo.get(1).getFridgename());
-//		return fridgeInfoName;
-//
-//	}
-
-	
-	//식재료 추가
-//		public void insertbasket(IngredientbasketVo ingredientbasketVo) {
-//			fridgeDao.ingredientbasket(ingredientbasketVo);
-//		}
 
 
 }

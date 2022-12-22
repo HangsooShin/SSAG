@@ -24,7 +24,8 @@ public class PrincipalDetailsService implements UserDetailsService{
 		System.out.println("여기 타나");
 		if(user == null) {
 			System.out.println("아이디 정보 없음");
-			return null;
+//			return null;
+			 throw new UsernameNotFoundException(username);
 		}else {
 			System.out.println("로그인 진행");
 			System.out.println(user);

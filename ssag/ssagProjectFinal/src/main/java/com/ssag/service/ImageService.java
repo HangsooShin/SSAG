@@ -1,5 +1,7 @@
 package com.ssag.service;
 
+import java.io.Console;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -11,22 +13,50 @@ public class ImageService {
 	private final WebClient webClient;
 
 	public ImageService(WebClient.Builder webClientBuilder) {
-		this.webClient = webClientBuilder.baseUrl("http://127.0.0.1:8090").build();
+		
+		this.webClient = webClientBuilder.baseUrl("http://43.201.9.93:8000").build();
 	}
 	
 	// 분석
-	public ImageVo getFirstTodoTest(String imgUrl) {
-		
+	public ImageVo dlprocess(String imgUrl) {
 		return this.webClient
 				.get()
 				.uri(uriBuilder -> uriBuilder
-					.path("/noticeboard/response/")
+					.path("/testDL/deeplearningprocess/")
 					.queryParam("imgUrl", imgUrl)
 		            .build())
 				.retrieve()
 				.bodyToMono(ImageVo.class)
 				.block();
 	}
+	
+	public ImageVo rcprocess(String imgUrl) {
+		return this.webClient
+				.get()
+				.uri(uriBuilder -> uriBuilder
+					.path("/testDL/reciptprocess/")
+					.queryParam("imgUrl", imgUrl)
+		            .build())
+				.retrieve()
+				.bodyToMono(ImageVo.class)
+				.block();
+		
+	}
+	
+	public ImageVo bcprocess(String imgUrl) {
+		System.out.println("image Url");
+		return this.webClient
+				.get()
+				.uri(uriBuilder -> uriBuilder
+					.path("/testDL/barcodeprocess/")
+					.queryParam("imgUrl", imgUrl)
+		            .build())
+				.retrieve()
+				.bodyToMono(ImageVo.class)
+				.block();
+	}
+	
+	
 	
 	
 }

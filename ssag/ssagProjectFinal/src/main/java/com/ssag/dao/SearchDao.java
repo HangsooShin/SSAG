@@ -1,5 +1,6 @@
 package com.ssag.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.ssag.model.CookVo;
 import com.ssag.model.CookbasketVo;
+import com.ssag.model.IngredientVo;
+import com.ssag.model.MerchandiseVo;
 import com.ssag.model.SimilarnameVo;
 
 @Mapper
@@ -21,12 +24,22 @@ public interface SearchDao {
 	public List<CookVo> selectRecipe(String name) throws DataAccessException;
 	
 	
-	public List<SimilarnameVo> recipeSearchbyname(String similar) throws DataAccessException;
+	public List<SimilarnameVo> recipeSearchbyname(String cookname) throws DataAccessException;
 	public void getcookbasket(Integer cookquantityinbasket, Integer usercode, Integer cookcode) throws DataAccessException;
 	public void updatecookbasket(Integer cookquantityinbasket, Integer usercode, Integer cookcode) throws DataAccessException;
 	public List<CookbasketVo> findbasket(Integer usercode, Integer cookcode) throws DataAccessException;
 	
 	
 	//장바구니 
-	public List<CookbasketVo> cookbasketlist(Integer usercode) throws DataAccessException;
+	public List<CookbasketVo> cookbasketlist(Integer usercode, String fridgecode) throws DataAccessException;
+
+
+	public void updatecookbasket2(Integer cookquantityinbasket, Integer usercode,Integer cookcode)throws DataAccessException;
+	public void deletecookbasket2(Integer usercode,Integer cookcode)throws DataAccessException;
+	public List<IngredientVo> ingredientchecklist(HashMap<String,Object> data)throws DataAccessException;
+	
+	public List<MerchandiseVo> ingredientprice(HashMap<String, Object> data)throws DataAccessException;
+	
+	
+
 }

@@ -35,9 +35,7 @@
   <body>
     <!-- Start Header Area -->
     <section class="hero-whoareu-area">
-           <!-- Start Header Area -->
-           <div th:replace="layout/app-header::mainheader"></div>
-           <!-- End app-header -->
+     
       <div style="padding-top: 20%">
         <!-- 클릭하면 메인 -->
         <a href="/app"
@@ -57,12 +55,32 @@
         <div class="member">
           <!-- 2. 필드 -->
           <form method="post" action="/app/company-register">
-          <div class="field">
+          <!-- <div class="field">
             <b>아이디</b>
             <span class="placehold-text"
-              ><input type="text" name="username"
-            /></span>
-          </div>
+              ><input type="text" name="username" oninput="checkusername()"
+            />
+            <span class="fieldError"
+            th:text="${username}"></span> <span class="username_ok"
+            style="color: green; display: none;">사용 가능한 아이디입니다.</span>
+            <span class="username_already" style="color: red; display: none;">
+              이미 사용 중인 아이디입니다.</span>
+          </span>
+          </div> -->
+          <div class="field">
+						<label><span>아이디</span> <input type="text"
+							class="form-control" id="username" name="username"
+							placeholder="username"
+              onfocus="this.placeholder = ''"
+							onblur="this.placeholder = 'username'"
+							onkeyup="this.value=this.value.replace(' ','')"
+							oninput="checkusername()" required maxlength="10">
+            
+              <span
+							class="username_ok" style="color: green; display: none;">사용
+								가능한 닉네임입니다.</span> <span class="username_already"
+							style="color: red; display: none;">이미 사용 중인 닉네임입니다.</span> </label>
+					</div>
           <div class="field">
             <label
               ><span>비밀번호</span>
@@ -108,7 +126,7 @@
           </div>
           <div class="field">
             <b>이름</b>
-            <input type="text" name="name" />
+            <input type="text" name="name" required/>
           </div>
 
           <!-- 3. 필드(생년월일) -->
@@ -120,7 +138,7 @@
           <!-- 5. 이메일_전화번호 -->
           <div class="field">
             <b>이메일<small></small></b>
-            <input type="email" placeholder="선택입력" name="email" />
+            <input type="email" placeholder="선택입력" name="email" required/>
           </div>
 
           <div class="field tel-number">
@@ -181,6 +199,7 @@
     <script src="../js/wow.min.js"></script>
     <script src="../js/tiny-slider.js"></script>
     <script src="../js/glightbox.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
       //비밀번호 확인
@@ -211,5 +230,42 @@
         }
       }
     </script> 
+
+
+<script>
+// 닉네임 실시간 유효성 검사
+function checkusername() {
+  let username = document.querySelector('#username').value;
+  
+  // console.log("username : ",username)
+  
+  $.ajax({
+    url:"/usernameCheck",
+    type:'POST',
+    data:{username:username},
+
+    success: function(cnt){
+      // let obj = json.parse(cnt)
+      console.log(cnt);
+      if(cnt != 1 && username.length > 0) { // 사용 가능한 아이디
+        // console.log("성공")
+        document.querySelector(".username_ok").style.display = "inline-block";
+        document.querySelector(".username_already").style.display = "none";
+
+      } else if(cnt == 1 && username.length > 0) { // 중복된 아이디
+        document.querySelector(".username_already").style.display = "inline-block";
+        document.querySelector(".username_ok").style.display = "none";
+      } else { // id에 아무 입력없으면 중복검사 문구 안보이도록
+        document.querySelector(".username_already").style.display = "none";
+        document.querySelector(".username_ok").style.display = "none";
+      }
+    },
+    error: function(e){
+      console.log(e)
+      console.log("통신 실패")
+      //alert("에러입니다.");
+    }
+  });
+};</script>
   </body>
 </html>

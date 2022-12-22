@@ -2,13 +2,13 @@ package com.ssag.service;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.mail.HtmlEmail;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 public class UserService {
 	private final UserDao userDao;
 	private final PasswordEncoder passwordEncoder;
-	
+
 	public void addUser(UserVo userVo) {
 		userDao.insertUser(userVo);
 	}
@@ -43,11 +43,16 @@ public class UserService {
 	}
 
 	public UserVo findById(String username) {
+		System.out.println("user정보 : " + userDao.findByUsername(username));
 		return userDao.findByUsername(username);
+		
 	}
 
 	public void updateUser(UserVo userVo) {
+//		System.out.println("updateUser :" + userDao.updateUser(name, username));
 		userDao.updateUser(userVo);
+//		userDao.updateUser(userVo);
+//		return updateUser;
 	}
 
 	public void procedureCall() {
@@ -64,8 +69,13 @@ public class UserService {
 		return companyServiceList;
 	}
 
-	public List<FridgeBoardVo> memoList(String fridgecode) {
-		List<FridgeBoardVo> fridgeBoardVo = userDao.memoList(fridgecode);
+
+	public List<FridgeBoardVo> memoList(String fridgecode, Integer usercode) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("fridgecode", fridgecode);
+		data.put("usercode", usercode);
+
+		List<FridgeBoardVo> fridgeBoardVo = userDao.memoList(data);
 		return fridgeBoardVo;
 	}
 
@@ -99,22 +109,21 @@ public class UserService {
 
 	// 비밀번호 변경
 
-	public void send_mail(String password,UserVo userVo, String div) throws Exception {
+	public void send_mail(String password, UserVo userVo, String div) throws Exception {
 		// Mail Server 설정
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
 
-		String hostSMTPid = "아이디";
-		String hostSMTPpwd = "비밀번호";
-		
-		
+		String hostSMTPid = "gongahze";
+		String hostSMTPpwd = "zbxldidtjd1!";
+
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "gongahze@naver.com";
 		String fromName = "gongahze@naver.com";
 		String subject = "";
 		String msg = "";
 
-		 if (div.equals("find_pw")) {
+		if (div.equals("find_pw")) {
 			subject = "Spring Homepage 임시 비밀번호 입니다.";
 			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
 			msg += "<h3 style='color: blue;'>";
@@ -148,7 +157,7 @@ public class UserService {
 	public void find_pw(HttpServletResponse response, UserVo userVo) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		System.out.println("입력받은 아이디"+userVo.getUsername());
+		System.out.println("입력받은 아이디" + userVo.getUsername());
 		// 아이디가 없으면
 		if (userDao.findByUsername(userVo.getUsername()) == null) {
 			out.print("아이디가 없습니다.");
@@ -162,18 +171,31 @@ public class UserService {
 			// 임시 비밀번호 생성
 			String password = "";
 
-			 for (int i = 0; i < 12; i++) {
-				 password += (char) ((Math.random() * 26) + 97);
-				}
-			System.out.println("임시 발급 비빌번호 : "+password);
+			for (int i = 0; i < 12; i++) {
+				password += (char) ((Math.random() * 26) + 97);
+			}
+			System.out.println("임시 발급 비빌번호 : " + password);
 			userVo.setPassword(passwordEncoder.encode(password));
 			// 비밀번호 변경
 //			userVo.update_pw(userVo);
 			userDao.update_pw(userVo);
 			// 비밀번호 변경 메일 발송
-			send_mail(password,userVo, "find_pw");
+			send_mail(password, userVo, "find_pw");
 			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
 			out.close();
 		}
 	}
+
+	public Integer count_id(String username) {
+		System.out.println(username);
+		Integer usernamePre = userDao.count_id(username);
+		System.out.println(usernamePre);
+		return usernamePre;
+	}
+	
+//	//비밀번호 변경
+//	  public void updatePassword(Account account, String newPassword) {
+//	        account.updatePassword(passwordEncoder.encode(newPassword));
+//	        accountRepository.save(account);
+//	    }
 }

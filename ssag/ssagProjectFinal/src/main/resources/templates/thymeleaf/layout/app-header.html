@@ -33,6 +33,16 @@
                 ><i class="lni lni-enter"></i>Register</a
               >
             </li>
+
+            <li sec:authorize="isAuthenticated()">
+              <a
+                th:href="@{#}"
+                th:text="|${userInfo.name}님 냉장고|"
+                style="color: white"
+                ><i class="lni lni-enter"></i>
+                <h6></h6
+              ></a>
+            </li>
             <!-- <li sec:authorize="isAuthenticated()">
                      
                         <sec:authentication property="principal.username" th:src="${username}" />

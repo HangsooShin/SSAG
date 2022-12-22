@@ -11,8 +11,8 @@ public class CookbasketVo {
 	private Integer ingredientcode;
 	private Integer usercode;
 	
-	private CookVo cookVo22;
-	private IngredientVo ingredientVo22;
+	private CookVo cookVo;
+	private IngredientVo ingredientVo;
 
 	
 	

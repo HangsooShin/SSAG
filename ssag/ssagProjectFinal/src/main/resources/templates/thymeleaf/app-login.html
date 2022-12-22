@@ -83,6 +83,10 @@
               height="60px"
             />
           </div>
+          <span>
+            <div th:if="${param.error}"></div>
+            <p id="valid" style="margin-top: 5%;"><div th:text="${exception}" style="color: rgb(249, 67, 67);"></div></p>
+          </span>
           <div style="padding: 10% 0% 0% 0%">
             <input
               type="image"
