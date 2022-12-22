@@ -82,35 +82,37 @@
                 </div>
                 <!-- navbar collapse -->
                 <div class="login-button">
-                  <!-- <ul>
-                    <li>
-                      <a href="/login"><i class="lni lni-enter"></i> 로그인</a>
+                  <ul>
+                    <li sec:authorize="isAuthenticated()">
+                      <a
+                        th:href="@{#}"
+                        th:text="|${userInfo.name}님 냉장고|"
+                        style="color: black"
+                        ><i class="lni lni-enter"></i>
+                        <h6></h6
+                      ></a>
                     </li>
-                    <li>
-                      <a href="/whoareu"
-                        ><i class="lni lni-user"></i> 회원가입</a
+                    <li sec:authorize="isAuthenticated()">
+                      <a th:href="@{/mypage}"
+                        ><i class="lni lni-enter"></i>My page</a
                       >
                     </li>
-                  </ul> -->
-                  <ul>
+
                     <li sec:authorize="isAuthenticated()">
                       <a th:href="@{/logout}"
                         ><i class="lni lni-enter"></i>로그아웃</a
                       >
                     </li>
-                    <li>
-                      <a href="/">HOME</a>
+                    <li sec:authorize="!isAuthenticated()">
+                      <a th:href="@{/whoareu}"
+                        ><i class="lni lni-enter"></i>회원가입</a
+                      >
                     </li>
+
                     <li sec:authorize="!isAuthenticated()">
                       <a th:href="@{/login}"
                         ><i class="lni lni-enter"></i>로그인</a
                       >
-                    </li>
-                    <li sec:authorize="isAuthenticated()">
-                     
-                        <sec:authentication property="principal.username" th:src="${username}" />
-                        <div id="username">안녕하세요.<h4 th:value=" ${username}"></h4></div>
-                    </sec:authorize>
                     </li>
                   </ul>
                 </div>

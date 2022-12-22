@@ -39,6 +39,7 @@
         <!-- 클릭하면 메인 끝 -->
 		<form class="form-horizontal" th:action="@{/app/mypage}" method="post">
 			<form th:object="${account}" method="post" action="/app/mypage">
+				<input type="hidden" name="_method" value="put"/>
 			<label>
 			  <p class="label-txt">아이디</p>
 			  <input type="text" class="input" th:value="${account.username}" name="username">

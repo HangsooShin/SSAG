@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ssag.config.auth.PrincipalDetails;
 import com.ssag.model.ImageVo;
-import com.ssag.model.UserVo;
 import com.ssag.service.ImageService;
 import com.ssag.service.UserService;
 
@@ -32,6 +31,7 @@ public class ImageController {
 	public String imageInset() {
 		return "imageUpload";
 	}
+
 
 	// 분석하기 - HashMap 사용 (JSON 리턴받기), 이미지 저장
 	@PostMapping(value = "/upload")
@@ -65,6 +65,7 @@ public class ImageController {
 			// destinationFile 경로로 폴더 생성
 			destinationFile.getParentFile().mkdirs();
 			file.transferTo(destinationFile);
+//			file.transferTo(destinationFile);
 
 			String imgUrl = fileUrl + destinationFileName; // 이미지 full_path
 			System.out.println(imgUrl);

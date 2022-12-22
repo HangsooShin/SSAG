@@ -26,25 +26,6 @@ public class MultipleLoginSecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
-	
-
-//	@Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return new AuthenticationManager() {
-//			
-//			@Override
-//			public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-//				// TODO Auto-generated method stub
-//				return authentication;
-//			}
-//		};
-//    }
-
-
-//	private final AuthenticationFailureHandler customFailureHandler;
-//	private final PrincipalOauth2UserService principalOauth2UserService;
-
-
 
 
 	@Configuration
@@ -61,10 +42,11 @@ public class MultipleLoginSecurityConfig {
 
 		@Bean
 		public SecurityFilterChain filterChainApp1(HttpSecurity http) throws Exception {
+			http.csrf().disable();
 			http.antMatcher("/app/**").authorizeRequests()
 					.antMatchers("/app/whoareu", "/app/login", "/app", "/app/company-register", "/app/user-register",
 							"/app/", "/app/find_id", "/app/find_pw", "/usernameCheck", "/app-header","/uploadimage","/upload",
-							"/app/testmerchandiseresult", "/app/testmerch")// 인증없이 접근가능한 페이지
+							"/app/testmerchandiseresult", "/app/testmerch","/app/find_pw","/app/find_id","/app/pw_change")// 인증없이 접근가능한 페이지
 					.permitAll()
 					.antMatchers("/css/**", "/js/**", "/images/**", "/scss/**", "/fonts/**", "/mail/**", "/favicon.ico")
 					.permitAll() // 이부분
@@ -73,10 +55,21 @@ public class MultipleLoginSecurityConfig {
 					.hasRole("USER").anyRequest().authenticated()
 					// log in
 					.and().formLogin().defaultSuccessUrl("/app").loginPage("/app/login")
-					.loginProcessingUrl("/app/login_proc").failureHandler(customFailureHandler) // 로그인 실패 핸들러
+					.loginProcessingUrl("/app/login_proc")
+					
+					.failureHandler(customFailureHandler) // 로그인 실패 핸들러
 //	                .failureUrl("/loginAdmin?error=loginError")
-					.and().logout().logoutUrl("/app/logout").invalidateHttpSession(true)
-					.logoutSuccessUrl("/app/login?logout").deleteCookies("JSESSIONID").permitAll().and().csrf().disable();
+					.and().logout().logoutUrl("/app/logout")
+					.invalidateHttpSession(true)
+					.logoutSuccessUrl("/app/login?logout").deleteCookies("JSESSIONID").permitAll()
+					.and()
+					.oauth2Login()
+					.loginPage("/app/login")
+					.userInfoEndpoint()
+					.userService(principalOauth2UserService);
+					
+					
+					
 			return http.build();
 		}
 
@@ -88,9 +81,10 @@ public class MultipleLoginSecurityConfig {
 
 		@Bean
 		public SecurityFilterChain filterChainApp2(HttpSecurity http) throws Exception {
-			http.antMatcher("/*").authorizeRequests()
-					.antMatchers("/login", "/whoareu", "/user-register", "/company-register", "/searchresult", "/",
-							"/usernameCheck")
+			http.csrf().disable();
+			((HttpSecurity)http.antMatcher("/*").authorizeRequests()
+					.antMatchers("/login", "/whoareu", "/user-register", "/company-register", "/searchresult", "/","/addArticle",
+							"/usernameCheck","/removeArticle","/find_pw","/find_id","/pw_change","/oauth2/**")
 					.permitAll()
 					.antMatchers("/css/**", "/js/**", "/images/**", "/scss/**", "/fonts/**", "/mail/**", "/favicon.ico")
 					.permitAll() // 이부분
@@ -99,8 +93,14 @@ public class MultipleLoginSecurityConfig {
 					// log in
 					.and().formLogin().defaultSuccessUrl("/").loginPage("/login").loginProcessingUrl("/login_proc")
 //	                .failureUrl("/loginAdmin?error=loginError")
-					.and().logout().logoutUrl("/logout").invalidateHttpSession(true).logoutSuccessUrl("/login?logout")
-					.permitAll().and().csrf().disable();
+					.and())
+					.oauth2Login()
+					.loginPage("/login")
+					.userInfoEndpoint()
+					.userService(principalOauth2UserService);
+//					.and().logout().logoutUrl("/logout").invalidateHttpSession(true).logoutSuccessUrl("/login?logout")
+//					.permitAll();
+				
 			return http.build();
 		}
 
@@ -108,5 +108,6 @@ public class MultipleLoginSecurityConfig {
 		private PrincipalOauth2UserService principalOauth2UserService;
 
 	}
+	
 
 }

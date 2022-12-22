@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Data;
+
 @Component
+@Data
 public class CookbasketListVo {
 	private Integer cookquantityinbasket;
 	private CookVo cookVo;

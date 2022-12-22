@@ -38,20 +38,28 @@ public class RestApiController {
 	private final PasswordEncoder passwordEncoder;
 
 	@GetMapping("/")
-	public String home(@AuthenticationPrincipal PrincipalDetails details) {
-//		String username = details.getUsername();
+	public String home(@AuthenticationPrincipal PrincipalDetails details, Model model) {
+		if (details != null) {
+			model.addAttribute("userInfo", details.getUser());
+		}
 		return "index";
 	}
 
 	// 일반회원가입 기업회원가입 갈라지는 경로
 	@GetMapping("/whoareu")
-	public String whoareu() {
+	public String whoareu(@AuthenticationPrincipal PrincipalDetails details, Model model) {
+		if (details != null) {
+			model.addAttribute("userInfo", details.getUser());
+		}
 		return "whoareu";
 	}
 
 	// 기업회원 회원가입
 	@GetMapping("/company-register")
-	public String createCompany(Model model) {
+	public String createCompany(Model model,@AuthenticationPrincipal PrincipalDetails details) {
+		if (details != null) {
+			model.addAttribute("userInfo", details.getUser());
+		}
 		List<CompanyVo> companyList = userService.companyList();
 		model.addAttribute("companyList", companyList);
 		return "company-register";
@@ -59,7 +67,10 @@ public class RestApiController {
 
 	// 일반회원 회원가입
 	@GetMapping("/user-register")
-	public String createUser() {
+	public String createUser(@AuthenticationPrincipal PrincipalDetails details, Model model) {
+		if (details != null) {
+			model.addAttribute("userInfo", details.getUser());
+		}
 		return "user-register";
 	}
 
@@ -85,7 +96,10 @@ public class RestApiController {
 	}
 
 	@GetMapping("/login")
-	public String login() {
+	public String login(@AuthenticationPrincipal PrincipalDetails details, Model model) {
+		if (details != null) {
+			model.addAttribute("userInfo", details.getUser());
+		}
 		return "login";
 	}
 
@@ -103,6 +117,7 @@ public class RestApiController {
 
 	@GetMapping("/mypage")
 	public String mypage(@AuthenticationPrincipal PrincipalDetails details, Model model) throws Exception {
+		
 		UserVo userlist = userService.findById(details.getUsername());
 		model.addAttribute("account", userlist);
 		return "mypage";
@@ -110,7 +125,8 @@ public class RestApiController {
 
 	// mypage 수정요청시 업데이트 user
 	@PostMapping("/mypage")
-	public String updateUser(UserVo userVo,@AuthenticationPrincipal PrincipalDetails user,Model model) throws Exception {
+	public String updateUser(UserVo userVo, @AuthenticationPrincipal PrincipalDetails user, Model model)
+			throws Exception {
 		userVo.setUsercode(user.getUser().getUsercode());
 		System.out.println("update service 탄 전");
 		userService.updateUser(userVo);
@@ -120,8 +136,11 @@ public class RestApiController {
 
 	// 아이디 찾기 폼
 	@GetMapping(value = "/find_id")
-	public String find_id_form() throws Exception {
-		return "find_id_form";
+	public String find_id_form(@AuthenticationPrincipal PrincipalDetails details, Model model) throws Exception {
+		if(details != null) {
+			model.addAttribute("userInfo", details.getUser());	
+		}
+		return "web_find_id_form";
 	}
 
 	@PostMapping(value = "/find_id")
@@ -129,13 +148,16 @@ public class RestApiController {
 			throws Exception {
 		System.out.println("find_id :" + userService.find_id(response, email));
 		md.addAttribute("id", userService.find_id(response, email));
-		return "find_id";
+		return "web_find_id";
 	}
 
 	// 비밀번호 찾기 폼
-	@GetMapping(value = "/find_pw_form")
-	public String find_pw_form() throws Exception {
-		return "find_pw_form";
+	@GetMapping(value = "/find_pw")
+	public String find_pw_form(@AuthenticationPrincipal PrincipalDetails details, Model model) throws Exception {
+		if(details != null) {
+			model.addAttribute("userInfo", details.getUser());	
+		}
+		return "web_find_pw_form";
 	}
 
 	// 비밀번호 찾기
@@ -145,13 +167,16 @@ public class RestApiController {
 		userService.find_pw(response, userVo);
 	}
 
-	//비밀번호 변경
-	@GetMapping("/pw-change")
-	public String pwChange() {
+	// 비밀번호 변경
+	@GetMapping("/pw_change")
+	public String pwChange(@AuthenticationPrincipal PrincipalDetails details, Model model) {
+		if(details != null) {
+			model.addAttribute("userInfo", details.getUser());	
+		}
 		return "pw-change";
 	}
 
-	@PostMapping("/pw-change")
+	@PostMapping("/pw_change")
 	public String checkPw(@RequestParam("password") String password, HttpSession session,
 			@AuthenticationPrincipal PrincipalDetails details) {
 		log.info("비밀번호 확인 요청 발생");
@@ -163,19 +188,18 @@ public class RestApiController {
 		}
 		return result;
 	}
-	
+
 	@GetMapping("/user")
 	public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principal) {
 		System.out.println("Principal : " + principal);
-		System.out.println("OAuth2 : "+principal.getUsername());
-		System.out.println("OAuth2 : "+principal.getUser().getName());
-		System.out.println("OAuth2 : "+principal.getUser().getUsername());
+		System.out.println("OAuth2 : " + principal.getUsername());
+		System.out.println("OAuth2 : " + principal.getUser().getName());
+		System.out.println("OAuth2 : " + principal.getUser().getUsername());
 		// iterator 순차 출력 해보기
-		
 
 		return "유저 페이지입니다.";
 	}
-	
+
 	@PostMapping("/usernameCheck")
 	@ResponseBody
 	public Integer usernameCheck(@RequestParam("username") String username, Model model) {
@@ -183,28 +207,5 @@ public class RestApiController {
 		Integer cnt = userService.count_id(username);
 		return cnt;
 	}
-	
-//	@InitBinder("passwordForm")
-//	public void initBinder(WebDataBinder webDataBinder) {
-//		webDataBinder.addValidators(new PasswordFormValidator);
-//	}
-	
-//    @GetMapping(SETTINGS_PASSWORD_URL) // (3)
-//    public String passUpdateForm(@CurrentUser Account account, Model model) {
-//        model.addAttribute(account);
-//        model.addAttribute(new PasswordForm());
-//        return SETTINGS_PASSWORD_VIEW_NAME;
-//    }
-//
-//    @PostMapping(SETTINGS_PASSWORD_URL) // (4) 
-//    public String updatePassword(@CurrentUser Account account, @Valid PasswordForm passwordForm, Errors errors, Model model, RedirectAttributes attributes) {
-//        if (errors.hasErrors()) {
-//            model.addAttribute(account);
-//            return SETTINGS_PASSWORD_VIEW_NAME;
-//        }
-//        accountService.updatePassword(account, passwordForm.getNewPassword()); // (5)
-//        attributes.addFlashAttribute("message", "패스워드를 변경했습니다.");
-//        return "redirect:" + SETTINGS_PASSWORD_URL;
-//    }
 
 }

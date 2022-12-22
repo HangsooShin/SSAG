@@ -22,11 +22,9 @@ public class IngredientService {
 	@Autowired
 	private SearchDao searchDao;
 
-	@Autowired
-	private CookIngredientListVo cookIngredientListVo;
 
 	public List<CookIngredientListVo> joinDic(String similar) {
-		// 최종 틀
+		
 		List<CookIngredientListVo> list = new ArrayList<CookIngredientListVo>();
 
 		// 가져오는 데이터
@@ -154,7 +152,7 @@ public class IngredientService {
 				if (cookbasketdata.get(i).getCookVo().getCookname().equals(key)) {
 					ingrelist.add(cookbasketdata.get(i).getIngredientVo());
 
-					System.out.println(ingrelist);
+					System.out.println("1.if"+ingrelist);
 				} else {
 					cookbasketListVo.setIngredientVoList(ingrelist);
 					list.add(cookbasketListVo);
@@ -168,19 +166,19 @@ public class IngredientService {
 					ingrelist = new ArrayList<IngredientVo>();
 					ingrelist.add(cookbasketdata.get(i).getIngredientVo());
 
-					System.out.println(ingrelist);
+					System.out.println("2.if"+ingrelist);
 				}
-				// 다하고나면 나머지 채워주기
-				cookbasketListVo.setIngredientVoList(ingrelist);
-				list.add(cookbasketListVo);
-
+			
 			}
+			// 다하고나면 나머지 채워주기
+			cookbasketListVo.setIngredientVoList(ingrelist);
+			list.add(cookbasketListVo);
 
 		} else {
 			System.out.println("장바구니 데이터 없음");
 		}
 
-		System.out.println(list);
+		System.out.println("3.list"+list);
 		return list;
 	}
 

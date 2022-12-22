@@ -129,23 +129,6 @@
         <div>
           <div>
             <div>
-              <!-- Start Search Form -->
-              <!-- <form th:action="@{/testmerchandiseresult}" method="post" id="search-form">
-              <div class="search-back"> -->
-              <!-- <div id="search-input" class="search-input"> -->
-              <!-- <label for="keyword"> -->
-              <!-- <i class="lni lni-search-alt theme-color"></i> -->
-              <!-- </label> -->
-              <!-- <input type="text" class="search-input"  name="similar" id="similar" placeholder="재료 이름으로 상품 검색 ex) '사과'">
-                <div class="search-btn">
-                  <button type="submit" id="search-btn" class="btn btn-submit"><i class="lni lni-search-alt"
-                      onclick=""></i></button>
-                </div>
-              </div> -->
-              <!-- </div> -->
-              <!-- </form> -->
-              <!-- End Search Form -->
-
               <!-- Start fridge nav tab -->
               <nav class="loc-c">
                 <div
@@ -218,6 +201,7 @@
                         th:id="|modal-form-${n.index}|"
                         method="post"
                       >
+                        <input type="hidden" name="_method" value="delete" />
                         <div
                           style="
                             display: flex;

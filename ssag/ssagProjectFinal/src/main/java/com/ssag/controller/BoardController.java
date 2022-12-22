@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssag.config.auth.PrincipalDetails;
@@ -38,56 +39,57 @@ public class BoardController {
 		return "newArticle";
 	}
 
-	//글 작성에서 등록하기 버튼 누르ㅏ면
-		@PostMapping(value="/addArticle")
-		public String addArticle(Model model,FridgeBoardVo fridgeBoardVo, @AuthenticationPrincipal PrincipalDetails daDetails) {
-			System.out.println("여기는 AddArticle");
-//			fridgeBoardVo.setCreateddate(LocalTime.now());
-			fridgeBoardVo.setFridgecode(daDetails.getUser().getFridgecode());
-			fridgeBoardVo.setWriter(daDetails.getUser().getUsercode());
-			System.out.println(fridgeBoardVo.getMemotext());
-			userService.addMemo(fridgeBoardVo);
-			
-			return "redirect:myFridge";
-		}
-		
-		@PostMapping(value="/removeArticle/{memocode}")
-		public String removeArticle(@PathVariable("memocode") int memocode) {
-			System.out.println("memocode !! : "+memocode);
-//			System.out.println(memocode.TYPE);
-			userService.deleteMemo(memocode);
-//			boardService.removeArticle(Integer.parseInt(articleNo));
-			return "redirect:/";
-			
-		}
-		
-		//글 목록 보여주는 곳
-		@GetMapping("/appmemo") 
-		public String getMemo(Model model, @AuthenticationPrincipal PrincipalDetails daDetails) {
-			System.out.println("=============== 앱 메모페이지 ===============");
-			List<FridgeBoardVo> memoList = userService.memoList(daDetails.getUser().getFridgecode(), daDetails.getUser().getUsercode());
-			model.addAttribute("memoList", memoList);
-			return "/appmemo";
-		}
-		
-		@PostMapping("/appaddmemo")
-		@ResponseBody
-		public void appaddmemo(Model model,String memotext, @AuthenticationPrincipal PrincipalDetails daDetails) {
-			System.out.println("=============== 앱 메모 추가 ===============");
-			
-			FridgeBoardVo fridgeBoardVo = new FridgeBoardVo();
-			fridgeBoardVo.setFridgecode(daDetails.getUser().getFridgecode());
-			fridgeBoardVo.setWriter(daDetails.getUser().getUsercode());
-			fridgeBoardVo.setMemotext(memotext);
-			
-			userService.addMemo(fridgeBoardVo);
-		}
-		
-		@PostMapping("/appdeletememo")
-		@ResponseBody
-		public void appdeletememo(Model model,Integer memocode, @AuthenticationPrincipal UserVo user) {
-			System.out.println("=============== 앱 메모 삭제 ===============");
-			userService.deleteMemo(memocode);
-		}
+	// 글 작성에서 등록하기 버튼 누르ㅏ면
+	@PostMapping(value = "/addArticle")
+	@ResponseBody
+	public List<FridgeBoardVo>  addArticle(Model model, FridgeBoardVo fridgeBoardVo,
+			@AuthenticationPrincipal PrincipalDetails details) {
+		logger.info("메모 등록");
+		fridgeBoardVo.setFridgecode(details.getUser().getFridgecode());
+		fridgeBoardVo.setWriter(details.getUser().getUsercode());
+		System.out.println(fridgeBoardVo.getMemotext());
+		userService.addMemo(fridgeBoardVo);
+		List<FridgeBoardVo> memoList = userService.memoList(details.getUser().getFridgecode(), details.getUser().getUsercode());
+		return memoList;
+	}
+
+	@PostMapping(value = "/removeArticle")
+	@ResponseBody
+	public List<FridgeBoardVo>  removeArticle(@RequestParam("memocode") int memocode,@AuthenticationPrincipal PrincipalDetails details) {
+		System.out.println("memocode !! : " + memocode);
+		userService.deleteMemo(memocode);
+		List<FridgeBoardVo> memoList = userService.memoList(details.getUser().getFridgecode(), details.getUser().getUsercode());
+		return memoList;
+	}
+
+	// 글 목록 보여주는 곳
+	@GetMapping("/appmemo")
+	public String getMemo(Model model, @AuthenticationPrincipal PrincipalDetails daDetails) {
+		System.out.println("=============== 앱 메모페이지 ===============");
+		List<FridgeBoardVo> memoList = userService.memoList(daDetails.getUser().getFridgecode(),
+				daDetails.getUser().getUsercode());
+		model.addAttribute("memoList", memoList);
+		return "/appmemo";
+	}
+
+	@PostMapping("/appaddmemo")
+	@ResponseBody
+	public void appaddmemo(Model model, String memotext, @AuthenticationPrincipal PrincipalDetails daDetails) {
+		System.out.println("=============== 앱 메모 추가 ===============");
+
+		FridgeBoardVo fridgeBoardVo = new FridgeBoardVo();
+		fridgeBoardVo.setFridgecode(daDetails.getUser().getFridgecode());
+		fridgeBoardVo.setWriter(daDetails.getUser().getUsercode());
+		fridgeBoardVo.setMemotext(memotext);
+
+		userService.addMemo(fridgeBoardVo);
+	}
+
+	@PostMapping("/appdeletememo")
+	@ResponseBody
+	public void appdeletememo(Model model, Integer memocode, @AuthenticationPrincipal UserVo user) {
+		System.out.println("=============== 앱 메모 삭제 ===============");
+		userService.deleteMemo(memocode);
+	}
 
 }

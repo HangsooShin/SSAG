@@ -79,14 +79,14 @@ public class FridgeController {
 
 	// 메인 냉장고 페이지
 	@GetMapping("/myFridge")
-	public String addFridge(@AuthenticationPrincipal PrincipalDetails principal, Model model,
+	public String addFridge(@AuthenticationPrincipal PrincipalDetails details, Model model,
 			FridgeBoardVo fridgeBoardVo) throws Exception {
 		logger.info("Fridge Contrller MyFridgeBox 진입!!!");
-
+		model.addAttribute("userInfo", details.getUser());
 		// *********************************************** 게시판
 
-		String fridgecode = principal.getUser().getFridgecode();
-		memoList = userService.memoList(fridgecode, principal.getUser().getUsercode());
+		String fridgecode = details.getUser().getFridgecode();
+		memoList = userService.memoList(fridgecode, details.getUser().getUsercode());
 		System.out.println("MemoList!!! : " + memoList);
 		model.addAttribute("memoList", memoList);
 
@@ -95,24 +95,19 @@ public class FridgeController {
 		model.addAttribute("ingredientList3", ingredientList3);
 
 		// *********************************************** 냉장고 재료보여줌
-		String userFridgeCode = userService.findById(principal.getUser().getUsername()).getFridgecode();
+		String userFridgeCode = userService.findById(details.getUser().getUsername()).getFridgecode();
 		System.out.println("과연 변경 후 fridgecode 인가" + userFridgeCode);
 		fridgeBoxList = fridgeService.selectMyFridge(userFridgeCode);
 		model.addAttribute("fridgeBoxList", fridgeBoxList);
 		return "myfridge";
 	}
 
-//	@PostMapping("/updateFridge")
-//	public String updateFridgeBox(Authentication authentication, Model model, FridgeBoxVo fridgeBoxVo) {
-//		fridgeBoxVo.setIngredientcode(261);
-//		fridgeService.createFridgeBox(fridgeBoxVo);
-//		return "fridgeBox2";
-//	}
-
 	// main 감자 검색하면 감자 상품정보 나옴
 	@GetMapping("/searchresult")
-	public String searchresultGet(SimilarnameVo similarnameVo, Model model, @RequestParam("similar") String similar) {
-
+	public String searchresultGet(SimilarnameVo similarnameVo, Model model, @RequestParam("similar") String similar,@AuthenticationPrincipal PrincipalDetails details) {
+		if(details != null) {
+			model.addAttribute("userInfo", details.getUser());	
+		}
 		fridgeService.getKeyword(similarnameVo.getSimilar());
 		similarnameList = fridgeService.getKeyword(similar);
 		model.addAttribute("cardlist", similarnameList);
@@ -158,7 +153,9 @@ public class FridgeController {
 	// 여기 아래에서 부터는 웹 장바구니
 	@GetMapping("/webbasket")
 	public String webBasket(Model model, @AuthenticationPrincipal PrincipalDetails details) {
-
+		if(details != null) {
+			model.addAttribute("userInfo", details.getUser());	
+		}
 		List<IngredientVo> ingredientchecklist = ingredientService.ingredientchecklist(details.getUser().getUsercode(),
 				details.getUser().getFridgecode());
 		List<CookbasketListVo> cookbasket = ingredientService.cookbasket(details.getUser().getUsercode(), details.getUser().getFridgecode());
@@ -174,8 +171,10 @@ public class FridgeController {
 
 	// 여기 아래에서 부터는 price 페이지
 	@GetMapping("/price")
-	// @ResponseBody
 	public String ingredientmerchandise(Model model, @AuthenticationPrincipal PrincipalDetails details) {
+		if(details != null) {
+			model.addAttribute("userInfo", details.getUser());	
+		}
 		List<MerchandiseVo> ingredientprice = ingredientService.ingredientprice(details.getUser().getUsercode(),
 				details.getUser().getFridgecode());
 		model.addAttribute("ingredientprice", ingredientprice);
@@ -253,19 +252,31 @@ public class FridgeController {
 	  }
 	  
 	  @PostMapping("/deletecookbasket")
-	  public String cookbasketVo3(Integer cookcode, @AuthenticationPrincipal UserVo user) {
+	  public String cookbasketVo3(Integer cookcode, @AuthenticationPrincipal PrincipalDetails details) {
 	    System.out.println("=============== 장바구니 요리 삭제 ===============");
-	    System.out.println(cookcode + " " + user.getUsercode());
-	    ingredientService.deletecookbasket(user.getUsercode(), cookcode);
+	    System.out.println(cookcode + " " + details.getUser().getUsercode());
+	    ingredientService.deletecookbasket(details.getUser().getUsercode(), cookcode);
 	    System.out.println("끝났는지 확인");
 	    return "redirect:/basket";
+	  }
+	  
+	  @PostMapping("/updatecookbasket")
+	  @ResponseBody
+	  public void cookbasketVo2(Integer cookcode, Integer cookquantityinbasket, @AuthenticationPrincipal PrincipalDetails details) {
+	    System.out.println("=============== 장바구니 요리 수량 변경 ===============");
+	    System.out.println(cookcode + " " + cookquantityinbasket + " " + details.getUser().getUsercode());
+	    ingredientService.updatecookbasket(cookquantityinbasket, details.getUser().getUsercode(), cookcode);
+	    System.out.println("끝났는지 확인");
 	  }
 
 
 	  @GetMapping("/checklist")
-	  public String checklist(Model model, @AuthenticationPrincipal UserVo user) {
-	    Integer usercode = user.getUsercode();
-	    String fridgecode = user.getFridgecode();
+	  public String checklist(Model model, @AuthenticationPrincipal PrincipalDetails details) {
+			if(details != null) {
+				model.addAttribute("userInfo", details.getUser());	
+			}
+	    Integer usercode = details.getUser().getUsercode();
+	    String fridgecode = details.getUser().getFridgecode();
 	    List<IngredientVo> ingredientchecklist = ingredientService.ingredientchecklist(usercode, fridgecode);
 	    model.addAttribute("ingredientlist", ingredientchecklist);
 	    return "/checklist";
