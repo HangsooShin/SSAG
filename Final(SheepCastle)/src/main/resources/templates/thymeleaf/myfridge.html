@@ -295,8 +295,8 @@
                                               </div>
                                               <!-- 이미지 업로드 모달 끝 -->
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                  data-bs-dismiss="modal">닫기</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  onclick="location.href='myFridge'">닫기</button>
                                               </div>
                                             </div>
                                           </div>
@@ -329,11 +329,13 @@
                                                     <form method="post" enctype="multipart/form-data">
                                                       <div class="button">
                                                         <label for="chooseFile">
-                                                          👉 이미지 선택 👈
+                                                          이미지 선택
+                                                          <!-- 👉 이미지 선택 👈 -->
                                                         </label>
                                                       </div>
                                                       <input type="file" id="chooseFile" name="chooseFile"
-                                                        accept="image/*" onchange="loadFile(this)">
+                                                        accept="image/*" onchange="uploadImage(this, 'rc')">
+
                                                     </form>
 
                                                     <div class="fileContainer">
@@ -341,9 +343,10 @@
                                                         <p>파일 이름: </p>
                                                         <p id="fileName"></p>
                                                       </div>
-                                                      <div class="buttonContainer">
+                                                      <!-- <button class="button btn" onclick="uploadImage(this)">제출</button> -->
+                                                      <!-- <div class="buttonContainer">
                                                         <div class="submitButton" id="submitButton">SUBMIT</div>
-                                                      </div>
+                                                      </div> -->
                                                     </div>
                                                   </div>
 
@@ -352,8 +355,8 @@
                                               </div>
                                               <!-- 이미지 업로드 모달 끝 -->
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                  data-bs-dismiss="modal">닫기</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  onclick="location.href='myFridge'">닫기</button>
                                               </div>
                                             </div>
                                           </div>
@@ -388,11 +391,13 @@
                                                     <form method="post" enctype="multipart/form-data">
                                                       <div class="button">
                                                         <label for="chooseFile">
-                                                          👉 이미지 선택 👈
+                                                          이미지 선택
+                                                          <!-- 👉 이미지 선택 👈 -->
                                                         </label>
                                                       </div>
                                                       <input type="file" id="chooseFile" name="chooseFile"
-                                                        accept="image/*" onchange="loadFile(this)">
+                                                        accept="image/*" onchange="uploadImage(this, 'bc')">
+
                                                     </form>
 
                                                     <div class="fileContainer">
@@ -400,9 +405,10 @@
                                                         <p>파일 이름: </p>
                                                         <p id="fileName"></p>
                                                       </div>
-                                                      <div class="buttonContainer">
+                                                      <!-- <button class="button btn" onclick="uploadImage(this)">제출</button> -->
+                                                      <!-- <div class="buttonContainer">
                                                         <div class="submitButton" id="submitButton">SUBMIT</div>
-                                                      </div>
+                                                      </div> -->
                                                     </div>
                                                   </div>
 
@@ -411,8 +417,8 @@
                                               </div>
                                               <!-- 이미지 업로드 모달 끝 -->
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                  data-bs-dismiss="modal">닫기</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  onclick="location.href='myFridge'">닫기</button>
                                               </div>
                                             </div>
                                           </div>
@@ -498,7 +504,7 @@
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                                  id="closeBtn">닫기</button>
+                                                  id="closeBtn" onclick="location.href='myFridge'">닫기</button>
                                                 <button type="button" class="btn btn-secondary" id="addIngredientBtn"
                                                   onclick="addIngredientBtnHandler(1)">재료
                                                   추가</button>
@@ -680,11 +686,13 @@
                                                     <form method="post" enctype="multipart/form-data">
                                                       <div class="button">
                                                         <label for="chooseFile">
-                                                          👉 이미지 선택 👈
+                                                          이미지 선택
+                                                          <!-- 👉 이미지 선택 👈 -->
                                                         </label>
                                                       </div>
                                                       <input type="file" id="chooseFile" name="chooseFile"
-                                                        accept="image/*" onchange="loadFile(this)">
+                                                        accept="image/*" onchange="uploadImage(this, 'dl')">
+
                                                     </form>
 
                                                     <div class="fileContainer">
@@ -692,9 +700,10 @@
                                                         <p>파일 이름: </p>
                                                         <p id="fileName"></p>
                                                       </div>
-                                                      <div class="buttonContainer">
+                                                      <!-- <button class="button btn" onclick="uploadImage(this)">제출</button> -->
+                                                      <!-- <div class="buttonContainer">
                                                         <div class="submitButton" id="submitButton">SUBMIT</div>
-                                                      </div>
+                                                      </div> -->
                                                     </div>
                                                   </div>
 
@@ -703,8 +712,8 @@
                                               </div>
                                               <!-- 이미지 업로드 모달 끝 -->
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                  data-bs-dismiss="modal">닫기</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  onclick="location.href='myFrdige'">닫기</button>
                                               </div>
                                             </div>
                                           </div>
@@ -737,11 +746,13 @@
                                                     <form method="post" enctype="multipart/form-data">
                                                       <div class="button">
                                                         <label for="chooseFile">
-                                                          👉 이미지 선택 👈
+                                                          이미지 선택
+                                                          <!-- 👉 이미지 선택 👈 -->
                                                         </label>
                                                       </div>
                                                       <input type="file" id="chooseFile" name="chooseFile"
-                                                        accept="image/*" onchange="loadFile(this)">
+                                                        accept="image/*" onchange="uploadImage(this, 'rc')">
+
                                                     </form>
 
                                                     <div class="fileContainer">
@@ -749,9 +760,10 @@
                                                         <p>파일 이름: </p>
                                                         <p id="fileName"></p>
                                                       </div>
-                                                      <div class="buttonContainer">
+                                                      <!-- <button class="button btn" onclick="uploadImage(this)">제출</button> -->
+                                                      <!-- <div class="buttonContainer">
                                                         <div class="submitButton" id="submitButton">SUBMIT</div>
-                                                      </div>
+                                                      </div> -->
                                                     </div>
                                                   </div>
 
@@ -760,8 +772,8 @@
                                               </div>
                                               <!-- 이미지 업로드 모달 끝 -->
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                  data-bs-dismiss="modal">닫기</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  onclick="location.href='myFridge'">닫기</button>
                                               </div>
                                             </div>
                                           </div>
@@ -796,11 +808,13 @@
                                                     <form method="post" enctype="multipart/form-data">
                                                       <div class="button">
                                                         <label for="chooseFile">
-                                                          👉 이미지 선택 👈
+                                                          이미지 선택
+                                                          <!-- 👉 이미지 선택 👈 -->
                                                         </label>
                                                       </div>
                                                       <input type="file" id="chooseFile" name="chooseFile"
-                                                        accept="image/*" onchange="loadFile(this)">
+                                                        accept="image/*" onchange="uploadImage(this, 'bc')">
+
                                                     </form>
 
                                                     <div class="fileContainer">
@@ -808,9 +822,10 @@
                                                         <p>파일 이름: </p>
                                                         <p id="fileName"></p>
                                                       </div>
-                                                      <div class="buttonContainer">
+                                                      <!-- <button class="button btn" onclick="uploadImage(this)">제출</button> -->
+                                                      <!-- <div class="buttonContainer">
                                                         <div class="submitButton" id="submitButton">SUBMIT</div>
-                                                      </div>
+                                                      </div> -->
                                                     </div>
                                                   </div>
 
@@ -819,8 +834,8 @@
                                               </div>
                                               <!-- 이미지 업로드 모달 끝 -->
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                  data-bs-dismiss="modal">닫기</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  onclick="location.href='myFridge'">닫기</button>
                                               </div>
                                             </div>
                                           </div>
@@ -1076,11 +1091,13 @@
                                                     <form method="post" enctype="multipart/form-data">
                                                       <div class="button">
                                                         <label for="chooseFile">
-                                                          👉 이미지 선택 👈
+                                                          이미지 선택
+                                                          <!-- 👉 이미지 선택 👈 -->
                                                         </label>
                                                       </div>
                                                       <input type="file" id="chooseFile" name="chooseFile"
-                                                        accept="image/*" onchange="loadFile(this)">
+                                                        accept="image/*" onchange="uploadImage(this, 'dl')">
+
                                                     </form>
 
                                                     <div class="fileContainer">
@@ -1088,9 +1105,10 @@
                                                         <p>파일 이름: </p>
                                                         <p id="fileName"></p>
                                                       </div>
-                                                      <div class="buttonContainer">
+                                                      <!-- <button class="button btn" onclick="uploadImage(this)">제출</button> -->
+                                                      <!-- <div class="buttonContainer">
                                                         <div class="submitButton" id="submitButton">SUBMIT</div>
-                                                      </div>
+                                                      </div> -->
                                                     </div>
                                                   </div>
 
@@ -1099,8 +1117,8 @@
                                               </div>
                                               <!-- 이미지 업로드 모달 끝 -->
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                  data-bs-dismiss="modal">닫기</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  onclick="location.href='myFridge'">닫기</button>
                                               </div>
                                             </div>
                                           </div>
@@ -1133,11 +1151,13 @@
                                                     <form method="post" enctype="multipart/form-data">
                                                       <div class="button">
                                                         <label for="chooseFile">
-                                                          👉 이미지 선택 👈
+                                                          이미지 선택
+                                                          <!-- 👉 이미지 선택 👈 -->
                                                         </label>
                                                       </div>
                                                       <input type="file" id="chooseFile" name="chooseFile"
-                                                        accept="image/*" onchange="loadFile(this)">
+                                                        accept="image/*" onchange="uploadImage(this, 'rc')">
+
                                                     </form>
 
                                                     <div class="fileContainer">
@@ -1145,9 +1165,10 @@
                                                         <p>파일 이름: </p>
                                                         <p id="fileName"></p>
                                                       </div>
-                                                      <div class="buttonContainer">
+                                                      <!-- <button class="button btn" onclick="uploadImage(this)">제출</button> -->
+                                                      <!-- <div class="buttonContainer">
                                                         <div class="submitButton" id="submitButton">SUBMIT</div>
-                                                      </div>
+                                                      </div> -->
                                                     </div>
                                                   </div>
 
@@ -1156,8 +1177,8 @@
                                               </div>
                                               <!-- 이미지 업로드 모달 끝 -->
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                  data-bs-dismiss="modal">닫기</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  onclick="location.href='myFridge'">닫기</button>
                                               </div>
                                             </div>
                                           </div>
@@ -1192,11 +1213,13 @@
                                                     <form method="post" enctype="multipart/form-data">
                                                       <div class="button">
                                                         <label for="chooseFile">
-                                                          👉 이미지 선택 👈
+                                                          이미지 선택
+                                                          <!-- 👉 이미지 선택 👈 -->
                                                         </label>
                                                       </div>
                                                       <input type="file" id="chooseFile" name="chooseFile"
-                                                        accept="image/*" onchange="loadFile(this)">
+                                                        accept="image/*" onchange="uploadImage(this, 'bc')">
+
                                                     </form>
 
                                                     <div class="fileContainer">
@@ -1204,9 +1227,10 @@
                                                         <p>파일 이름: </p>
                                                         <p id="fileName"></p>
                                                       </div>
-                                                      <div class="buttonContainer">
+                                                      <!-- <button class="button btn" onclick="uploadImage(this)">제출</button> -->
+                                                      <!-- <div class="buttonContainer">
                                                         <div class="submitButton" id="submitButton">SUBMIT</div>
-                                                      </div>
+                                                      </div> -->
                                                     </div>
                                                   </div>
 
@@ -1215,8 +1239,8 @@
                                               </div>
                                               <!-- 이미지 업로드 모달 끝 -->
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                  data-bs-dismiss="modal">닫기</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                  onclick="location.href='myFridge'">닫기</button>
                                               </div>
                                             </div>
                                           </div>
@@ -1224,7 +1248,7 @@
                                         <!-- 내부 모달 끝 -->
 
                                         <!-- 재료 등록 버튼(직접입력3) -->
-                                        <button class="button btn btn-success newSelectBtn" data-bs-toggle="modal"
+                                        <button class=" button btn btn-success newSelectBtn" data-bs-toggle="modal"
                                           data-bs-target="#selftypingUploadModal2">
                                           직접 입력
                                         </button>
@@ -1292,7 +1316,7 @@
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                                  id="closeBtn">닫기</button>
+                                                  id="closeBtn" onclick="location.href='myFridge'">닫기</button>
                                                 <button type="button" class="btn btn-secondary" id="addIngredientBtn"
                                                   onclick="addIngredientBtnHandler(3)">재료
                                                   추가</button>
@@ -1334,7 +1358,8 @@
                                 class="imgIconBorder">
                             </button>
 
-                            <p class="fridge-icon-name" th:text="${fridgeList.ingredientVo22.ingredientname}"></p>
+                            <p class="fridge-icon-name" th:text="${fridgeList.ingredientVo22.ingredientname}">
+                            </p>
 
                             <!-- Modal -->
                             <div class="modal fade" th:id="'code' +${fridgeList.ingredientcode}+'_'+${fridgeStat.index}"
@@ -1573,12 +1598,7 @@
 
 
     <hr>
-    <select id="test">
-      <option value="">사과</option>
-      <option value="">딸기</option>
-      <option value="">오렌지</option>
-      <option value="">감귤</option>
-    </select>
+
 
     <!-- Start Footer Area -->
     <footer class="footer">
@@ -2022,7 +2042,10 @@
           let searchdata = await response.json();
           console.log("searchdata :", searchdata);
           console.log("첫번째 for직전");
+          let $memoInput = document.getElementById("memotext");
+          $memoInput.value = "";
           makeMemoCard(searchdata);
+
 
         } catch (err) {
           alert(err);
