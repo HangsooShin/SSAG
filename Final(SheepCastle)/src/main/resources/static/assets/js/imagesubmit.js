@@ -34,7 +34,7 @@ async function uploadImage(input, type) {
     for (let i = 0; i < inputcount; i++) {
       document.getElementsByClassName("value-" + searchdata.response.codelist[i])[i].selected = true;
       if (i != inputcount - 1) {
-        addIngredientBtnHandler(num);
+        addIngredientBtnHandler(1);
       }
     }
   } catch (err) {
